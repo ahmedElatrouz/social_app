@@ -1,4 +1,4 @@
-#Mon Mar 23 21:31:55 WET 2020
+#Mon Mar 23 22:27:49 WET 2020
 base.0=E\:\\nsas\\ci2\\ci2_sem2\\1 project flutter\\social_app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
