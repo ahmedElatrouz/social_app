@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_app/view/actualite_page.dart';
 
-class login_page extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _login_pageState createState() => _login_pageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _login_pageState extends State<login_page> {
+class _LoginPageState extends State<LoginPage> {
   bool isAuth = false;
 
   Widget buildAuthScreen() {
@@ -40,7 +41,11 @@ class _login_pageState extends State<login_page> {
                   ),
             ),
             GestureDetector(
-              onTap: ()=>print('clicked'),
+              onTap: (){
+                setState(() {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ActualitePage()));
+                });
+              },
               child: Container(
                 width: 260.0,
                 height: 60.0,

@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
         primarySwatch:Colors.deepPurple,
         accentColor: Colors.teal,
         ),
-      home: login_page(),
+      home: LoginPage(),
     );
   }
 }   
