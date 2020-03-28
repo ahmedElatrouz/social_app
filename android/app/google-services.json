@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "511927621477",
+    "firebase_url": "https://social-app-7abd2.firebaseio.com",
+    "project_id": "social-app-7abd2",
+    "storage_bucket": "social-app-7abd2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511927621477:android:d00913266efef73ad3338c",
+        "android_client_info": {
+          "package_name": "com.elatrouz.social_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511927621477-u14n3p0e6d99s18qf9nk6ljtbljd41ol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBG4cmD27GD90jjhgh2ivmG3Ebf2OTLEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511927621477-u14n3p0e6d99s18qf9nk6ljtbljd41ol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
