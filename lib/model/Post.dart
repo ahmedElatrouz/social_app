@@ -7,7 +7,7 @@ class Post {
   String description;
   String photoUrl;
   String videoUrl;
-  Talent posteur;
+  Talent talent;
   
   
   Post({
@@ -17,7 +17,7 @@ class Post {
     this.description,
     this.photoUrl,
     this.videoUrl,
-    this.posteur,
+    this.talent,
   });
   
 }

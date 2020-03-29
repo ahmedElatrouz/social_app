@@ -7,6 +7,4 @@ class Categorie {
     this.cat,
   });
 
-  @override
-  String toString() => 'Categorie(cat: $cat)';
-}
+  }

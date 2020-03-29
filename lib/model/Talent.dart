@@ -1,6 +1,7 @@
 
 
 import 'package:social_app/model/Categorie.dart';
+import 'package:social_app/model/Post.dart';
 
 import 'Utilisateur.dart';
 
@@ -10,7 +11,7 @@ class Talent extends Utilisateur {
   String photo="sdl";
   String video="sdl";
   String description="sdl";
-  String posts;
+  List<Post> posts;
   Talent({
     this.id=1,
     this.categorie,
@@ -19,6 +20,17 @@ class Talent extends Utilisateur {
     this.description="sdl",
     this.posts,
   });
+
+
+  void aimerPost(Post post){
+    post.nombreLikes=post.nombreLikes++;
+  }
+  
+  
+
+  
+
+
 
   
 
