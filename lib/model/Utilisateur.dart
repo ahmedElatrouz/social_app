@@ -7,7 +7,6 @@ class Utilisateur {
   String prenom;
   Genre genre;
   int age;
-  String login;
   String password;
   String email;
   String tel;
@@ -19,7 +18,6 @@ class Utilisateur {
     this.prenom,
     this.genre,
     this.age,
-    this.login,
     this.password,
     this.email,
     this.tel,
