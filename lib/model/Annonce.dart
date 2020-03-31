@@ -4,7 +4,7 @@ class Annonce {
   int id;
   DateTime date;
   String description;
-  Professionnel pro;
+  String proRef;
   
   
   Annonce({

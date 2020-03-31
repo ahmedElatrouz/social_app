@@ -28,29 +28,21 @@ class _RegisterState extends State<Register> {
 
   void assignAttribut(String att, var val) {
     switch (att) {
-      case 'Nom':
-        nom = val;
+      case 'Nom':nom = val;
         break;
-      case 'Prenom':
-        prenom = val;
+      case 'Prenom':  prenom = val;
         break;
-      case 'Genre':
-        genre = val;
+      case 'Genre': genre = val;
         break;
-      case 'Nationalite':
-        nationalite = val;
+      case 'Nationalite': nationalite = val;
         break;
-      case 'Tel':
-        tel = val;
+      case 'Tel': tel = val;
         break;
-      case 'Email':
-        email = val;
+      case 'Email':email = val;
         break;
-      case 'Password':
-        password = val;
+      case 'Password':password = val;
         break;
-      case 'Age':
-        age = val;
+      case 'Age':age = val;
         break;
       default:
         return null;
@@ -58,11 +50,14 @@ class _RegisterState extends State<Register> {
     }
   }
 
+  //methode permet de creer les champs 
+
   Widget createField(String fieldName) {
     return Expanded(
         child: TextFormField(
           //si on est dans l'email field on change le clavier vers le type email
       keyboardType: fieldName == "Email"? TextInputType.emailAddress :TextInputType.text,
+
       //si on est dans le field password l'ecriture devient obscure (pour que personne ne voit le password)
       obscureText: fieldName == "Password",
       validator: (val) => val.isEmpty ? 'cant be empty' : null,
@@ -76,6 +71,8 @@ class _RegisterState extends State<Register> {
       },
     ));
   }
+
+
 
   @override
   Widget build(BuildContext context) {

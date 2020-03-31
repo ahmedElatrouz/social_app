@@ -5,7 +5,7 @@
 class Utilisateur {
   String nom;
   String prenom;
-  Genre genre;
+  String genre;
   int age;
   String password;
   String email;
