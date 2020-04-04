@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/service/auth.dart';
+import 'package:social_app/view/shared/reusable_header.dart';
 
 
 
@@ -35,8 +36,10 @@ void getCurrentUser() async{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return  //Center(child: Text("actualite"));
+    
+     Scaffold(
+      appBar:header(), /*AppBar(
         title: Text('SocialApp2'),
         actions: <Widget>[
           FlatButton.icon(
@@ -47,13 +50,15 @@ void getCurrentUser() async{
              icon: Icon(Icons.person),
              label: Text('logOut'))
         ],
-      ),
+      ),*/
       body: Container(
-        child: Text(
-          'Helloooo',
-          style: TextStyle(
-            fontSize:50,
-        ),
+        child: Center(
+          child: Text(
+            'actualite',
+            style: TextStyle(
+              fontSize:20,
+          ),
+          ),
         ),
       ),
     );

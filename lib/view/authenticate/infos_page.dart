@@ -120,7 +120,7 @@ class _InfosPageState extends State<InfosPage> {
                                     fontSize: 20.0, color: Colors.white)),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                               setState(() => loading = true);
+                               //setState(() => loading = true);
                                 dynamic result = await _auth
                                     .signUp(widget.email, widget.password)
                                     .then((currentUser) =>
@@ -137,7 +137,7 @@ class _InfosPageState extends State<InfosPage> {
                                 if (result == null) {
                                   
                                   setState(() {
-                                    loading = false;
+                                    //loading = false;
                                   error = "this email is already used!";
                                   //Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
                                   });
@@ -145,8 +145,8 @@ class _InfosPageState extends State<InfosPage> {
                                 } else {
                                  
                                   setState(() {
-                                      loading = false;
-                                    Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
+                                     // loading = false;
+                                    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
                                     
                                   });
                                    
