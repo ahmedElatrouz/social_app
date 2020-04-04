@@ -16,7 +16,7 @@ Future currentUser(){
 }
 
 Talent _talentFromFirebaseUser(FirebaseUser talent){
-  return talent != null ? Talent(uid: talent.uid) : null;
+  return talent != null ? Talent(uid:talent.uid ): null;
 }
 
 
@@ -27,6 +27,7 @@ Stream<Talent> get talent{
 //register with emailand password
 
 Future signUp(String email,String password) async{
+  
   try{
     AuthResult result=await _auth.createUserWithEmailAndPassword(email: email, password: password);
     FirebaseUser talent = result.user;
@@ -36,6 +37,7 @@ Future signUp(String email,String password) async{
     print(e.toString());
     return null;
   }
+  
 }
 
 
@@ -43,6 +45,7 @@ Future createCollection(String age, String email,String genre,String natonalite,
 String password,String prenom,String tel) async{ 
 
 FirebaseUser user = await _auth.currentUser();
+print(email+password);
 
   try{
 
@@ -63,10 +66,12 @@ await _authStore.collection("Talents").document(user.uid).setData({
     print(e.toString());
     return null;
   }
+  return 1;
 }
 
 
 Future signIn(String email,String password) async{
+
   try{
     AuthResult result=await _auth.signInWithEmailAndPassword(email: email, password: password);
     FirebaseUser talent = result.user;

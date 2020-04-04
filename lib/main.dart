@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
           Authenticate.id : (context) => Authenticate(),
           LoginPage.id : (context) => LoginPage(),
           Register.id : (context) => Register(),
-          ActualitePage.id : (context) => ActualitePage(),
-        },
+          //ActualitePage.id : (context) => ActualitePage(),
+       },
       ),
       );
   }

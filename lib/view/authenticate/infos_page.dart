@@ -7,7 +7,7 @@ class InfosPage extends StatefulWidget {
   final String email;
   final String password;
 
-  InfosPage({this.email, this.password});
+  InfosPage({@required this.email,@required this.password});
 
   @override
   _InfosPageState createState() => _InfosPageState();
@@ -86,27 +86,27 @@ class _InfosPageState extends State<InfosPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          createField("Nom"),
+                          Expanded(child: createField("Nom")),
                           SizedBox(
                             height: 20,
                           ),
-                          createField("Prenom"),
+                          Expanded(child: createField("Prenom")),
                           SizedBox(
                             height: 20,
                           ),
-                          createField("Genre"),
+                          Expanded(child: createField("Genre")),
                           SizedBox(
                             height: 20,
                           ),
-                          createField("Nationalite"),
+                          Expanded(child: createField("Nationalite")),
                           SizedBox(
                             height: 20,
                           ),
-                          createField("Tel"),
+                          Expanded(child: createField("Tel")),
                           SizedBox(
                             height: 20,
                           ),
-                          createField("Age"),
+                          Expanded(child: createField("Age")),
                           SizedBox(
                             height: 20,
                           ),
@@ -120,7 +120,7 @@ class _InfosPageState extends State<InfosPage> {
                                     fontSize: 20.0, color: Colors.white)),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                setState(() => loading = true);
+                               setState(() => loading = true);
                                 dynamic result = await _auth
                                     .signUp(widget.email, widget.password)
                                     .then((currentUser) =>
@@ -133,13 +133,26 @@ class _InfosPageState extends State<InfosPage> {
                                             widget.password,
                                             prenom,
                                             tel));
+                               
                                 if (result == null) {
                                   loading = false;
-                                  error = "this email adresse doesn't exist!";
+                                  setState(() {
+                                    
+                                  error = "this email is already used!";
+                                  //Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
+                                  });
+                                  
                                 } else {
-                                  Navigator.pushNamed(
-                                      context, ActualitePage.id);
-                                      loading=false;
+                                  loading = false;
+                                  setState(() {
+                                     
+                                    Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
+                                    
+                                  });
+                                   
+                                  //ActualitePage();
+                                  
+                                     
                                 }
                               }
                             },
