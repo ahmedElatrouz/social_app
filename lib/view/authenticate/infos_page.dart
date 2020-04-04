@@ -135,17 +135,17 @@ class _InfosPageState extends State<InfosPage> {
                                             tel));
                                
                                 if (result == null) {
-                                  loading = false;
+                                  
                                   setState(() {
-                                    
+                                    loading = false;
                                   error = "this email is already used!";
                                   //Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
                                   });
                                   
                                 } else {
-                                  loading = false;
+                                 
                                   setState(() {
-                                     
+                                      loading = false;
                                     Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
                                     
                                   });
