@@ -10,6 +10,7 @@ AppBar header(context,String page){
         "socialApp",
         style:kHeaderTextStyle,
       ),
+      
       actions: <Widget>[
            new IconButton(
              icon: page=="profil"? Icon(Icons.edit):Icon(Icons.exit_to_app),
