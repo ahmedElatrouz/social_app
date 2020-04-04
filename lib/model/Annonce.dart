@@ -1,4 +1,4 @@
-import 'package:social_app/model/Professionnel.dart';
+//import 'package:social_app/model/Professionnel.dart';
 
 class Annonce {
   int id;
@@ -11,6 +11,6 @@ class Annonce {
     this.id,
     this.date,
     this.description,
-    this.pro,
+    this.proRef
   });
 }

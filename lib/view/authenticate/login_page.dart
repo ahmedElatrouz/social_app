@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/service/auth.dart';
+import 'package:social_app/view/accueil/actualite_page.dart';
 import 'package:social_app/view/shared/loading.dart';
 
 class LoginPage extends StatefulWidget {
 
-  final Function togleView;
-  LoginPage({@required this.togleView});
+  static const String id = 'login_page';
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -28,18 +28,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 
     return loading ? Loading() : Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.brown,
-        actions: <Widget>[
-          FlatButton.icon(
-              onPressed: () => widget.togleView(),
-              icon: Icon(Icons.person),
-              label: Text('register'))
-        ],
-      ),
 
-
-      body: Container(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25),
         child: Form(
           key:_formKey ,
           child: Column(
@@ -53,14 +44,16 @@ class _LoginPageState extends State<LoginPage> {
                   autofocus: false,
                   onChanged: (val) {setState(() => email = val);},
                   validator: (val) => val.isEmpty ? 'your email not correct' : null,
+                  
                   decoration: InputDecoration(
                       hintText: "Email",
                       icon: Icon(
                         Icons.mail,
                         color: Colors.grey,
                       ),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))
                     ),
+                    
                 ),
                 SizedBox(height: 20,),
 
@@ -92,13 +85,17 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async{
                       if(_formKey.currentState.validate()){
                         setState(() => loading = true );
-                        dynamic result=_auth.signIn(email, password);
-                        print(result);
+                        dynamic result= await _auth.signIn(email, password);
+                        
                         if(result == null){
                           setState(() {
                             loading = false;
                             error = 'you have a problem in your email';
                           });
+                        }
+                        else{
+                          Navigator.pushNamed(context, ActualitePage.id);
+                          loading=false;
                         }
                       }
                     }),

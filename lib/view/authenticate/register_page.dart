@@ -1,48 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:social_app/service/auth.dart';
+//import 'package:social_app/service/auth.dart';
+import 'package:social_app/view/authenticate/infos_page.dart';
 import 'package:social_app/view/shared/loading.dart';
 
 class Register extends StatefulWidget {
-  final Function togleView;
-  Register({@required this.togleView});
+
+  static const String id = 'register_page';
+
 
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   String error;
-  String nom = '';
-  String prenom = '';
-  String genre = '';
-  String nationalite = '';
-  String tel = '';
+
   String email = '';
-  String login = '';
   String password = '';
   String age = '';
   bool loading = false;
 
   void assignAttribut(String att, var val) {
     switch (att) {
-      case 'Nom':nom = val;
-        break;
-      case 'Prenom':  prenom = val;
-        break;
-      case 'Genre': genre = val;
-        break;
-      case 'Nationalite': nationalite = val;
-        break;
-      case 'Tel': tel = val;
-        break;
       case 'Email':email = val;
         break;
       case 'Password':password = val;
-        break;
-      case 'Age':age = val;
         break;
       default:
         return null;
@@ -53,23 +37,21 @@ class _RegisterState extends State<Register> {
   //methode permet de creer les champs 
 
   Widget createField(String fieldName) {
-    return Expanded(
-        child: TextFormField(
-          //si on est dans l'email field on change le clavier vers le type email
+    return TextFormField(
+      //si on est dans l'email field on change le clavier vers le type email
       keyboardType: fieldName == "Email"? TextInputType.emailAddress :TextInputType.text,
 
       //si on est dans le field password l'ecriture devient obscure (pour que personne ne voit le password)
       obscureText: fieldName == "Password",
       validator: (val) => val.isEmpty ? 'cant be empty' : null,
       decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: fieldName,
-          labelStyle: TextStyle(fontSize: 15)),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+      labelText: fieldName,
+      labelStyle: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
       onChanged: (val) {
-        setState(() => assignAttribut(fieldName, val));
-        print(prenom);
+    setState(() => assignAttribut(fieldName, val));
       },
-    ));
+    );
   }
 
 
@@ -79,72 +61,46 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : Scaffold(
-            appBar: AppBar(
-              actions: <Widget>[
-                FlatButton.icon(
-                  onPressed: () => widget.togleView(),
-                  icon: Icon(Icons.person),
-                  label: Text('SignIn'),
-                )
-              ],
-              backgroundColor: Colors.brown[500],
-              title: Text('SignUp'),
-            ),
-            body: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 8,
-                        ),
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50),
+              child: Container(
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        //crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          createField("Email"),
 
-                        createField("Nom"),
-                        createField("Prenom"),
-                        createField("Genre"),
-                        createField("Nationalite"),
-                        createField("Tel"),
-                        createField("Email"),
-                        createField("Password"),
-                        createField("Age"),
+                          SizedBox( height: 20,),
+                         
+                          createField("Password"),
 
-                        Expanded(
-                            child: RaisedButton(
-                          highlightColor: Colors.purple,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          color: Colors.blueAccent,
-                          child: Text('Register',
-                              style: TextStyle(
-                                  fontSize: 15.0, color: Colors.white)),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              setState(() => loading = true);
-                              dynamic result = _auth
-                                  .signUp(email, password)
-                                  .then((currentUser) => _auth.createCollection(
-                                      age,
-                                      email,
-                                      genre,
-                                      nationalite,
-                                      nom,
-                                      password,
-                                      prenom,
-                                      tel));
-                              if (result == null) {
-                                loading = false;
-                                error = "this email adresse doesn't exist!";
-                              }
+                          SizedBox( height: 20,),
+
+                          RaisedButton(
+                            highlightColor: Colors.purple,
+                            shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                            color: Colors.blueAccent,
+                            child: Text('more Infos',
+                            style: TextStyle(
+                                fontSize: 20.0, color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                            onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  
+                                  Navigator.push(context, 
+                                  MaterialPageRoute(
+                                    builder: (context)=>InfosPage(email: email,password: password,))
+                                    );
                             }
-                          },
-                        )),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        //Text(error,style: TextStyle(color: Colors.red),),
-                      ],
-                    ))),
+                            }
+                          )
+                         
+                        ],
+                      ))),
+            ),
           );
   }
 }
