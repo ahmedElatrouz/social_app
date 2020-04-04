@@ -12,7 +12,7 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context),
+      appBar: header(context,"profil"),
       body:Center(child: Text("profile page")) ,
      
     );

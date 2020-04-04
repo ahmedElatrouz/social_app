@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/view/profil/edit_profile_page.dart';
 
 import 'constants.dart';
 
-AppBar header(context){
+AppBar header(context,String page){
   return AppBar(
     
       title: Text(
@@ -11,11 +12,15 @@ AppBar header(context){
       ),
       actions: <Widget>[
            new IconButton(
-             icon: new Icon(Icons.exit_to_app),
+             icon: page=="profil"? Icon(Icons.edit):Icon(Icons.exit_to_app),
             onPressed: () {
-              //TODO: logOut here
-              Navigator.of(context).pop(null);
               
+              
+              if(page=="profil") Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfilPage()));
+              else{
+                //TODO: logOut here
+              Navigator.of(context).pop(null);
+              }
             } 
            ),
          ],

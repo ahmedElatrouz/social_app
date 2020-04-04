@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
     pageController=PageController(
       initialPage: 0,
@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                 
                   @override
                   void dispose() {
-                    // TODO: implement dispose
+                    
                     pageController.dispose();
                     super.dispose();
                   }

@@ -39,7 +39,7 @@ void getCurrentUser() async{
     return  //Center(child: Text("actualite"));
     
      Scaffold(
-      appBar:header(context), /*AppBar(
+      appBar:header(context,"actualite"), /*AppBar(
         title: Text('SocialApp2'),
         actions: <Widget>[
           FlatButton.icon(
