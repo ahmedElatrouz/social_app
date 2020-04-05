@@ -42,7 +42,7 @@ Future signUp(String email,String password) async{
 
 
 Future createCollection(String age, String email,String genre,String natonalite,String nom,
-String password,String prenom,String tel) async{ 
+String password,String prenom,String tel,String url) async{ 
 
 FirebaseUser user = await _auth.currentUser();
 print(email+password);
@@ -59,6 +59,7 @@ await _authStore.collection("Talents").document(user.uid).setData({
   "password" : password,
   "prenom" : prenom,
   "tel" : tel,
+  "url" : url,
 });
   }
   catch(e){

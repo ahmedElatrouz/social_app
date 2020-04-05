@@ -27,6 +27,6 @@ AppBar header(context,String page){
          ],
         leading: new Container(),
       centerTitle: true,
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Color(0xFF1D1E33),
   );
 }

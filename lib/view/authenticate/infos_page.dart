@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/service/auth.dart';
 import 'package:social_app/view/accueil/home.dart';
+import 'package:social_app/view/shared/field.dart';
 import 'package:social_app/view/shared/loading.dart';
 
 class InfosPage extends StatefulWidget {
@@ -23,55 +24,11 @@ class _InfosPageState extends State<InfosPage> {
   String nationalite = '';
   String tel = '';
   String age = '';
+  String url = '';
   bool loading = false;
 
-  void assignAttribut(String att, var val) {
-    switch (att) {
-      case 'Nom':
-        nom = val;
-        break;
-      case 'Prenom':
-        prenom = val;
-        break;
-      case 'Genre':
-        genre = val;
-        break;
-      case 'Nationalite':
-        nationalite = val;
-        break;
-      case 'Tel':
-        tel = val;
-        break;
-      case 'Age':
-        age = val;
-        break;
-      default:
-        return null;
-        break;
-    }
-  }
 
-//methode permet de creer les champs
-  Widget createField(String fieldName) {
-    return TextFormField(
-      //si on est dans l'email field on change le clavier vers le type email
-      keyboardType: fieldName == "Email"
-          ? TextInputType.emailAddress
-          : TextInputType.text,
-      //si on est dans le field password l'ecriture devient obscure (pour que personne ne voit
-      obscureText: fieldName == "Password" ? true : false,
-      validator: (val) => val.isEmpty ? 'cant be empty' : null,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-        labelText: fieldName,
-        labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      onChanged: (val) {
-        setState(() => assignAttribut(fieldName, val));
-        print(prenom);
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,27 +50,73 @@ class _InfosPageState extends State<InfosPage> {
                         SizedBox(
                           height: 25,
                         ),
-                        Expanded(child: createField("Nom")),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Nom",
+                          change: (val) {
+                            nom = val;
+                          },
+                        )),
                         SizedBox(
                           height: 15,
                         ),
-                        Expanded(child: createField("Prenom")),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Prenom",
+                          change: (val) {
+                            prenom = val;
+                          },
+                        )),
                         SizedBox(
                           height: 15,
                         ),
-                        Expanded(child: createField("Genre")),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Genre",
+                          change: (val) {
+                           genre = val;
+                          },
+                        )),
                         SizedBox(
                           height: 15,
                         ),
-                        Expanded(child: createField("Nationalite")),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Nationalite",
+                          change: (val) {
+                            nationalite = val;
+                          },
+                        )),
                         SizedBox(
                           height: 15,
                         ),
-                        Expanded(child: createField("Tel")),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Tel",
+                          change: (val) {
+                            tel = val;
+                          },
+                        )),
                         SizedBox(
                           height: 15,
                         ),
-                        Expanded(child: createField("Age")),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Age",
+                          change: (val) {
+                            age = val;
+                          },
+                        )),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Url",
+                          change: (val) {
+                            url = val;
+                          },
+                        )),
                         SizedBox(
                           height: 15,
                         ),
@@ -138,7 +141,8 @@ class _InfosPageState extends State<InfosPage> {
                                       nom,
                                       widget.password,
                                       prenom,
-                                      tel));
+                                      tel,
+                                      url));
 
                               if (result == null) {
                                 setState(() {
@@ -149,10 +153,8 @@ class _InfosPageState extends State<InfosPage> {
                               } else {
                                 setState(() {
                                   // loading = false;
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Home()));
+                                  Navigator.pushReplacementNamed(
+                                      context, Home.id);
                                 });
 
                                 //ActualitePage();

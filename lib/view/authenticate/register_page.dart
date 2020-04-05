@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:social_app/service/auth.dart';
 import 'package:social_app/view/authenticate/infos_page.dart';
 import 'package:social_app/view/authenticate/infos_pro_page.dart';
+import 'package:social_app/view/shared/field.dart';
 import 'package:social_app/view/shared/loading.dart';
 
 class Register extends StatefulWidget {
@@ -21,42 +21,6 @@ class _RegisterState extends State<Register> {
   String age = '';
   bool loading = false;
 
-  void assignAttribut(String att, var val) {
-    switch (att) {
-      case 'Email':
-        email = val;
-        break;
-      case 'Password':
-        password = val;
-        break;
-      default:
-        return null;
-        break;
-    }
-  }
-
-  //methode permet de creer les champs
-
-  Widget createField(String fieldName) {
-    return TextFormField(
-      //si on est dans l'email field on change le clavier vers le type email
-      keyboardType: fieldName == "Email"
-          ? TextInputType.emailAddress
-          : TextInputType.text,
-
-      //si on est dans le field password l'ecriture devient obscure (pour que personne ne voit le password)
-      obscureText: fieldName == "Password",
-      validator: (val) => val.isEmpty ? 'cant be empty' : null,
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-        labelText: fieldName,
-      ),
-      onChanged: (val) {
-        setState(() => assignAttribut(fieldName, val));
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +48,23 @@ class _RegisterState extends State<Register> {
                           SizedBox(
                             height: 100,
                           ),
-                          createField("Email"),
+                          CreateField(
+                            change:(val){
+                              setState(() {
+                                email = val;
+                              });
+                            } ,
+                          fieldName: "Email",
+                          ),
                           SizedBox(
                             height: 20,
                           ),
-                          createField("Password"),
+                          CreateField(fieldName: "Password",
+                          change: (val){
+                            setState(() {
+                              password = val;
+                            });
+                          },),
                           SizedBox(
                             height: 20,
                           ),
@@ -157,3 +133,6 @@ class _RegisterState extends State<Register> {
           );
   }
 }
+
+
+
