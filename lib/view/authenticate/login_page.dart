@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/service/auth.dart';
-import 'package:social_app/view/accueil/actualite_page.dart';
-import 'package:social_app/view/accueil/home.dart';
+//import 'package:social_app/view/accueil/actualite_page.dart';
+//import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
 
 class LoginPage extends StatefulWidget {
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     onPressed: () async{
                       if(_formKey.currentState.validate()){
-                        /*setState(() => loading = true );
+                        //setState(() => loading = true );
                         dynamic result= await _auth.signIn(email, password);
                         
                         if(result == null){
@@ -95,14 +95,14 @@ class _LoginPageState extends State<LoginPage> {
                              //Navigator.pushNamed(context, ActualitePage.id);
                           });
                         }
-                        else{*/
+                        else{
                          Navigator.pushReplacementNamed(context,"Home" /*ActualitePage.id*/);
                           
                           //Home();
                           //loading=false;
                        // }
                       }
-                    }),
+                    }}),
                 SizedBox(height: 20,),
                 Text(error,style: TextStyle(color:Colors.red,)),
               ]),
