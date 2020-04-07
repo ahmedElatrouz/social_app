@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_app/view/accueil/home.dart';
 //import 'package:social_app/service/auth.dart';
 //import 'package:social_app/view/accueil/actualite_page.dart';
 //import 'package:social_app/view/accueil/home.dart';
@@ -72,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 20,
                       ),
+                      
                       TextFormField(
                         onChanged: (val) {
                           setState(() => password = val);
@@ -123,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         else{*/
                               Navigator.pushReplacementNamed(
-                                  context, "Home" /*ActualitePage.id*/);
+                                  context, Home.id /*ActualitePage.id*/);
 
                               //Home();
                               //loading=false;

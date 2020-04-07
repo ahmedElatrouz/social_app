@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           LoginPage.id : (context) => LoginPage(),
           Register.id : (context) => Register(),
           ActualitePage.id : (context) => ActualitePage(),
-          "Home" :(context)=>Home()
+          Home.id :(context)=>Home()
        },
       ),
       );
