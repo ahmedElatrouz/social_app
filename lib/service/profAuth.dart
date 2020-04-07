@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:social_app/model/Talent.dart';
+import 'package:social_app/model/Professionnel.dart';
 
 
 
-class AuthService{
+class ProfAuthService{
 
 
 final FirebaseAuth  _auth = FirebaseAuth.instance;
@@ -15,13 +15,13 @@ Future currentUser(){
   return _auth.currentUser();
 }
 
-Talent _talentFromFirebaseUser(FirebaseUser talent){
-  return talent != null ? Talent(uid:talent.uid ): null;
+Professionnel _professionnelFromFirebaseUser(FirebaseUser prof){
+  return prof != null ? Professionnel(proID: prof.uid): null;
 }
 
 
-Stream<Talent> get talent{
-  return _auth.onAuthStateChanged.map(_talentFromFirebaseUser);
+Stream<Professionnel> get professionnel{
+  return _auth.onAuthStateChanged.map(_professionnelFromFirebaseUser);
 }
 
 //register with emailand password
@@ -30,8 +30,8 @@ Future signUp(String email,String password) async{
   
   try{
     AuthResult result=await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    FirebaseUser talent = result.user;
-    return _talentFromFirebaseUser(talent);
+    FirebaseUser prof = result.user;
+    return _professionnelFromFirebaseUser(prof);
   }
   catch(e){
     print(e.toString());
@@ -48,8 +48,7 @@ FirebaseUser user = await _auth.currentUser();
 print(email+password);
 
   try{
-
-await _authStore.collection("Talents").document(user.uid).setData({
+await _authStore.collection("professionnel").document(user.uid).setData({
   "uid" : user.uid,
   "age" : age,
   "email" : email,
@@ -60,6 +59,7 @@ await _authStore.collection("Talents").document(user.uid).setData({
   "prenom" : prenom,
   "tel" : tel,
 });
+
   }
   catch(e){
     print(e.toString());
@@ -69,18 +69,21 @@ await _authStore.collection("Talents").document(user.uid).setData({
 }
 
 
+
 Future signIn(String email,String password) async{
 
   try{
     AuthResult result=await _auth.signInWithEmailAndPassword(email: email, password: password);
-    FirebaseUser talent = result.user;
-    return _talentFromFirebaseUser(talent);
+    FirebaseUser prof = result.user;
+    return _professionnelFromFirebaseUser(prof);
   }
   catch(e){
     print(e.toString());
     return null;
   }
 }
+
+
 
 Future signOut() async{
 try{

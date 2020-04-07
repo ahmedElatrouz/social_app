@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/service/auth.dart';
-import 'package:social_app/view/accueil/actualite_page.dart';
+import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
 
 class InfosPage extends StatefulWidget {
   final String email;
   final String password;
 
-  InfosPage({@required this.email,@required this.password});
+  InfosPage({@required this.email, @required this.password});
 
   @override
   _InfosPageState createState() => _InfosPageState();
@@ -79,94 +79,97 @@ class _InfosPageState extends State<InfosPage> {
         ? Loading()
         : Scaffold(
             body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50),
-              child: Container(
-                  child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(child: createField("Nom")),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Expanded(child: createField("Prenom")),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Expanded(child: createField("Genre")),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Expanded(child: createField("Nationalite")),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Expanded(child: createField("Tel")),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Expanded(child: createField("Age")),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          RaisedButton(
-                            highlightColor: Colors.purple,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                            color: Colors.blueAccent,
-                            child: Text('Register',
-                                style: TextStyle(
-                                    fontSize: 20.0, color: Colors.white)),
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                               //setState(() => loading = true);
-                                dynamic result = await _auth
-                                    .signUp(widget.email, widget.password)
-                                    .then((currentUser) =>
-                                        _auth.createCollection(
-                                            age,
-                                            widget.email,
-                                            genre,
-                                            nationalite,
-                                            nom,
-                                            widget.password,
-                                            prenom,
-                                            tel));
-                               
-                                if (result == null) {
-                                  
-                                  setState(() {
-                                    //loading = false;
+                padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Talent',
+                          style:
+                              TextStyle(fontSize: 30, color: Colors.blueGrey),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Expanded(child: createField("Nom")),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(child: createField("Prenom")),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(child: createField("Genre")),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(child: createField("Nationalite")),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(child: createField("Tel")),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(child: createField("Age")),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        RaisedButton(
+                          highlightColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          color: Colors.lightBlueAccent,
+                          child: Text('Register',
+                              style: TextStyle(
+                                  fontSize: 20.0, color: Colors.white)),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              //setState(() => loading = true);
+                              dynamic result = await _auth
+                                  .signUp(widget.email, widget.password)
+                                  .then((currentUser) => _auth.createCollection(
+                                      age,
+                                      widget.email,
+                                      genre,
+                                      nationalite,
+                                      nom,
+                                      widget.password,
+                                      prenom,
+                                      tel));
+
+                              if (result == null) {
+                                setState(() {
+                                  //loading = false;
                                   error = "this email is already used!";
                                   //Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
-                                  });
-                                  
-                                } else {
-                                 
-                                  setState(() {
-                                     // loading = false;
-                                    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
-                                    
-                                  });
-                                   
-                                  //ActualitePage();
-                                  
-                                     
-                                }
+                                });
+                              } else {
+                                setState(() {
+                                  // loading = false;
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Home()));
+                                });
+
+                                //ActualitePage();
+
                               }
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(error,
-                              style: TextStyle(
-                                color: Colors.red,
-                              )),
-                        ],
-                      ))),
-            ),
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(error,
+                            style: TextStyle(
+                              color: Colors.red,
+                            )),
+                      ],
+                    ))),
           );
   }
 }

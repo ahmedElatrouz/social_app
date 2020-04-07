@@ -3,7 +3,7 @@ import 'package:social_app/model/Utilisateur.dart';
 
 class Professionnel extends Utilisateur {
 
-    int proID;
+    String proID;
     List<Annonce> annonces;
  
  
