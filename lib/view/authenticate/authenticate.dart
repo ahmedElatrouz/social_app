@@ -12,10 +12,10 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      /*decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(''),fit: BoxFit.cover)
-      ),
+      ),*/
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
