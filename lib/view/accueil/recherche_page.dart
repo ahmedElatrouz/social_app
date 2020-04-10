@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/model/Utilisateur.dart';
 import 'package:social_app/service/talentDao.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 class RecherchePage extends StatefulWidget {
   @override
   _RecherchePageState createState() => _RecherchePageState();
 }
 
 class _RecherchePageState extends State<RecherchePage> {
+  TextEditingController searchController = TextEditingController();
+
+  List<ResultWidget> rechercheResult = [];
 
 
-TextEditingController searchController=TextEditingController();
-
-List<Text> talentsNames=[];
   AppBar rechercheTextWidget() {
     return AppBar(
       backgroundColor: Colors.white,
       title: TextFormField(
-          controller:searchController,
-          decoration: InputDecoration(
+        controller: searchController,
+        decoration: InputDecoration(
           hintText: 'Search for a user..',
           filled: true,
           prefixIcon: Icon(Icons.account_box),
@@ -30,31 +31,26 @@ List<Text> talentsNames=[];
                 //TODO:clear the textField
               }),
         ),
-        onFieldSubmitted:(value){
-                  createList(value);
-                
-
-        } ,
+        onFieldSubmitted: (value) {
+          createList(value);
+        },
       ),
     );
   }
 
-
-  clearSearch(){
+  clearSearch() {
     searchController.clear();
   }
 
-
-  createList(String value)async{
-                     List<Talent>  talents=await TalentDao().searchByName(value);
-                       List<Text> list=[];
-                        for(Talent t in talents){
-                          list.add( Text(t.nom));
-                        }
-                        setState(() {
-                          talentsNames=list;
- 
-                        });
+  createList(String value) async {
+    List<Talent> talents = await TalentDao().searchByName(value);
+    List<ResultWidget> list = [];
+    for (Talent t in talents) {
+      list.add(ResultWidget(user: t,));
+    }
+    setState(() {
+      rechercheResult = list;
+    });
   }
 
   Container noContentWidget() {
@@ -86,20 +82,59 @@ List<Text> talentsNames=[];
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       appBar: rechercheTextWidget(),
-      body:talentsNames.isEmpty? noContentWidget():existContentWidget(),
-          );
-        }
+      body: rechercheResult.isEmpty ? noContentWidget() : existContentWidget(),
+    );
+  }
+
+  Container existContentWidget() {
+    return Container(
+      child: ListView(
+        children: rechercheResult,
+      ),
+    );
+  }
+}
+
+
+
+
+class ResultWidget extends StatelessWidget {
+
+  final Talent user;
+
+  const ResultWidget({ this.user});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       
-
-
-
-        Container existContentWidget() {
-            return Container(
-                child: ListView(
-                  children:talentsNames,
-                ),
-            );
-
-
-        }
+      color: Colors.deepPurple.withOpacity(0.7),
+      child: Column(
+        children:<Widget>[
+          GestureDetector(
+              onTap:()=> print("go to this profil"),
+              child: ListTile(
+                leading:CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  backgroundImage:user.photo!=null?CachedNetworkImageProvider(user.photo):AssetImage('assets/images/ahmed.jpg') ,
+                  ),
+                  title: Text(
+                    user.nom,
+                    style: TextStyle(
+                      color:Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                    subtitle: Text(user.nom+" "+user.prenom,
+                    style:TextStyle(color:Colors.white), ),
+              ),
+          ),
+          Divider(
+            height: 2.0,
+            color: Colors.white54,
+          ),
+        ]
+      ),
+    );
+  }
 }
