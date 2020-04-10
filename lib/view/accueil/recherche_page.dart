@@ -11,19 +11,22 @@ class RecherchePage extends StatefulWidget {
 class _RecherchePageState extends State<RecherchePage> {
 
 
+TextEditingController searchController=TextEditingController();
+
 List<Text> talentsNames=[];
   AppBar rechercheTextWidget() {
     return AppBar(
       backgroundColor: Colors.white,
       title: TextFormField(
-        decoration: InputDecoration(
+          controller:searchController,
+          decoration: InputDecoration(
           hintText: 'Search for a user..',
           filled: true,
           prefixIcon: Icon(Icons.account_box),
           suffixIcon: IconButton(
               icon: Icon(Icons.clear),
               onPressed: () {
-                
+                clearSearch();
                 //TODO:clear the textField
               }),
         ),
@@ -37,21 +40,21 @@ List<Text> talentsNames=[];
   }
 
 
-  createList(String value)async{
-      
-                     List<Talent>  talents=await TalentDao().searchByName(value);
+  clearSearch(){
+    searchController.clear();
+  }
 
+
+  createList(String value)async{
+                     List<Talent>  talents=await TalentDao().searchByName(value);
                        List<Text> list=[];
                         for(Talent t in talents){
                           list.add( Text(t.nom));
                         }
                         setState(() {
                           talentsNames=list;
-                          
+ 
                         });
-                        
-
-         
   }
 
   Container noContentWidget() {
