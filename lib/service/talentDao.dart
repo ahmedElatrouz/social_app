@@ -48,6 +48,24 @@ class TalentDao  {
       return true;
   }
 
+  Future<List<Talent>> searchByName(String name)async{
+
+    List<Talent> talents=null;
+    try{
+        var users=await usersRef.where("nom",isGreaterThanOrEqualTo: name).getDocuments();
+        talents=users.documents.map((doc)=>Talent.fromMap(doc.data)).toList();
+    }catch(e){
+      print(e);
+    }
+   
+
+
+   return talents;
+  }
+
+
+  
+
 
 
 
