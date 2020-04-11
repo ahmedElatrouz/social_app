@@ -10,35 +10,42 @@ import 'Utilisateur.dart';
 class Talent extends Utilisateur {
   String uid;
   Categorie categorie ;
-  String photo="sdl";
-  String video="sdl";
-  String description="sdl";
+  String photo;
+  String video;
+  String description;
   List<Post> posts;
   
-  Talent({
-    this.uid,
-    this.categorie,
-    this.photo="sdl",
-    this.video="sdl",
-    this.description="sdl",
-    this.posts,
-  });
+  Talent({ String nom,
+  String prenom,
+  String genre,
+  var age,
+  String password,
+  String email,
+  String nationalite,
+  String uid,
+  //Categorie cat,
+  String photo,
+  String video,
+  String description}
+  ):super(nom:nom,prenom:prenom,genre:genre,age:age,password:password,email:email,nationalite:nationalite){
+    this.uid=uid;
+   // this.categorie=cat;
+    this.photo=photo;
+    this.video=video;
+    this.description=description;
+    
+  }
+
+  
 
   void aimerPost(Post post){
     post.nombreLikes=post.nombreLikes++;
   }
   
-  
-
-  
-
-
-
-  
-
 
 
   Map<String, dynamic> toMap() {
+    //TODO:complete this methode
     return {
       'uid': uid,
       'Categorie': categorie.toMap(),
@@ -53,17 +60,30 @@ class Talent extends Utilisateur {
     if (map == null) return null;
   
     return Talent(
-      uid: map['uid'],
-      categorie:null,
-     // categorie: Categorie categorie.fromMap(map['']),
-      photo: map['photo="sdl"'],
-      video: map['video="sdl"'],
-      description: map['description="sdl"'],
-      posts: List<Post>.from(map['posts']?.map((x) => Post.fromMap(x))),
+      uid:map['uid'],
+      email:map['email'],
+      nom:map['nom'],
+      prenom:map['prenom'],
+      description:map['description'],
+      password:map['password'],
+      genre:map['genre'],
+      photo:map['photo'],
+      video:map['video'],
+      nationalite: map['nationalite'],
+      //age: int.tryParse(map['age']),
+     // Categorie categorie.fromMap(map['']),
+    //  List<Post>.from(map['posts']?.map((x) => Post.fromMap(x))),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   static Talent fromJson(String source) => fromMap(json.decode(source));
- }
+
+  @override
+  String toString() {
+    return 'Talent(${super.toString()} , uid: $uid , photo: $photo, video: $video, description: $description, posts: $posts)';
+  }
+}
+
+ 

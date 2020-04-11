@@ -11,7 +11,7 @@ final FirebaseAuth  _auth = FirebaseAuth.instance;
 final Firestore _authStore = Firestore.instance;
 
 
-Future currentUser() async{
+Future<FirebaseUser> currentUser() async{
   return await _auth.currentUser();
 }
 
