@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/view/accueil/home.dart';
-//import 'package:social_app/service/auth.dart';
+import 'package:social_app/service/auth.dart';
 //import 'package:social_app/view/accueil/actualite_page.dart';
 //import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
@@ -14,14 +14,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // final AuthService _auth = AuthService();
+   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
   String error = '';
   bool loading = false;
 
-  //bool isAuth = false;
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   @override
@@ -113,23 +112,22 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              /*setState(() => loading = true );
+                              setState(() => loading = true );
                         dynamic result= await _auth.signIn(email, password);
                         
                         if(result == null){
                           setState(() {
                             loading = false;
                             error = 'you have a problem in your email';
-                             //Navigator.pushNamed(context, ActualitePage.id);
                           });
                         }
-                        else{*/
+                        else{
                               Navigator.pushReplacementNamed(
-                                  context, Home.id /*ActualitePage.id*/);
+                                  context, Home.id );
 
-                              //Home();
-                              //loading=false;
-                              // }
+                              loading=false;
+                            
+                            }
                             }
                           }),
                       SizedBox(

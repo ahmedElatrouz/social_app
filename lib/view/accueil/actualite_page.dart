@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:social_app/view/shared/reusable_header.dart';
 
-
-
-
-
 class ActualitePage extends StatefulWidget {
 
   static const String id = 'actualite_page';
@@ -17,8 +13,6 @@ class ActualitePage extends StatefulWidget {
 
 class _ActualitePageState extends State<ActualitePage> {
 
-
-  
 
 
   @override

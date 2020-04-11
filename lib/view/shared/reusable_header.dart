@@ -19,7 +19,7 @@ AppBar header(context,String page){
               
               if(page=="profil") Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfilPage()));
               else{
-                //TODO: logOut here
+    
               Navigator.of(context).pop(null);
               }
             } 

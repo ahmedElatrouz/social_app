@@ -11,9 +11,13 @@ final FirebaseAuth  _auth = FirebaseAuth.instance;
 final Firestore _authStore = Firestore.instance;
 
 
-Future currentUser(){
-  return _auth.currentUser();
+Future currentUser() async{
+  return await _auth.currentUser();
 }
+
+Future<String> getcurrentUserUid() async {
+  return (await _auth.currentUser()).uid;
+  }
 
 Talent _talentFromFirebaseUser(FirebaseUser talent){
   return talent != null ? Talent(uid:talent.uid ): null;

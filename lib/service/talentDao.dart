@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/view/accueil/actualite_page.dart';
+//import 'package:social_app/view/accueil/actualite_page.dart';
 
 final usersRef=Firestore.instance.collection("Talents");
 

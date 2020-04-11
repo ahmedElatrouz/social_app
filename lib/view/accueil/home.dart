@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_app/service/auth.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
@@ -21,7 +22,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
  
-  //final FirebaseAuth  _auth = FirebaseAuth.instance;
+  final AuthService _auth = AuthService();
   final Firestore _authStore = Firestore.instance;
 
   bool getUserDocument(String collection) {
@@ -33,6 +34,11 @@ class _HomeState extends State<Home> {
     
   }
 
+  Future currentUser() async{
+    FirebaseUser user= await _auth.currentUser();
+    print(user.email);
+  }
+
 
 
   PageController pageController;
@@ -41,6 +47,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+     currentUser();
     pageController = PageController(
       initialPage: 0,
     );
@@ -71,7 +78,7 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
           BottomNavigationBarItem(icon: Icon(Icons.search)),
-            BottomNavigationBarItem(icon: Icon(Icons.star)),
+          BottomNavigationBarItem(icon: Icon(Icons.star)),
         ],
       ),
     );

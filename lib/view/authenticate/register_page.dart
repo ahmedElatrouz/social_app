@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/view/authenticate/infos_page.dart';
 import 'package:social_app/view/authenticate/infos_pro_page.dart';
-import 'package:social_app/view/shared/field.dart';
 import 'package:social_app/view/shared/loading.dart';
+import 'package:social_app/view/shared/reusable_text_field.dart';
 
 class Register extends StatefulWidget {
   static const String id = 'register_page';

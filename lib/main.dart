@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<Talent>.value(
       value: AuthService().talent,
       child: MaterialApp(
-        initialRoute:Home.id,
+        initialRoute:Authenticate.id,
         routes: {
           Authenticate.id : (context) => Authenticate(),
           LoginPage.id : (context) => LoginPage(),

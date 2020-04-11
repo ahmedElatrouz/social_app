@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/service/auth.dart';
 import 'package:social_app/view/accueil/home.dart';
-import 'package:social_app/view/shared/field.dart';
 import 'package:social_app/view/shared/loading.dart';
+import 'package:social_app/view/shared/reusable_text_field.dart';
 
 class InfosPage extends StatefulWidget {
   final String email;
