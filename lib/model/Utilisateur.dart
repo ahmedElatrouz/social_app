@@ -8,6 +8,7 @@ class Utilisateur {
   String password;
   String email;
   String nationalite;
+  String tel;
 
 
   Utilisateur({
@@ -18,6 +19,7 @@ class Utilisateur {
     this.password,
     this.email,
     this.nationalite,
+    this.tel,
   });
   
 

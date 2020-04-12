@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/model/Categorie.dart';
 import 'package:social_app/model/Post.dart';
 
@@ -23,17 +24,34 @@ class Talent extends Utilisateur {
   String email,
   String nationalite,
   String uid,
+  String tel,
   //Categorie cat,
   String photo,
   String video,
   String description}
-  ):super(nom:nom,prenom:prenom,genre:genre,age:age,password:password,email:email,nationalite:nationalite){
+  ):super(nom:nom,prenom:prenom,genre:genre,age:age,password:password,email:email,nationalite:nationalite,tel:tel){
     this.uid=uid;
    // this.categorie=cat;
     this.photo=photo;
     this.video=video;
     this.description=description;
     
+  }
+  factory Talent.fromDocument(DocumentSnapshot doc){
+    return Talent(
+      age: doc['age'],
+      email: doc['email'],
+      genre: doc['genre'],
+      nationalite: doc['nationalite'],
+      nom: doc['nom'],
+      password: doc['password'],
+      prenom: doc['prenom'],
+      tel: doc['tel'],
+      uid: doc['uid'],
+      photo: doc['photoUrl'],
+      video: doc['videoUrl'],
+      description: doc['description'],
+      );
   }
 
   

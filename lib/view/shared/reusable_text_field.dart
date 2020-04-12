@@ -46,8 +46,7 @@ class CreateLogInField extends StatelessWidget {
   keyboardType: type == "Email" ? TextInputType.emailAddress : TextInputType.text,
   autofocus: false,
   onChanged: onChange,
-  validator: (val) =>
-      val.isEmpty || val.length<6 ? 'can\'t be empty' : null,
+  //validator: (val) => val.isEmpty || val.length<6 ? 'can\'t be empty' : null,
   obscureText: type == "Email" ? false : true,
   style: TextStyle(
       fontSize: 20, fontWeight: FontWeight.bold),

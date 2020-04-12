@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (_formKey.currentState.validate()) {
                               setState(() => loading = true );
                         dynamic result= await _auth.signIn(
-                          email, password);
+                          "dafali@email.com", "123456789");
                         
                         if(result == null){
                           setState(() {

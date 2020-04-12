@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:social_app/service/auth.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
+
+
 class ProfilPage extends StatefulWidget {
   @override
   _ProfilPageState createState() => _ProfilPageState();
@@ -11,27 +13,44 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   final AuthService _auth = AuthService();
-  final Firestore _firestore = Firestore.instance;
   FirebaseUser loggedInUser;
   final FirebaseAuth user = FirebaseAuth.instance;
+  final userRef = Firestore.instance.collection('Talents');
+  String name = '';
+  String prenom = '';
+  String email = '';
+  String nationalite = '';
+  String uid = '';
 
-  void getCurrentUser() async {
+ getCurrentUser() async {
     try {
       final usr = await user.currentUser();
       if (usr != null) loggedInUser = usr;
+      uid = loggedInUser.uid;
+      print(uid);
     } catch (e) {
       print(e);
     }
   }
 
-  String name = '';
-  String prenom = '';
-  String email = '';
-  String nationalite = '';
+  
+ infoStream() async {
 
-  void infoStream() async {
-    _firestore.collection('Talents').snapshots();
-    await for (var snapshot in _firestore.collection('Talents').snapshots()) {
+   /*final QuerySnapshot snapshot = await userRef
+   .where("email", isEqualTo: email).getDocuments();
+
+   snapshot.documents.forEach((DocumentSnapshot doc){
+      
+      name = doc.data['nom'];
+      prenom = doc.data['prenom'];
+      email = doc.data['email'];
+      nationalite = doc.data['nationalite'];
+      print(name);
+      print(prenom);
+      print(email);
+   });*/
+   userRef.snapshots();
+    await for (var snapshot in userRef.snapshots()) {
       for (var info in snapshot.documents) {
         final currentUser = loggedInUser.email;
 
@@ -62,8 +81,14 @@ class _ProfilPageState extends State<ProfilPage> {
         body: ListView(
           children: <Widget>[
             Container(
-
-              color: Color(0xFF009688),
+              decoration: BoxDecoration(
+                color: Color(0xFF009688),
+                
+                borderRadius: new BorderRadius.only(
+                    bottomLeft:  const  Radius.circular(60.0),
+                    bottomRight: const  Radius.circular(60.0))
+              ),
+              
               child: Column(children: <Widget>[
                 SizedBox(
                   height: 3,
@@ -90,7 +115,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black45)),
                 SizedBox(
-                  height: 20,
+                  height: 8,
                 )
                 
               ]),

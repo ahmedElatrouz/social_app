@@ -24,7 +24,9 @@ class _InfosPageState extends State<InfosPage> {
   String nationalite = '';
   String tel = '';
   String age = '';
-  String url = '';
+  String photoUrl = '';
+  String videoUrl = '';
+  String description = '';
   bool loading = false;
 
 
@@ -114,7 +116,7 @@ class _InfosPageState extends State<InfosPage> {
                             child: CreateField(
                           fieldName: "Url",
                           change: (val) {
-                            url = val;
+                            photoUrl = val;
                           },
                         )),
                         SizedBox(
@@ -142,7 +144,9 @@ class _InfosPageState extends State<InfosPage> {
                                       widget.password,
                                       prenom,
                                       tel,
-                                      url));
+                                      photoUrl,
+                                      videoUrl,
+                                      description));
 
                               if (result == null) {
                                 setState(() {
