@@ -32,7 +32,7 @@ flutter:
     - family: Signatra
       fonts:
         - asset: assets/fonts/Signatra.ttf
-    - family: Bangers
+    - family: Bangers-Regular
       fonts:
         - asset: assets/fonts/Bangers-Regular.ttf 
   assets:

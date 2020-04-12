@@ -12,39 +12,34 @@ class ProfilPage extends StatefulWidget {
 class _ProfilPageState extends State<ProfilPage> {
   final AuthService _auth = AuthService();
   final Firestore _firestore = Firestore.instance;
-  FirebaseUser loggedInUser ;
+  FirebaseUser loggedInUser;
   final FirebaseAuth user = FirebaseAuth.instance;
 
   void getCurrentUser() async {
-    try{
-      final usr= await user.currentUser();
-      if(usr != null)
-      loggedInUser=usr;
-    }
-    catch(e){
+    try {
+      final usr = await user.currentUser();
+      if (usr != null) loggedInUser = usr;
+    } catch (e) {
       print(e);
     }
   }
-  
-  
+
   String name = '';
-  String prenom  = '';
+  String prenom = '';
   String email = '';
   String nationalite = '';
-  
 
   void infoStream() async {
     _firestore.collection('Talents').snapshots();
     await for (var snapshot in _firestore.collection('Talents').snapshots()) {
       for (var info in snapshot.documents) {
+        final currentUser = loggedInUser.email;
 
-        final currentUser= loggedInUser.email;
-        
-        if(currentUser == info.data['email']){
+        if (currentUser == info.data['email']) {
           name = info.data['nom'];
           prenom = info.data['prenom'];
-          email =info.data['email'];
-          nationalite =info.data['nationalite'];
+          email = info.data['email'];
+          nationalite = info.data['nationalite'];
           print(name);
           print(prenom);
           print(email);
@@ -67,45 +62,56 @@ class _ProfilPageState extends State<ProfilPage> {
         body: ListView(
           children: <Widget>[
             Container(
+
               color: Color(0xFF009688),
               child: Column(children: <Widget>[
+                SizedBox(
+                  height: 3,
+                ),
                 CircleAvatar(
                   backgroundImage: AssetImage('assets/images/3.jpg'),
-                  backgroundColor: Colors.lightBlueAccent,
+                  
                   radius: 60,
                 ),
                 SizedBox(
                   height: 8,
                 ),
-                Text( '$name $prenom',
+                Text('$name $prenom',
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
                 Text('$email, $nationalite',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold ,color: Colors.black38)),
-                SizedBox(height: 20,)
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black38)),
+                SizedBox(
+                  height: 20,
+                )
+                
               ]),
             ),
-
-
-            SizedBox(height: 80,),
-
-
+            SizedBox(
+              height: 80,
+            ),
+            Text(
+              'Posts',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,),
+            ),
             Container(
               child: Wrap(
                 children: <Widget>[
-                for(int i = 0 ; i<10 ;i++)
-                Container(
-                  height: MediaQuery.of(context).size.width/3,
-                  width: MediaQuery.of(context).size.width/3,
-                  decoration: BoxDecoration(image: DecorationImage(
-                    image: AssetImage('assets/images/3.jpg'),
-                    fit: BoxFit.cover,
-                  )),
-                )
-              ],
+                  for (int i = 0; i < 10; i++)
+                    Container(
+                      height: MediaQuery.of(context).size.width / 3,
+                      width: MediaQuery.of(context).size.width / 3,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage('assets/images/3.jpg'),
+                        fit: BoxFit.cover,
+                      )),
+                    )
+                ],
               ),
-              
             )
           ],
         ));
