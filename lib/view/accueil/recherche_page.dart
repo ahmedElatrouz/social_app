@@ -4,6 +4,7 @@ import 'package:social_app/model/Talent.dart';
 //import 'package:social_app/model/Utilisateur.dart';
 import 'package:social_app/service/talentDao.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:social_app/view/shared/progress.dart';
 class RecherchePage extends StatefulWidget {
   @override
   _RecherchePageState createState() => _RecherchePageState();
@@ -13,7 +14,8 @@ class _RecherchePageState extends State<RecherchePage> {
   TextEditingController searchController = TextEditingController();
 
   List<ResultWidget> rechercheResult = [];
-
+  bool isWaiting=false;
+  bool noResult=false;
 
   AppBar rechercheTextWidget() {
     return AppBar(
@@ -32,6 +34,9 @@ class _RecherchePageState extends State<RecherchePage> {
               }),
         ),
         onFieldSubmitted: (value) {
+          setState(() {
+            isWaiting=true;
+          });
           createList(value);
         },
       ),
@@ -50,6 +55,10 @@ class _RecherchePageState extends State<RecherchePage> {
     }
     setState(() {
       rechercheResult = list;
+      
+      isWaiting=false;
+      if(rechercheResult.isEmpty) noResult=true;
+      
     });
   }
 
@@ -63,7 +72,7 @@ class _RecherchePageState extends State<RecherchePage> {
             height: orientation == Orientation.portrait ? 300.0 : 100.0,
           ),
           Text(
-            "Recherche",
+            noResult?"Talent non trouvé"  :  "Recherche",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
@@ -87,13 +96,17 @@ class _RecherchePageState extends State<RecherchePage> {
   }
 
   Container existContentWidget() {
-    return Container(
+    if(isWaiting)
+    return circularProgress();
+    else return Container(
       child: ListView(
         children: rechercheResult,
       ),
     );
   }
 }
+
+
 
 
 
