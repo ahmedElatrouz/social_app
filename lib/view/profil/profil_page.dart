@@ -84,15 +84,30 @@ class _ProfilPageState extends State<ProfilPage> {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black38)),
+                Text('Category',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black45)),
                 SizedBox(
                   height: 20,
                 )
                 
               ]),
             ),
-            SizedBox(
-              height: 80,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: null,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text('new post',style: TextStyle(fontSize: 25),),
+                  ),
+                  )
+              ],
             ),
+
             Text(
               'Posts',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,),

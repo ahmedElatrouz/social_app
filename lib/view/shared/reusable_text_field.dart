@@ -27,3 +27,41 @@ class CreateField extends StatelessWidget {
    );
  }
 }
+
+
+
+
+class CreateLogInField extends StatelessWidget {
+
+  final Function onChange;
+  final String type;
+
+  CreateLogInField({ @required this.type , @required this.onChange });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+  
+  maxLines: 1,
+  keyboardType: type == "Email" ? TextInputType.emailAddress : TextInputType.text,
+  autofocus: false,
+  onChanged: onChange,
+  validator: (val) =>
+      val.isEmpty || val.length<6 ? 'can\'t be empty' : null,
+  obscureText: type == "Email" ? false : true,
+  style: TextStyle(
+      fontSize: 20, fontWeight: FontWeight.bold),
+  decoration: InputDecoration(
+      hintText: type,
+      hintStyle: TextStyle(color: Colors.black26),
+      icon: Icon(
+        type == "Email" ? Icons.mail : Icons.lock,
+        color: Colors.grey,
+        size: 35,
+      ),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30))),
+
+   );
+  }
+}

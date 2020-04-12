@@ -5,6 +5,7 @@ import 'package:social_app/service/auth.dart';
 //import 'package:social_app/view/accueil/actualite_page.dart';
 //import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
+import 'package:social_app/view/shared/reusable_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
@@ -42,58 +43,29 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 30,
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.bold,
+                          
                         ),
                       ),
                       SizedBox(
                         height: 100,
                       ),
-                      TextFormField(
-                        
-                        maxLines: 1,
-                        keyboardType: TextInputType.emailAddress,
-                        autofocus: false,
-                        onChanged: (val) {
-                          setState(() => email = val);
-                        },
-                        validator: (val) =>
-                            val.isEmpty ? 'your email not correct' : null,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                        decoration: InputDecoration(
-                            hintText: "Email",
-                            icon: Icon(
-                              Icons.mail,
-                              color: Colors.grey,
-                              size: 35,
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30))),
-                      ),
+
+                      CreateLogInField(
+                        type: "Email", 
+                        onChange: (val){ setState(() => email = val);}
+                        ),
+
                       SizedBox(
                         height: 20,
                       ),
                       
-                      TextFormField(
-                        onChanged: (val) {
-                          setState(() => password = val);
-                        },
-                        validator: (val) =>
-                            val.length < 6 ? 'your password not correct' : null,
-                        obscureText: true,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                        decoration: InputDecoration(
-                            labelStyle: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                            hintText: "Password",
-                            icon: Icon(
-                              Icons.lock,
-                              color: Colors.grey,
-                              size: 35,
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(32.0))),
-                      ),
+
+                      CreateLogInField(
+                        type: "Password",
+                        onChange: (val){
+                          setState(() => password = val);}
+                        ),
+
                       SizedBox(
                         height: 20,
                       ),
@@ -113,7 +85,8 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               setState(() => loading = true );
-                        dynamic result= await _auth.signIn(email, password);
+                        dynamic result= await _auth.signIn(
+                          email, password);
                         
                         if(result == null){
                           setState(() {
@@ -122,21 +95,17 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         }
                         else{
-                              Navigator.pushReplacementNamed(
-                                  context, Home.id );
-
+                              Navigator.pushReplacementNamed(context, Home.id );
                               loading=false;
-                            
                             }
                             }
                           }),
+
                       SizedBox(
                         height: 20,
                       ),
-                      Text(error,
-                          style: TextStyle(
-                            color: Colors.red,
-                          )),
+
+                      Text( error , style: TextStyle(color: Colors.red,)),
                     ]),
               ),
             ),
