@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Categorie {
-  int catID;
+  String catID;
   String cat;
   String description;
   

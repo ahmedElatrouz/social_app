@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:social_app/model/Talent.dart';
 
 class Post {
-  int postID;
+  String postID;
   int nombreLikes;
   String date;
   String description;
