@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/view/accueil/home.dart';
-import 'package:social_app/repository/auth.dart';
+import 'package:social_app/repository/talentAuth.dart';
 //import 'package:social_app/view/accueil/actualite_page.dart';
 //import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-   final AuthService _auth = AuthService();
+   final TalentAuthService _auth = TalentAuthService();
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';

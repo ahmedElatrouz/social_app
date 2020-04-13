@@ -11,7 +11,6 @@ class Annonce {
   Annonce({this.id, this.date, this.description, this.proRef});
 
   Map<String, dynamic> toMap() {
-    //TODO:complete this methode
     return {
       'uid': id,
       'date': date,

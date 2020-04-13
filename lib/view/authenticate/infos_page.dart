@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_app/repository/auth.dart';
+import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
 import 'package:social_app/view/shared/reusable_text_field.dart';
@@ -15,7 +15,7 @@ class InfosPage extends StatefulWidget {
 }
 
 class _InfosPageState extends State<InfosPage> {
-  final AuthService _auth = AuthService();
+  final TalentAuthService _auth = TalentAuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
   String nom = '';
@@ -135,7 +135,7 @@ class _InfosPageState extends State<InfosPage> {
                               //setState(() => loading = true);
                               dynamic result = await _auth
                                   .signUp(widget.email, widget.password)
-                                  .then((currentUser) => _auth.createCollection(
+                                  .then((currentUser) => _auth.createDocumment(
                                       age,
                                       widget.email,
                                       genre,

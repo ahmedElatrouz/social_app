@@ -8,7 +8,7 @@ import 'package:social_app/repository/postRepository.dart';
 
 class PostRepositoryImpl implements PostRepository {
 
-  final postsRef=Firestore.instance.collection("posts");  
+  final postsRef=Firestore.instance.collection("Posts");  
 
 
 

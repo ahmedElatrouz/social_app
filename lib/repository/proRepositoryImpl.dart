@@ -7,12 +7,12 @@ final userRef=Firestore.instance.collection('professionel');
 
 
 
-class ProfessionelRepositoryImpl implements ProfessionelRepository{
+class ProfessionelRepositoryImpl implements ProfessionnelRepository{
 
 
 
   @override
-  Future<int> createProfessionel(Professionnel pro) async{
+  Future<int> createProfessionnel(Professionnel pro) async{
     int r=0;
     try{
       await userRef.add(pro.toMap());
@@ -25,7 +25,7 @@ class ProfessionelRepositoryImpl implements ProfessionelRepository{
 
 
   @override
-  Future<int> updateProfetionnel(Professionnel pro) async{
+  Future<int> updateProfessionnel(Professionnel pro) async{
     int r=0;
     var doc = await userRef.document(pro.proID).get();
     try{
@@ -41,7 +41,7 @@ class ProfessionelRepositoryImpl implements ProfessionelRepository{
 
 
     @override
-  Future<int> deleteProfetionnel(String id) async{
+  Future<int> deleteProfessionnel(String id) async{
     int r=0;
     var doc =await userRef.document(id).get();
     try{

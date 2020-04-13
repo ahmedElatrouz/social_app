@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:social_app/repository/auth.dart';
+//import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
 
@@ -12,7 +12,7 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  final AuthService _auth = AuthService();
+  //final TalentAuthService _auth = TalentAuthService();
   FirebaseUser loggedInUser;
   final FirebaseAuth user = FirebaseAuth.instance;
   final userRef = Firestore.instance.collection('Talents');

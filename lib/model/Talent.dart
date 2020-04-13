@@ -1,8 +1,6 @@
 
 
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/model/Categorie.dart';
 import 'package:social_app/model/Post.dart';
 
@@ -40,22 +38,7 @@ class Talent extends Utilisateur {
     
   }
   
-  factory Talent.fromDocument(DocumentSnapshot doc){
-    return Talent(
-      age: doc['age'],
-      email: doc['email'],
-      genre: doc['genre'],
-      nationalite: doc['nationalite'],
-      nom: doc['nom'],
-      password: doc['password'],
-      prenom: doc['prenom'],
-      tel: doc['tel'],
-      uid: doc['uid'],
-      photo: doc['photoUrl'],
-      video: doc['videoUrl'],
-      description: doc['description'],
-      );
-  }
+  
 
   
 
@@ -66,7 +49,6 @@ class Talent extends Utilisateur {
 
 
   Map<String, dynamic> toMap() {
-    //TODO:complete this methode
     return {
       'uid': uid,
       'Categorie': categorie.toMap(),

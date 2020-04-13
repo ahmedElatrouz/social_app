@@ -12,7 +12,6 @@ class Admin {
   });
 
   Map<String, dynamic> toMap() {
-    //TODO:complete this methode
     return {
       'uid': uid,
       'email': email,

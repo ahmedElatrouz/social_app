@@ -2,8 +2,8 @@
 
 import 'package:social_app/model/Professionnel.dart';
 
-abstract class ProfessionelRepository{
-  Future<int> createProfessionel(Professionnel pro);
-  Future<int> updateProfetionnel(Professionnel pro);
-  Future<int> deleteProfetionnel(String id);
+abstract class ProfessionnelRepository{
+  Future<int> createProfessionnel(Professionnel pro);
+  Future<int> updateProfessionnel(Professionnel pro);
+  Future<int> deleteProfessionnel(String id);
 }

@@ -30,10 +30,9 @@ class Professionnel extends Utilisateur {
   }
 
   Map<String, dynamic> toMap() {
-    //TODO:complete this methode
     return {
       'uid': proID,
-      //'annonce': List<dynamic>.from(annonces.map((x) => x.toMap())),
+      'annonce': List<dynamic>.from(annonces.map((x) => x.toMap())),
     };
   }
 
