@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:social_app/model/Talent.dart';
-//import 'package:social_app/model/Utilisateur.dart';
-import 'package:social_app/service/talentDao.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
 class RecherchePage extends StatefulWidget {
   @override
@@ -12,11 +11,13 @@ class RecherchePage extends StatefulWidget {
 
 class _RecherchePageState extends State<RecherchePage> {
   TextEditingController searchController = TextEditingController();
-
   List<ResultWidget> rechercheResult = [];
   bool isWaiting=false;
   bool noResult=false;
 
+
+
+  TalentService talentService=TalentService();
   AppBar rechercheTextWidget() {
     return AppBar(
       backgroundColor: Colors.white,
@@ -48,7 +49,7 @@ class _RecherchePageState extends State<RecherchePage> {
   }
 
   createList(String value) async {
-    List<Talent> talents = await TalentDao().searchByName(value);
+    List<Talent> talents = await talentService.searchByName(value);
     List<ResultWidget> list = [];
     for (Talent t in talents) {
       list.add(ResultWidget(user: t,));
@@ -96,8 +97,10 @@ class _RecherchePageState extends State<RecherchePage> {
   }
 
   Container existContentWidget() {
-    if(isWaiting)
-    return circularProgress();
+    if(isWaiting){
+      return circularProgress();
+    }
+    
     else return Container(
       child: ListView(
         children: rechercheResult,

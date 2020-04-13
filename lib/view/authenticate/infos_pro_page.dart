@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_app/service/profAuth.dart';
+import 'package:social_app/repository/profAuth.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
 import 'package:social_app/view/shared/reusable_text_field.dart';

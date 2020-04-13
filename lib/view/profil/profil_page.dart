@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:social_app/service/auth.dart';
+import 'package:social_app/repository/auth.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
 
