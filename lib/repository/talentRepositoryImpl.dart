@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_app/model/Categorie.dart';
 import 'package:social_app/model/Talent.dart';
 
 import 'talentRepository.dart';
@@ -71,6 +72,19 @@ class TalentRepositoryImpl implements TalentRepository  {
       print(e);
     }
    return talents;
+  }
+
+  @override
+  Future<List<Talent>> searchByCategorie(Categorie categorie)async {
+    List<Talent> talents=[];
+    try{
+        var users=await usersRef.where("categorie_ID",isEqualTo: categorie.catID).getDocuments();
+        talents=users.documents.map((doc)=>Talent.fromMap(doc.data)).toList();
+    }catch(e){
+      print(e);
+    }
+   return talents;
+  
   }
 
 }
