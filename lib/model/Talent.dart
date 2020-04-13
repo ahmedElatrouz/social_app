@@ -9,6 +9,7 @@ import 'package:social_app/model/Post.dart';
 import 'Utilisateur.dart';
 
 class Talent extends Utilisateur {
+
   String uid;
   Categorie categorie ;
   String photo;
@@ -16,7 +17,8 @@ class Talent extends Utilisateur {
   String description;
   List<Post> posts;
   
-  Talent({ String nom,
+  Talent({ 
+  String nom,
   String prenom,
   String genre,
   var age,
@@ -37,6 +39,7 @@ class Talent extends Utilisateur {
     this.description=description;
     
   }
+  
   factory Talent.fromDocument(DocumentSnapshot doc){
     return Talent(
       age: doc['age'],

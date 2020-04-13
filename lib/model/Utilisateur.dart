@@ -1,4 +1,4 @@
- List<String> genres=['homme','femme'];
+List<String> genres = ['homme', 'femme'];
 
 class Utilisateur {
   String nom;
@@ -10,7 +10,6 @@ class Utilisateur {
   String nationalite;
   String tel;
 
-
   Utilisateur({
     this.nom,
     this.prenom,
@@ -21,9 +20,6 @@ class Utilisateur {
     this.nationalite,
     this.tel,
   });
-  
-
-
 
   @override
   String toString() {

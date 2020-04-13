@@ -31,8 +31,6 @@ class TalentRepositoryImpl implements TalentRepository  {
         await usersRef.document(talent.uid).updateData(talent.toMap());
         r=1;
       }
-      
-   
     }catch(e){
       print(e);
     }
