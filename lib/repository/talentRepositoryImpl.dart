@@ -69,7 +69,7 @@ class TalentRepositoryImpl implements TalentRepository  {
 
     List<Talent> talents=[];
     try{
-        var users=await usersRef.where("nom",isLessThanOrEqualTo: name).getDocuments();
+        var users=await usersRef.where("nom",isEqualTo: name).getDocuments();
         talents=users.documents.map((doc)=>Talent.fromMap(doc.data)).toList();
     }catch(e){
       print(e);
