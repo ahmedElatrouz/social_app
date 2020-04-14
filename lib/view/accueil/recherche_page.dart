@@ -20,10 +20,12 @@ class _RecherchePageState extends State<RecherchePage> {
   TalentService talentService=TalentService();
   AppBar rechercheTextWidget() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor:Colors.deepPurple,// Colors.white,
       title: TextFormField(
+        
         controller: searchController,
         decoration: InputDecoration(
+          labelStyle: TextStyle(color:Colors.white),
           hintText: 'Search for a user..',
           filled: true,
           prefixIcon: Icon(Icons.account_box),
