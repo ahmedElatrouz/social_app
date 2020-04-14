@@ -28,6 +28,11 @@ class TalentService {
     return talentRepository.searchByName(name);
   }
 
+  Future<List<String>> getCurrentUSerInfos(){
+     return talentRepository.getTalentInfos();
+
+  }
+
 
   
 

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<Talent>.value(
-      value: TalentAuthService().talent,
+      value: TalentAuth().talent,
       child: MaterialApp(
         initialRoute:Authenticate.id,
         routes: {

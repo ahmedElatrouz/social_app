@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/repository/talentAuth.dart';
-//import 'package:social_app/view/accueil/actualite_page.dart';
-//import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
 import 'package:social_app/view/shared/reusable_text_field.dart';
+
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
@@ -14,9 +13,14 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+
+
+
 class _LoginPageState extends State<LoginPage> {
-   final TalentAuthService _auth = TalentAuthService();
+   
+  final TalentAuth _auth = TalentAuth();
   final _formKey = GlobalKey<FormState>();
+  
   String email = '';
   String password = '';
   String error = '';
@@ -82,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                     fontSize: 25.0, color: Colors.white)),
                           ),
+
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               setState(() => loading = true );

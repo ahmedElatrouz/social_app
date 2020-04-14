@@ -12,9 +12,9 @@ class InfosProPage extends StatefulWidget {
   @override
   _InfosProPageState createState() => _InfosProPageState();
 }
-
+ 
 class _InfosProPageState extends State<InfosProPage> {
-  final ProfAuthService _profAuth = ProfAuthService();
+  final ProfAuth _profAuth = ProfAuth();
   final _formKey = GlobalKey<FormState>();
   String error = '';
   String nom = '';
@@ -133,7 +133,7 @@ class _InfosProPageState extends State<InfosProPage> {
                                   dynamic result = await _profAuth
                                       .signUp(widget.email, widget.password)
                                       .then((currentUser) =>
-                                          _profAuth.createCollection(
+                                          _profAuth.createDocument(
                                               age,
                                               widget.email,
                                               genre,

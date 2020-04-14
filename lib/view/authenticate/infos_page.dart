@@ -15,7 +15,7 @@ class InfosPage extends StatefulWidget {
 }
 
 class _InfosPageState extends State<InfosPage> {
-  final TalentAuthService _auth = TalentAuthService();
+  final TalentAuth _auth = TalentAuth();
   final _formKey = GlobalKey<FormState>();
   String error = '';
   String nom = '';
@@ -117,6 +117,17 @@ class _InfosPageState extends State<InfosPage> {
                           fieldName: "Url",
                           change: (val) {
                             photoUrl = val;
+                            videoUrl = val;
+                          },
+                        )),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(
+                            child: CreateField(
+                          fieldName: "Description",
+                          change: (val) {
+                            description = val;
                           },
                         )),
                         SizedBox(
@@ -179,3 +190,4 @@ class _InfosPageState extends State<InfosPage> {
           );
   }
 }
+

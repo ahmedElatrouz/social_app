@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:social_app/repository/talentAuth.dart';
+import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
-
 
 
 class ProfilPage extends StatefulWidget {
@@ -12,67 +9,34 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  //final TalentAuthService _auth = TalentAuthService();
-  FirebaseUser loggedInUser;
-  final FirebaseAuth user = FirebaseAuth.instance;
-  final userRef = Firestore.instance.collection('Talents');
-  String name = '';
-  String prenom = '';
-  String email = '';
-  String nationalite = '';
-  String uid = '';
+  TalentService talentService = TalentService();
 
- getCurrentUser() async {
-    try {
-      final usr = await user.currentUser();
-      if (usr != null) loggedInUser = usr;
-      uid = loggedInUser.uid;
-      print(uid);
-    } catch (e) {
-      print(e);
-    }
-  }
+  String nom ;
+  String prenom;
+  String email ;
+  String nationalite;
 
-  
- infoStream() async {
+getInfos() async{
 
-   /*final QuerySnapshot snapshot = await userRef
-   .where("email", isEqualTo: email).getDocuments();
+   List list =await talentService.getCurrentUSerInfos();
+   nom= list[0];
+   prenom = list[1];
+   email= list[2];
+   nationalite = list[3];
+   print(nom);
+   print(prenom);
+   print(email);
+   print(nationalite);
+}
 
-   snapshot.documents.forEach((DocumentSnapshot doc){
-      
-      name = doc.data['nom'];
-      prenom = doc.data['prenom'];
-      email = doc.data['email'];
-      nationalite = doc.data['nationalite'];
-      print(name);
-      print(prenom);
-      print(email);
-   });*/
-   userRef.snapshots();
-    await for (var snapshot in userRef.snapshots()) {
-      for (var info in snapshot.documents) {
-        final currentUser = loggedInUser.email;
-
-        if (currentUser == info.data['email']) {
-          name = info.data['nom'];
-          prenom = info.data['prenom'];
-          email = info.data['email'];
-          nationalite = info.data['nationalite'];
-          print(name);
-          print(prenom);
-          print(email);
-        }
-      }
-    }
-  }
+setinfo(){}
 
   @override
   void initState() {
-    getCurrentUser();
-    infoStream();
+    getInfos();
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,20 +59,19 @@ class _ProfilPageState extends State<ProfilPage> {
                 ),
                 CircleAvatar(
                   backgroundImage: AssetImage('assets/images/3.jpg'),
-                  
                   radius: 60,
                 ),
                 SizedBox(
                   height: 8,
                 ),
-                Text('$name $prenom',
+                Text('$nom $prenom',
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
                 Text('$email, $nationalite',
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black38)),
+                        color: Colors.black38)),    
                 Text('Category',
                     style: TextStyle(
                         fontSize: 20,

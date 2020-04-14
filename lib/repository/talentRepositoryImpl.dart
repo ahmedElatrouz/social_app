@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:social_app/model/Categorie.dart';
 import 'package:social_app/model/Talent.dart';
 
@@ -9,9 +10,11 @@ import 'talentRepository.dart';
 
 final usersRef=Firestore.instance.collection("Talents");
 
-
 class TalentRepositoryImpl implements TalentRepository  {
-  
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  String uid = '';
+
   @override
   Future<int> createTalent(Talent talent)async {
     int r=0;
@@ -85,6 +88,25 @@ class TalentRepositoryImpl implements TalentRepository  {
     }
    return talents;
   
+  }
+
+
+
+  Future<String> getcurrentUserUid() async {
+  return (await auth.currentUser()).uid;
+}
+
+
+  @override
+  Future<List<String>> getTalentInfos() async{
+    List<String> list= [];
+    final QuerySnapshot snapshot = await usersRef.where('uid', isEqualTo: await TalentRepositoryImpl().getcurrentUserUid())
+    .getDocuments();
+    snapshot.documents.forEach((DocumentSnapshot doc){
+      list = [doc.data['nom'] , doc.data['prenom'] , doc.data['email']
+      , doc.data['nationalite']];
+    });
+    return list;
   }
 
 }

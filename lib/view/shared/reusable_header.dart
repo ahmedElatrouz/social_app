@@ -7,7 +7,7 @@ AppBar header(context,String page){
   return AppBar(
     
       title: Text(
-        "socialApp",
+        "Artness",
         style:kHeaderTextStyle,
       ),
       

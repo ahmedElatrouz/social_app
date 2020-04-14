@@ -22,7 +22,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
  
-  final TalentAuthService _auth = TalentAuthService();
+  final TalentAuth _auth = TalentAuth();
   final Firestore _authStore = Firestore.instance;
 
   bool getUserDocument(String collection) {
