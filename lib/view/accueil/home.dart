@@ -69,21 +69,25 @@ class _HomeState extends State<Home> {
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showUnselectedLabels: true,
-        iconSize: 18.0,
-        currentIndex: pageIndex,
-        onTap: onTap,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.deepPurple,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_active),title: Text('Home1')),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle),title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.search),title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Home')),
-        ],
+      bottomNavigationBar: Container(
+        height: 50.0,
+        child: BottomNavigationBar(
+          
+          type: BottomNavigationBarType.fixed,
+          showUnselectedLabels: true,
+          iconSize: 18.0,
+          currentIndex: pageIndex,
+          onTap: onTap,
+          unselectedItemColor: Colors.black,
+          selectedItemColor: Colors.deepPurple,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home),title: Text('Home')),
+            BottomNavigationBarItem(icon: Icon(Icons.notifications_active),title: Text('Home1')),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle),title: Text('Home')),
+            BottomNavigationBarItem(icon: Icon(Icons.search),title: Text('Home')),
+            BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Home')),
+          ],
+        ),
       ),
     );
   }
