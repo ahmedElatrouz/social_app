@@ -20,16 +20,39 @@ class _ActualitePageState extends State<ActualitePage> {
     return  //Center(child: Text("actualite"));
     
      Scaffold(
-      appBar:header(context,"actualite"),
-      body: Container(
-        child: Center(
-          child: Text(
-            'actualite',
-            style: TextStyle(
-              fontSize:20,
+      //appBar:header(context,"actualite"),
+      backgroundColor: Colors.black,
+      body: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(child: Text('hello',style: TextStyle(color:Colors.white),)),
+             /* Container(
+                child:Icon(Icons.image)
+              ),
+              Container(
+                child: TextField(),
+              ),
+              Container(
+                child:Icon(Icons.whatshot)
+              ),
+              Container(
+                child:Icon(Icons.photo)
+              ),
+*/
+            ]
           ),
+          Container(
+            child: Center(
+              child: Text(
+                'actualite',
+                style: TextStyle(
+                  fontSize:20,
+              ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

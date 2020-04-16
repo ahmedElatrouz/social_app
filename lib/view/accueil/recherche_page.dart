@@ -25,7 +25,7 @@ class _RecherchePageState extends State<RecherchePage> {
         
         controller: searchController,
         decoration: InputDecoration(
-          labelStyle: TextStyle(color:Colors.white),
+          labelStyle: TextStyle(color:Colors.black),
           hintText: 'Search for a user..',
           filled: true,
           prefixIcon: Icon(Icons.account_box),
@@ -78,7 +78,7 @@ class _RecherchePageState extends State<RecherchePage> {
             noResult?"Talent non trouvé"  :  "Recherche",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w600,
               fontSize: orientation == Orientation.portrait ? 50.0 : 40.0,
@@ -92,7 +92,7 @@ class _RecherchePageState extends State<RecherchePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Colors.white,
       appBar: rechercheTextWidget(),
       body: rechercheResult.isEmpty ? noContentWidget() : existContentWidget(),
     );

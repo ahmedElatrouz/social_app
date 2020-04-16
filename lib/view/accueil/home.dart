@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
@@ -69,16 +69,20 @@ class _HomeState extends State<Home> {
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: CupertinoTabBar(
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: true,
+        iconSize: 18.0,
         currentIndex: pageIndex,
         onTap: onTap,
-        activeColor: Colors.deepPurple,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.deepPurple,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
-          BottomNavigationBarItem(icon: Icon(Icons.search)),
-          BottomNavigationBarItem(icon: Icon(Icons.star)),
+          BottomNavigationBarItem(icon: Icon(Icons.home),title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications_active),title: Text('Home1')),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle),title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.search),title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Home')),
         ],
       ),
     );
@@ -97,10 +101,8 @@ class _HomeState extends State<Home> {
   }
 
   void onTap(int pageIndex) {
-    pageController.animateToPage(
+    pageController.jumpToPage(
       pageIndex,
-      duration: Duration(milliseconds:200), 
-      curve: Curves.easeIn
       );
   }
 }
