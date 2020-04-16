@@ -138,7 +138,7 @@ class ResultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       
-      color: Colors.deepPurple.withOpacity(0.7),
+      color: Colors.lightBlueAccent.withOpacity(0.7),
       child: Column(
         children:<Widget>[
           GestureDetector(
