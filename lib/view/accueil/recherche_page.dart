@@ -4,6 +4,7 @@ import 'package:social_app/model/Talent.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
+
 class RecherchePage extends StatefulWidget {
   @override
   _RecherchePageState createState() => _RecherchePageState();
@@ -24,17 +25,17 @@ class _RecherchePageState extends State<RecherchePage> {
       title: TextFormField(
         controller: searchController,
         decoration: InputDecoration(
-         // enabledBorder: InputBorder.none,
-         // focusedErrorBorder:InputBorder.none ,
+          focusColor: Colors.grey,
+          hoverColor: Colors.grey,
           border: InputBorder.none,
           disabledBorder: InputBorder.none,
           fillColor: Color(0xFFFFFFFF),
           labelStyle: TextStyle(color:Colors.black),
           hintText: 'Search for a user..',
           filled: true,
-          prefixIcon: Icon(Icons.account_box),
+          prefixIcon: Icon(Icons.account_box,color: Colors.blueGrey,),
           suffixIcon: IconButton(
-              icon: Icon(Icons.clear),
+              icon: Icon(Icons.clear,color: Colors.blueGrey,),
               onPressed: () {
                 clearSearch();
                 //TODO:clear the textField
@@ -43,6 +44,7 @@ class _RecherchePageState extends State<RecherchePage> {
         onFieldSubmitted: (value) {
           setState(() {
             isWaiting=true;
+            print("trueeeeeee");
           });
           createList(value);
         },
@@ -62,7 +64,6 @@ class _RecherchePageState extends State<RecherchePage> {
     }
     setState(() {
       rechercheResult = list;
-      
       isWaiting=false;
       if(rechercheResult.isEmpty) noResult=true;
       
@@ -98,15 +99,20 @@ class _RecherchePageState extends State<RecherchePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: rechercheTextWidget(),
-      body: rechercheResult.isEmpty ? noContentWidget() : existContentWidget(),
+      body:isNoContentWidget() ? noContentWidget() : existContentWidget(),
     );
   }
 
+
+  bool isNoContentWidget(){
+    if(isWaiting) return false;
+    if(rechercheResult.isEmpty) return true;
+    else return false;
+  }
+
   Container existContentWidget() {
-    if(isWaiting){
+    if(isWaiting==true)
       return circularProgress();
-    }
-    
     else return Container(
       child: ListView(
         children: rechercheResult,
@@ -127,6 +133,7 @@ class ResultWidget extends StatelessWidget {
   const ResultWidget({ this.user});
 
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -138,7 +145,7 @@ class ResultWidget extends StatelessWidget {
               onTap:()=> print("go to this profil"),
               child: ListTile(
                 leading:CircleAvatar(
-                  backgroundColor: Colors.grey,
+                  backgroundColor: Colors.transparent,
                   backgroundImage:user.photo!=null?CachedNetworkImageProvider(user.photo):AssetImage('assets/images/ahmed.jpg') ,
                   ),
                   title: Text(
