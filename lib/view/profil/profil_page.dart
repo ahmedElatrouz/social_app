@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
@@ -10,31 +11,15 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   TalentService talentService = TalentService();
+  final Talent talent=Talent(nom:'ahmed',prenom:'elatrouz',email: 'aelatrouz@gmail.com',nationalite: "moroccan");
 
-  String nom ;
-  String prenom;
-  String email ;
-  String nationalite;
-
-getInfos() async{
-
-   List list =await talentService.getCurrentUSerInfos();
-   nom= list[0];
-   prenom = list[1];
-   email= list[2];
-   nationalite = list[3];
-   print(nom);
-   print(prenom);
-   print(email);
-   print(nationalite);
-}
 
 setinfo(){}
 
   @override
   void initState() {
-    getInfos();
     super.initState();
+    //getInfos();
   }
 
 
@@ -64,10 +49,10 @@ setinfo(){}
                 SizedBox(
                   height: 8,
                 ),
-                Text('$nom $prenom',
+                Text(talent.nom + talent.prenom,
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-                Text('$email, $nationalite',
+                Text(talent.email+" "+ talent.nationalite,
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

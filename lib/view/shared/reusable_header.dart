@@ -5,7 +5,7 @@ import 'constants.dart';
 
 AppBar header(context,String page){
   return AppBar(
-    
+      elevation: 0.0,
       title: Text(
         "Artness",
         style:kHeaderTextStyle,

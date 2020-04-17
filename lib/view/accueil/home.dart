@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
@@ -13,6 +14,10 @@ import 'actualite_page.dart';
 class Home extends StatefulWidget {
 
   static const String id = 'home';
+
+ /*  Home({
+    this.talent,
+  }) ;*/
   @override
   _HomeState createState() => _HomeState();
 }
@@ -22,24 +27,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
  
-  final TalentAuth _auth = TalentAuth();
-  final Firestore _authStore = Firestore.instance;
-
-  bool getUserDocument(String collection) {
-    if( _authStore.collection(collection)
-                        == _authStore.collection('Talents')){
-      return true;
-    }
-    else return false;
-    
-  }
-
-  Future currentUser() async{
-    FirebaseUser user= await _auth.currentUser();
-    print(user.email);
-  }
-
-
 
   PageController pageController;
   int pageIndex = 0;
@@ -47,7 +34,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-     currentUser();
     pageController = PageController(
       initialPage: 0,
     );
@@ -79,13 +65,13 @@ class _HomeState extends State<Home> {
           currentIndex: pageIndex,
           onTap: onTap,
           unselectedItemColor: Colors.black,
-          selectedItemColor: Colors.deepPurple,
+          selectedItemColor: Colors.lightBlueAccent,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home),title: Text('Home')),
-            BottomNavigationBarItem(icon: Icon(Icons.notifications_active),title: Text('Home1')),
-            BottomNavigationBarItem(icon: Icon(Icons.account_circle),title: Text('Home')),
-            BottomNavigationBarItem(icon: Icon(Icons.search),title: Text('Home')),
-            BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Home')),
+            BottomNavigationBarItem(icon: Icon(Icons.home),title: Text('Accueil')),
+            BottomNavigationBarItem(icon: Icon(Icons.notifications_active),title: Text('Notifications')),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle),title: Text('Profile')),
+            BottomNavigationBarItem(icon: Icon(Icons.search),title: Text('Recherche')),
+            //BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Recommandation')),
           ],
         ),
       ),
