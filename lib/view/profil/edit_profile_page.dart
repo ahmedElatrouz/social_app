@@ -1,8 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:social_app/view/accueil/actualite_page.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
+import 'package:social_app/view/profil/profil_page.dart';
 import 'package:social_app/view/shared/constants.dart';
 
 
@@ -164,7 +166,7 @@ class EditElements extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
         children:<Widget>[
           GestureDetector(
-              onTap:()=> print("go to this setting"),
+              onTap:()=> print('go to setting page'),//TODO:Navigator.pushNamed(context, settingPage),
               child: ListTile(
                   title: Text(
                     kEditElementsText[setting][0],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
@@ -49,10 +50,10 @@ setinfo(){}
                 SizedBox(
                   height: 8,
                 ),
-                Text(talent.nom + talent.prenom,
+                Text(/*talent.nom + talent.prenom*/Provider.of<Talent>(context).prenom+Provider.of<Talent>(context).nom,
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-                Text(talent.email+" "+ talent.nationalite,
+                Text(Provider.of<Talent>(context).email+" "+ Provider.of<Talent>(context).nationalite,
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
