@@ -1,5 +1,5 @@
 
-import '../profil/edit_profile_page.dart';
+//import '../profil/edit_profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,9 +8,12 @@ const kHeaderTextStyle=TextStyle(
   fontSize: 40.0,
   fontFamily: 'Signatra',
 );
-
+ enum settings{
+    editProfil,editEmail,editTel,editPassword,accesPrive
+  }
 
  const Map<settings,List<String>> kEditElementsText={
+   settings.editProfil:["Informations Professionnelles","Modfier votre nom, prenom, genre ou nationalité"],
    settings.editEmail:["Adresse e-mail","Modifier l'adresse e-mail de votre compte"],
    settings.editTel:["Numéro de téléphone","Modifier l'adresse e-mail de votre compte"],
    settings.editPassword:["Mot de passe","Modifier l'adresse e-mail de votre compte"],

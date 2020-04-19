@@ -151,17 +151,17 @@ class _InfosProPageState extends State<InfosProPage> {
                                     });
                                   } else {
                                     setState(() {
-                                      // loading = false;
+                                      
                                       Navigator.pushReplacementNamed(
                                           context, Home.id);
                                     });
 
-                                    //ActualitePage();
+                                   
 
                                   }
                                 }
 
-                                //ActualitePage();
+                                
                               }),
                           SizedBox(
                             height: 20,

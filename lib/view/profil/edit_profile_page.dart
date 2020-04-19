@@ -1,16 +1,19 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:social_app/model/Talent.dart';
+import 'package:social_app/repository/talentAuth.dart';
+import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/actualite_page.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
 import 'package:social_app/view/profil/profil_page.dart';
+import 'package:social_app/view/profil/settingPage.dart';
 import 'package:social_app/view/shared/constants.dart';
 
 
-  enum settings{
-    editEmail,editTel,editPassword,accesPrive
-  }
+ 
   enum pages{
     compte,confidentialite
   }
@@ -119,20 +122,23 @@ class _EditProfilPageState extends State<EditProfilPage> {
 
 
 List<EditElements> compteList=[
-              EditElements(settings.editEmail),
-              EditElements(settings.editTel),
-              EditElements(settings.editPassword),];
+              EditElements(setting:settings.editProfil),
+              EditElements(setting:settings.editEmail),
+              EditElements(setting:settings.editTel),
+              EditElements(setting:settings.editPassword),];
 
 List<EditElements> confidentialiteList=[
-              EditElements(settings.accesPrive),];
+              EditElements(setting:settings.accesPrive),];
+
 
 
 class EditPageCore extends StatelessWidget {
   final pages page;
-
+  
   const EditPageCore({@required this.page});
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       child:Column(
         children:page==pages.compte?compteList:confidentialiteList,        
@@ -153,9 +159,19 @@ class EditElements extends StatelessWidget {
 
   final settings setting;
 
-   EditElements(this.setting);
+   EditElements({@required this.setting});
+
+  TalentService talentService;
+  Talent talent;
+
+  getUser(context)async {
+    talentService =Provider.of<TalentService>(context);
+    talent=await talentService.getCurrentUser();
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUser(context);
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -166,7 +182,7 @@ class EditElements extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
         children:<Widget>[
           GestureDetector(
-              onTap:()=> print('go to setting page'),//TODO:Navigator.pushNamed(context, settingPage),
+              onTap:()=> print('got to setting'),//Navigator.push(context,MaterialPageRoute(builder: (context)=> SettingPage(talent:talent,setting:setting))),//TODO:Navigator.pushNamed(context, settingPage),
               child: ListTile(
                   title: Text(
                     kEditElementsText[setting][0],

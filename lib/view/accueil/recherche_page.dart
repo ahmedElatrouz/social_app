@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:social_app/services/talentService.dart';
@@ -57,7 +59,7 @@ class _RecherchePageState extends State<RecherchePage> {
   }
 
   createList(String value) async {
-    List<Talent> talents = await talentService.searchByName(value);
+    List<Talent> talents = await Provider.of<TalentService>(context).searchByName(value);
     List<ResultWidget> list = [];
     for (Talent t in talents) {
       list.add(ResultWidget(user: t,));

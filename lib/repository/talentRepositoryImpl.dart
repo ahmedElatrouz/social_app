@@ -8,10 +8,10 @@ import 'package:social_app/model/Talent.dart';
 import 'talentRepository.dart';
 //import 'package:social_app/view/accueil/actualite_page.dart';
 
-final usersRef=Firestore.instance.collection("Talents");
+
 
 class TalentRepositoryImpl implements TalentRepository  {
-
+  final usersRef=Firestore.instance.collection("Talents");
   final FirebaseAuth auth = FirebaseAuth.instance;
   String uid = '';
 
@@ -93,20 +93,47 @@ class TalentRepositoryImpl implements TalentRepository  {
 
 
   Future<String> getcurrentUserUid() async {
+    
   return (await auth.currentUser()).uid;
-}
+} 
+
+
+  
 
 
   @override
-  Future<List<String>> getTalentInfos() async{
-    List<String> list= [];
-    final QuerySnapshot snapshot = await usersRef.where('uid', isEqualTo: await TalentRepositoryImpl().getcurrentUserUid())
-    .getDocuments();
-    snapshot.documents.forEach((DocumentSnapshot doc){
-      list = [doc.data['nom'] , doc.data['prenom'] , doc.data['email']
-      , doc.data['nationalite']];
-    });
-    return list;
+  Future<Talent> getCurrentTalent() async{
+    
+    Talent talent;
+    FirebaseUser user=await auth.currentUser();
+   
+    try{
+      var doc = await usersRef.where("uid",isEqualTo:user.uid).getDocuments();
+    talent =doc.documents.map((docum)=>Talent.fromMap(docum.data)).elementAt(0);
+    }catch(e){
+      print(e);
+    }
+    
+    return talent;
+  }
+
+  @override
+  Future signIn(String email, String password) async{
+    dynamic result;
+    FirebaseUser user;
+    try{
+       result=await auth.signInWithEmailAndPassword(email: email, password: password);
+        user = result.user;
+      
+       
+    }catch(e){
+      print(e);
+    }
+    return _talentFromFirebaseUser(user);
+  }
+
+    Talent _talentFromFirebaseUser(FirebaseUser user) {
+    return user != null ? Talent(uid: user.uid) : null;
   }
 
 }

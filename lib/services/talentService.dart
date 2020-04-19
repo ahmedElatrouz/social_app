@@ -1,11 +1,13 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/talentRepository.dart';
 import 'package:social_app/repository/talentRepositoryImpl.dart';
 
-class TalentService {
+class TalentService  {
 
   TalentRepository talentRepository;
+  
   
   TalentService(){
     talentRepository=TalentRepositoryImpl();
@@ -18,6 +20,7 @@ class TalentService {
 
   Future<int> updateTalent(Talent talent) {
     return talentRepository.updateTalent(talent);
+    
   }
 
   Future<int> deleteTalent(String id) {
@@ -28,9 +31,14 @@ class TalentService {
     return talentRepository.searchByName(name);
   }
 
-  Future<List<String>> getCurrentUSerInfos(){
-     return talentRepository.getTalentInfos();
+  Future<Talent> getCurrentUser(){
+     return talentRepository.getCurrentTalent();
 
+  }
+
+  Future signIn(String email,String password){
+    dynamic result=talentRepository.signIn(email, password);
+    return result;
   }
 
 

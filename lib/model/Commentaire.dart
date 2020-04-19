@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/services/talentService.dart';
 
 class Commentaire {
   String uid;
@@ -35,7 +36,7 @@ class Commentaire {
       uid: map['uid'],
       contenue: map['contenue'],
       date: map['date'],
-      talent: Talent.fromMap(map['talent']),
+      //talent: Talent.fromMap(),
       annonce: Annonce.fromMap(map['annonce']),
     );
   }

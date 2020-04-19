@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/view/shared/loading.dart';
@@ -17,6 +21,10 @@ class LoginPage extends StatefulWidget {
 
 
 class _LoginPageState extends State<LoginPage> {
+
+
+ TalentService talentServiceProvider;
+
    
   final TalentAuth _auth = TalentAuth();
   final _formKey = GlobalKey<FormState>();
@@ -30,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+     talentServiceProvider=Provider.of<TalentService>(context,listen: false);
     return loading
         ? Loading()
         : Scaffold(
@@ -89,8 +98,9 @@ class _LoginPageState extends State<LoginPage> {
 
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              setState(() => loading = true );
-                        dynamic result= await _auth.signIn(
+                              //setState(() => loading = true );
+                             
+                        dynamic result= talentServiceProvider.signIn(
                           "dafali@email.com", "123456789");
                         
                         if(result == null){
@@ -100,8 +110,11 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         }
                         else{
-                              Navigator.pushReplacementNamed(context, Home.id );
+                          setState(() {
+                            Navigator.pushReplacementNamed(context, Home.id );
                               loading=false;
+                          });
+                              
                             }
                             }
                           }),
@@ -115,5 +128,13 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           );
+  }
+
+
+
+  @override 
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }

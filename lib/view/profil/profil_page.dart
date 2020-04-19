@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
 
@@ -11,24 +12,37 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  TalentService talentService = TalentService();
-  final Talent talent=Talent(nom:'ahmed',prenom:'elatrouz',email: 'aelatrouz@gmail.com',nationalite: "moroccan");
+  bool isWaiting=true;
+  Talent talent=Talent(nom: 'ggdfdf',prenom: 'rljgs',email: 'krgjslml',nationalite: 'ifjhslk');
+  String nom='';
+  String prenom='';
+  String email='';
+  String nationalite='';
+TalentService talentService;
+  
 
 
-setinfo(){}
 
-  @override
-  void initState() {
-    super.initState();
-    //getInfos();
+  setInfos()async{
+    await currentTalent();
+
+    nom=talent.nom==null?nom:talent.nom;
+          setState(() {
+         isWaiting=false;
+       });
   }
 
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: header(context, "profil"),
-        body: ListView(
+   currentTalent()async{
+       talentService = Provider.of<TalentService>(context,listen: false);
+       talent=await talentService.getCurrentUser();
+       return 0;
+       
+    }
+
+
+  Widget profileView(){
+   return  ListView(
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
@@ -50,10 +64,10 @@ setinfo(){}
                 SizedBox(
                   height: 8,
                 ),
-                Text(/*talent.nom + talent.prenom*/Provider.of<Talent>(context).prenom+Provider.of<Talent>(context).nom,
+                Text(talent.nom,
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-                Text(Provider.of<Talent>(context).email+" "+ Provider.of<Talent>(context).nationalite,
+                Text(nationalite,
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -103,6 +117,19 @@ setinfo(){}
               ),
             )
           ],
-        ));
+        );
   }
+
+  
+  @override
+  Widget build(BuildContext context) {
+    setInfos();
+   return Scaffold(
+        appBar: header(context, "profil"),
+        body: isWaiting==false?profileView(): circularProgress(),
+   );
+     
+  }
+
+
 }
