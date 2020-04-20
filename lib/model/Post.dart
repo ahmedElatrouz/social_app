@@ -5,11 +5,11 @@ import 'package:social_app/model/Talent.dart';
 class Post {
   String postID;
   int nombreLikes;
-  String date;
+  DateTime date;
   String description;
   String photoUrl;
   String videoUrl;
-  Talent talent;
+  String talentId;
   
   
   Post({
@@ -19,7 +19,7 @@ class Post {
     this.description,
     this.photoUrl,
     this.videoUrl,
-    this.talent,
+    this.talentId,
   });
   
 
@@ -31,7 +31,7 @@ class Post {
       'description': description,
       'photoUrl': photoUrl,
       'videoUrl': videoUrl,
-      'talent': talent.toMap(),
+      'talent_ID': talentId,     //talent.toMap(),
     };
   }
 
@@ -45,7 +45,7 @@ class Post {
       description: map['description'],
       photoUrl: map['photoUrl'],
       videoUrl: map['videoUrl'],
-      talent: Talent.fromMap(map['talent']),
+      talentId: map['talent_ID'], //Talent.fromMap(map['talent']),
     );
   }
 

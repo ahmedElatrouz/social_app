@@ -1,5 +1,4 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
@@ -8,18 +7,18 @@ import 'package:social_app/view/profil/upload_post_page.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
-//final StorageReference storageRef = FirebaseStorage.instance.ref();
-//final postRef = Firestore.instance.collection('Posts');
+
 class ProfilPage extends StatefulWidget {
   @override
   _ProfilPageState createState() => _ProfilPageState();
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+
   bool isWaiting=true;
-  Talent talent;
+  Talent talent=Talent();
   String nom='';
-  String prenom='';
+  String prenom=''; 
   String email='';
   String nationalite='';
   TalentService talentService;
@@ -30,7 +29,8 @@ class _ProfilPageState extends State<ProfilPage> {
   setInfos()async{
     await currentTalent();
 
-    nom=talent.nom==null?nom:talent.nom;
+    nom=talent.nom==null ? nom : talent.nom;
+
           setState(() {
          isWaiting=false;
        });
@@ -40,8 +40,7 @@ class _ProfilPageState extends State<ProfilPage> {
   currentTalent() async{
        talentService = Provider.of<TalentService>(context,listen: false);
        talent=await talentService.getCurrentUser();
-       return 0;
-       
+       //return 0;    
   }
 
 
