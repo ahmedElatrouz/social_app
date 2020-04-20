@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:social_app/model/Talent.dart';
+//import 'package:social_app/model/Talent.dart';
+
 
 class Post {
-  String postID;
+  String postId;
   int nombreLikes;
   DateTime date;
   String description;
@@ -13,7 +14,7 @@ class Post {
   
   
   Post({
-    this.postID,
+    this.postId,
     this.nombreLikes,
     this.date,
     this.description,
@@ -25,7 +26,7 @@ class Post {
 
   Map<String, dynamic> toMap() {
     return {
-      'postID': postID,
+      'postID': postId,
       'nombreLikes': nombreLikes,
       'date': date,
       'description': description,
@@ -39,7 +40,7 @@ class Post {
     if (map == null) return null;
   
     return Post(
-      postID: map['postID'],
+      postId: map['postID'],
       nombreLikes: map['nombreLikes'],
       date: map['date'],
       description: map['description'],

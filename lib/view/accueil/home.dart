@@ -1,9 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:social_app/model/Talent.dart';
-import 'package:social_app/repository/talentAuth.dart';
-import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';

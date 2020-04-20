@@ -19,7 +19,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<int> createPost(Post post) async {
     int r = 0;
     try {
-      await postRef.add(post.toMap());
+      await postRef.document(postId).setData(post.toMap());
       r = 1;
     } catch (e) {
       print(e);
@@ -27,13 +27,12 @@ class PostRepositoryImpl implements PostRepository {
     return r;
   }
 
-
   @override
   Future<int> updatePost(Post post) async {
     int r = 0;
     try {
-      if (await exists(post.postID) == true) {
-        await postRef.document(post.postID).updateData(post.toMap());
+      if (await exists(post.postId) == true) {
+        await postRef.document(post.postId).updateData(post.toMap());
         r = 1;
       }
     } catch (e) {
@@ -81,10 +80,10 @@ class PostRepositoryImpl implements PostRepository {
 
 
 
-        /// Upload image to firestore  ***************************************
-  @override   
-  handleSubmit(image, captionController,currentTalentUid) async {
 
+  /// Upload image to firestore  ***************************************
+  @override
+  handleSubmitImage(image, captionController, currentTalentUid) async {
     await compressImage(image);
 
     String mediaUrl = await PostRepositoryImpl()
@@ -97,7 +96,6 @@ class PostRepositoryImpl implements PostRepository {
     );
   }
 
-
   compressImage(image) async {
     final temDir = await getTemporaryDirectory();
     final path = temDir.path;
@@ -106,7 +104,6 @@ class PostRepositoryImpl implements PostRepository {
       ..writeAsBytesSync(Im.encodeJpg(imageFile, quality: 85));
     image = compressedImageFile;
   }
-
 
   Future<String> uploadImage({File imageFile, String postId}) async {
     StorageUploadTask uploadTask =
@@ -119,11 +116,10 @@ class PostRepositoryImpl implements PostRepository {
     return null;
   }
 
-
   createPostInFirestore(
       {String mediaUrl, String description, String currentTalentUid}) async {
-    await PostRepositoryImpl().createPost(Post(
-      postID: postId,
+    await this.createPost(Post(
+      postId: postId,
       nombreLikes: 0,
       date: new DateTime.now(),
       description: description,
@@ -134,5 +130,34 @@ class PostRepositoryImpl implements PostRepository {
   }
 
 
+
+  /// Upload video to firestore  ***************************************
+  @override
+  handleSubmitVideo(video, captionController, currentTalentUid) async {
+    await compressImage(video);
+
+    String mediaUrl = await PostRepositoryImpl()
+        .uploadVideo(videoFile: video, postId: postId);
+
+    createPostInFirestore(
+      mediaUrl: mediaUrl,
+      description: captionController.text,
+      currentTalentUid: currentTalentUid,
+    );
+  }
+
+  Future<String> uploadVideo({File videoFile, String postId}) async {
+
+    StorageUploadTask uploadTask =
+        storageRef.child('post_$postId.jpg').putFile(videoFile);
+
+    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    String downloadUrl = await storageSnap.ref.getDownloadURL();
+    
+    if (uploadTask.isComplete) {
+      return downloadUrl;
+    }
+    return null;
+  }
 
 }

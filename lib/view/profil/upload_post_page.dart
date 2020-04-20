@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/repository/postRepositoryImpl.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:video_player/video_player.dart';
@@ -24,8 +23,8 @@ class UploadPost extends StatefulWidget {
 
 
 class _UploadPostState extends State<UploadPost> {
+
   PostService postService = PostService();
-  //PostRepositoryImpl postRepositoryImpl = PostRepositoryImpl();
   File image;
   File video;
 
@@ -113,9 +112,12 @@ class _UploadPostState extends State<UploadPost> {
     setState(() {
       isUploading = true;
     });
-
-    await postService.handleSubmit(image, captionController , widget.currentTalent.uid);
-
+    if(image != null){
+    await postService.handleSubmitImage(image, captionController , widget.currentTalent.uid);
+    }
+    if(video != null){
+      await postService.handleSubmitVideo(video, captionController , widget.currentTalent.uid);
+    }
     captionController.clear();
 
     setState(() {
@@ -127,6 +129,7 @@ class _UploadPostState extends State<UploadPost> {
 
   Scaffold buildUploadForm() {
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.white70,
         leading: IconButton(
@@ -186,6 +189,10 @@ class _UploadPostState extends State<UploadPost> {
                     ),
                   )
                 : Container(),
+
+
+          SizedBox(height: 8,),
+
           ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.blueGrey,

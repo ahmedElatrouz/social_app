@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/talentRepository.dart';
 import 'package:social_app/repository/talentRepositoryImpl.dart';

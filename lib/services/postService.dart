@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
@@ -31,8 +30,12 @@ PostRepository postRepository;
     return postRepository.searchByUser(talent);
   }
 
-  handleSubmit(image, captionController,currentTalentUid){
-    return postRepository.handleSubmit(image, captionController, currentTalentUid);
+  handleSubmitImage(image, captionController,currentTalentUid){
+    return postRepository.handleSubmitImage(image, captionController, currentTalentUid);
+  }
+
+  handleSubmitVideo(video, captionController , currentTalentUid){
+    return postRepository.handleSubmitVideo(video, captionController, currentTalentUid);
   }
 
 
