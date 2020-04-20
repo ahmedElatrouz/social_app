@@ -1,11 +1,15 @@
+//import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/profil/upload_post_page.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
-
+//final StorageReference storageRef = FirebaseStorage.instance.ref();
+//final postRef = Firestore.instance.collection('Posts');
 class ProfilPage extends StatefulWidget {
   @override
   _ProfilPageState createState() => _ProfilPageState();
@@ -13,12 +17,12 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   bool isWaiting=true;
-  Talent talent=Talent(nom: 'ggdfdf',prenom: 'rljgs',email: 'krgjslml',nationalite: 'ifjhslk');
+  Talent talent;
   String nom='';
   String prenom='';
   String email='';
   String nationalite='';
-TalentService talentService;
+  TalentService talentService;
   
 
 
@@ -33,12 +37,13 @@ TalentService talentService;
   }
 
 
-   currentTalent()async{
+  currentTalent() async{
        talentService = Provider.of<TalentService>(context,listen: false);
        talent=await talentService.getCurrentUser();
        return 0;
        
-    }
+  }
+
 
 
   Widget profileView(){
@@ -52,8 +57,8 @@ TalentService talentService;
                     bottomLeft:  const  Radius.circular(60.0),
                     bottomRight: const  Radius.circular(60.0))
               ),
-              
               child: Column(children: <Widget>[
+                
                 SizedBox(
                   height: 3,
                 ),
@@ -64,10 +69,10 @@ TalentService talentService;
                 SizedBox(
                   height: 8,
                 ),
-                Text(talent.nom,
+                Text(talent.nom+' '+talent.prenom,
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-                Text(nationalite,
+                Text(talent.email+', '+talent.nationalite,
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -87,9 +92,20 @@ TalentService talentService;
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 RaisedButton(
-                  onPressed: null,
+                  highlightColor: Colors.blue,
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                       borderRadius: BorderRadius.circular(50.0)),
+                  color: Colors.lightBlueAccent,
+                  onPressed: (){
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) =>UploadPost(currentTalent: talent,))
+                      );
+                  },
+                  
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 125),
                     child: Text('new post',style: TextStyle(fontSize: 25),),
                   ),
                   )
@@ -98,7 +114,7 @@ TalentService talentService;
 
             Text(
               'Posts',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
             Container(
               child: Wrap(

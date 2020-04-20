@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:social_app/model/Professionnel.dart';
 
-class ProfAuth {
+class ProfAuth { 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _authStore = Firestore.instance.collection("Professionnels");
 

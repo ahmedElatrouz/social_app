@@ -17,7 +17,8 @@ AppBar header(context,String page){
             onPressed: () {
               
               
-              if(page=="profil") Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfilPage()));
+              if(page=="profil") Navigator.push(
+                context, MaterialPageRoute(builder: (context)=>EditProfilPage()));
               else{
     
               Navigator.of(context).pop(null);

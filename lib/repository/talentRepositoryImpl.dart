@@ -95,27 +95,29 @@ class TalentRepositoryImpl implements TalentRepository  {
   Future<String> getcurrentUserUid() async {
     
   return (await auth.currentUser()).uid;
-} 
+  } 
 
 
-  
+   
 
 
   @override
   Future<Talent> getCurrentTalent() async{
     
     Talent talent;
-    FirebaseUser user=await auth.currentUser();
+    FirebaseUser user = await auth.currentUser();
    
     try{
-      var doc = await usersRef.where("uid",isEqualTo:user.uid).getDocuments();
+    var doc = await usersRef.where("uid",isEqualTo:user.uid).getDocuments();
     talent =doc.documents.map((docum)=>Talent.fromMap(docum.data)).elementAt(0);
     }catch(e){
       print(e);
     }
-    
     return talent;
   }
+
+
+
 
   @override
   Future signIn(String email, String password) async{

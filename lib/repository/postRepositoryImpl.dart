@@ -1,7 +1,7 @@
-
-
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/postRepository.dart';
@@ -9,8 +9,8 @@ import 'package:social_app/repository/postRepository.dart';
 class PostRepositoryImpl implements PostRepository {
 
   final postsRef=Firestore.instance.collection("Posts");  
-
-
+  final postRef = Firestore.instance.collection('Posts');
+  final StorageReference storageRef = FirebaseStorage.instance.ref();
 
 
   @override
@@ -84,5 +84,26 @@ class PostRepositoryImpl implements PostRepository {
         return false;
       }
       return true;
+  }
+
+  @override
+  createPostInFirestore({String mediaUrl, String description,String talentId,String postId}) {
+    postRef.document(postId).setData({
+      "date" : new DateTime.now(),
+      "description" : description,
+      "nombreLikes" : {},
+      "photoUrl" : mediaUrl,
+      "talent_ID" : talentId,
+      "videoUrl" : '',
+    });
+  }
+
+  @override
+  Future<String> uploadImage(imageFile,postId) async{
+    StorageUploadTask uploadTask = storageRef.child('post_$postId.jpg').putFile(imageFile);
+    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    String doawnloadUrl = await storageSnap.ref.getDownloadURL();
+    print(doawnloadUrl);
+    return doawnloadUrl;
   }
 }

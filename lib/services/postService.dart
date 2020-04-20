@@ -1,5 +1,4 @@
-
-
+import 'dart:io';
 
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
@@ -32,6 +31,18 @@ PostRepository postRepository;
     return postRepository.searchByUser(talent);
   }
 
+  createPostInFirestore({String mediaUrl, String description,String talentId,String postId}){
+    return postRepository.createPostInFirestore(
+      mediaUrl: mediaUrl,
+      description: description,
+      talentId: talentId,
+      postId: postId,
+      );
+  }
+
+  Future<String> uploadImage(imageFile,postId){
+    return postRepository.uploadImage(imageFile,postId);
+  }
 
 
 
