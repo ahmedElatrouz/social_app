@@ -23,7 +23,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
 
- TalentService talentServiceProvider;
+ TalentService talentService=TalentService();
 
    
   final TalentAuth _auth = TalentAuth();
@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-     talentServiceProvider=Provider.of<TalentService>(context,listen: false);
+     
     return loading
         ? Loading()
         : Scaffold(
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (_formKey.currentState.validate()) {
                               //setState(() => loading = true );
                              
-                        dynamic result= talentServiceProvider.signIn(
+                        dynamic result= talentService.signIn(
                           "dafali@email.com", "123456789");
                         
                         if(result == null){

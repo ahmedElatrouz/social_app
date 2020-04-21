@@ -21,12 +21,12 @@ class _ActualitePageState extends State<ActualitePage> {
     
      Scaffold(
       //appBar:header(context,"actualite"),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
           Row(
             children: <Widget>[
-              Container(child: Text('hello',style: TextStyle(color:Colors.white),)),
+              Container(child: Text('hello',style: TextStyle(color:Colors.black),)),
              /* Container(
                 child:Icon(Icons.image)
               ),

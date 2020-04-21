@@ -22,9 +22,7 @@ runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider<TalentService>(
-      create: (context)=>TalentService(),
-          child: MaterialApp(
+    return MaterialApp(
       initialRoute:Authenticate.id,
       routes: {
         Authenticate.id : (context) => Authenticate(),
@@ -33,8 +31,7 @@ class MyApp extends StatelessWidget {
         ActualitePage.id : (context) => ActualitePage(),
         Home.id :(context)=>Home()
       
-           },
-          ),
+     },
     );
   }
 }   

@@ -1,21 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/services/talentService.dart';
+
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
 import 'package:social_app/view/profil/profil_page.dart';
+import 'package:social_app/view/shared/progress.dart';
 
 import 'actualite_page.dart';
 
 class Home extends StatefulWidget {
   static const String id = 'home';
-
+  
   /*  Home({
     this.talent,
   }) ;*/
@@ -26,6 +26,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   PageController pageController;
   int pageIndex = 0;
+  bool isContentLoaded=false;
+  Talent talent=new Talent(nom:'NaN',email:'NaN');
+TalentService talentService;
 
   @override
   void initState() {
@@ -33,22 +36,28 @@ class _HomeState extends State<Home> {
     pageController = PageController(
       initialPage: 0,
     );
-  }
+    
 
-  @override
-  Widget build(BuildContext context) {
+    
+  }
+ 
+
+ Widget homeContent(){
     return Scaffold(
-      body: PageView(
-        children: <Widget>[
-          ActualitePage(),
-          NotificationPage(),
-          ProfilPage(),
-          RecherchePage(),
-          RecommandationsPage(),
-        ],
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        physics: NeverScrollableScrollPhysics(),
+      body: Provider<Talent>(
+            create: (context)=>talent,
+              child: PageView(
+            children: <Widget>[
+              ActualitePage(),
+              NotificationPage(),
+              ProfilPage(),
+              RecherchePage(),
+              RecommandationsPage(),
+            ],
+            controller: pageController,
+            onPageChanged: onPageChanged,
+            physics: NeverScrollableScrollPhysics(),
+          ),
       ),
       bottomNavigationBar: Container(
         height: 50.0,
@@ -75,6 +84,11 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return  homeContent();
   }
 
   @override

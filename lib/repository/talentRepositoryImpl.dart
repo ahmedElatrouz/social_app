@@ -82,6 +82,7 @@ class TalentRepositoryImpl implements TalentRepository  {
     List<Talent> talents=[];
     try{
         var users=await usersRef.where("categorie_ID",isEqualTo: categorie.catID).getDocuments();
+        
         talents=users.documents.map((doc)=>Talent.fromMap(doc.data)).toList();
     }catch(e){
       print(e);
@@ -108,8 +109,8 @@ class TalentRepositoryImpl implements TalentRepository  {
     FirebaseUser user=await auth.currentUser();
    
     try{
-      var doc = await usersRef.where("uid",isEqualTo:user.uid).getDocuments();
-    talent =doc.documents.map((docum)=>Talent.fromMap(docum.data)).elementAt(0);
+      var doc = await usersRef.document(user.uid).get();
+          talent =Talent.fromMap(doc.data);
     }catch(e){
       print(e);
     }

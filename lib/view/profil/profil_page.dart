@@ -4,7 +4,7 @@ import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
-
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ProfilPage extends StatefulWidget {
   @override
@@ -12,36 +12,34 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  bool isWaiting=true;
-  Talent talent=Talent(nom: 'ggdfdf',prenom: 'rljgs',email: 'krgjslml',nationalite: 'ifjhslk');
-  String nom='';
-  String prenom='';
-  String email='';
-  String nationalite='';
+
+bool isWaiting=true;
+Talent talent=new Talent(nom:'NaN',email:'NaN');
 TalentService talentService;
-  
 
 
-
-  setInfos()async{
-    await currentTalent();
-
-    nom=talent.nom==null?nom:talent.nom;
-          setState(() {
-         isWaiting=false;
-       });
+  @override
+  initState(){
+    super.initState();
+    talentService=TalentService();
+    getTalent();
   }
 
-
-   currentTalent()async{
-       talentService = Provider.of<TalentService>(context,listen: false);
-       talent=await talentService.getCurrentUser();
-       return 0;
-       
+  getTalent()async{
+    
+    try{
+      talent=await talentService.getCurrentUser();
+    }catch(e){
+      print(e);
     }
-
-
+    
+    
+    setState(() {
+      isWaiting=false;
+    });
+  }
   Widget profileView(){
+    
    return  ListView(
           children: <Widget>[
             Container(
@@ -67,7 +65,7 @@ TalentService talentService;
                 Text(talent.nom,
                     style:
                         TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-                Text(nationalite,
+                Text(talent.email,
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -123,13 +121,13 @@ TalentService talentService;
   
   @override
   Widget build(BuildContext context) {
-    setInfos();
+   
    return Scaffold(
-        appBar: header(context, "profil"),
-        body: isWaiting==false?profileView(): circularProgress(),
-   );
+     appBar: header(context, "profil"),
+     body:isWaiting?circularProgress():profileView()
+     
+     );
      
   }
-
 
 }
