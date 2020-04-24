@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:social_app/view/shared/reusable_header.dart';
 
 class ActualitePage extends StatefulWidget {
 

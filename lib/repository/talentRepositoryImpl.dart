@@ -96,17 +96,17 @@ class TalentRepositoryImpl implements TalentRepository  {
   Future<String> getcurrentUserUid() async {
     
   return (await auth.currentUser()).uid;
-} 
+  } 
 
 
-  
+   
 
 
   @override
   Future<Talent> getCurrentTalent() async{
     
     Talent talent;
-    FirebaseUser user=await auth.currentUser();
+    FirebaseUser user = await auth.currentUser();
    
     try{
       var doc = await usersRef.document(user.uid).get();
@@ -114,9 +114,11 @@ class TalentRepositoryImpl implements TalentRepository  {
     }catch(e){
       print(e);
     }
-    
     return talent;
   }
+
+
+
 
   @override
   Future signIn(String email, String password) async{

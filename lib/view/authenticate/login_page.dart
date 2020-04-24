@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/repository/talentAuth.dart';

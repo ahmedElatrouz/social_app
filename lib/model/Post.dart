@@ -1,37 +1,38 @@
 import 'dart:convert';
 
-import 'package:social_app/model/Talent.dart';
+//import 'package:social_app/model/Talent.dart';
+
 
 class Post {
-  String postID;
+  String postId;
   int nombreLikes;
-  String date;
+  DateTime date;
   String description;
   String photoUrl;
   String videoUrl;
-  Talent talent;
+  String talentId;
   
   
   Post({
-    this.postID,
+    this.postId,
     this.nombreLikes,
     this.date,
     this.description,
     this.photoUrl,
     this.videoUrl,
-    this.talent,
+    this.talentId,
   });
   
 
   Map<String, dynamic> toMap() {
     return {
-      'postID': postID,
+      'postID': postId,
       'nombreLikes': nombreLikes,
       'date': date,
       'description': description,
       'photoUrl': photoUrl,
       'videoUrl': videoUrl,
-      'talent': talent.toMap(),
+      'talent_ID': talentId,     //talent.toMap(),
     };
   }
 
@@ -39,13 +40,13 @@ class Post {
     if (map == null) return null;
   
     return Post(
-      postID: map['postID'],
+      postId: map['postID'],
       nombreLikes: map['nombreLikes'],
       date: map['date'],
       description: map['description'],
       photoUrl: map['photoUrl'],
       videoUrl: map['videoUrl'],
-      talent: Talent.fromMap(map['talent']),
+      talentId: map['talent_ID'], //Talent.fromMap(map['talent']),
     );
   }
 

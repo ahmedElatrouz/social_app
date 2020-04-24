@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/services/talentService.dart';
 
 class Commentaire {
   String uid;

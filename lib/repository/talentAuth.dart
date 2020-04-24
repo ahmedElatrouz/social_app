@@ -54,6 +54,7 @@ class TalentAuth {
       String photoUrl,
       String videoUrl,
       String description) async {
+        
     FirebaseUser user = await _auth.currentUser();
     print(email + password);
     DocumentSnapshot doc = await _authStore.document(user.uid).get();

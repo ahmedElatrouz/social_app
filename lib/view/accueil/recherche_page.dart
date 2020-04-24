@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:social_app/services/talentService.dart';

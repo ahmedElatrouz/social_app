@@ -1,10 +1,6 @@
-
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/services/talentService.dart';
-
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
@@ -15,20 +11,17 @@ import 'actualite_page.dart';
 
 class Home extends StatefulWidget {
   static const String id = 'home';
-  
-  /*  Home({
-    this.talent,
-  }) ;*/
   @override
   _HomeState createState() => _HomeState();
 }
 
+
+
 class _HomeState extends State<Home> {
+  
   PageController pageController;
   int pageIndex = 0;
   bool isContentLoaded=false;
-  Talent talent=new Talent(nom:'NaN',email:'NaN');
-TalentService talentService;
 
   @override
   void initState() {
@@ -44,9 +37,7 @@ TalentService talentService;
 
  Widget homeContent(){
     return Scaffold(
-      body: Provider<Talent>(
-            create: (context)=>talent,
-              child: PageView(
+      body: PageView(
             children: <Widget>[
               ActualitePage(),
               NotificationPage(),
@@ -58,7 +49,7 @@ TalentService talentService;
             onPageChanged: onPageChanged,
             physics: NeverScrollableScrollPhysics(),
           ),
-      ),
+      
       bottomNavigationBar: Container(
         height: 50.0,
         child: BottomNavigationBar(

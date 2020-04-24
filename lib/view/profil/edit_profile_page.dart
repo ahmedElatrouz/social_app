@@ -165,7 +165,7 @@ class EditElements extends StatelessWidget {
   Talent talent;
 
   getUser(context)async {
-    talentService =Provider.of<TalentService>(context);
+    talentService =TalentService();
     talent=await talentService.getCurrentUser();
   }
 
@@ -182,7 +182,7 @@ class EditElements extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
         children:<Widget>[
           GestureDetector(
-              onTap:()=> print('got to setting'),//Navigator.push(context,MaterialPageRoute(builder: (context)=> SettingPage(talent:talent,setting:setting))),//TODO:Navigator.pushNamed(context, settingPage),
+              onTap:()=> Navigator.push(context,MaterialPageRoute(builder: (context)=> SettingPage(talent:talent,setting:setting))),//TODO:Navigator.pushNamed(context, settingPage),
               child: ListTile(
                   title: Text(
                     kEditElementsText[setting][0],
