@@ -71,7 +71,7 @@ final settings setting;
       appBar: AppBar(
         title: Text(kEditElementsText[setting][0]),
       ),
-          body:emailWidget()//emailWidget()
+          body:SingleChildScrollView(child: emailWidget())//emailWidget()
     );
   }
 }
