@@ -15,6 +15,7 @@ class Categorie {
 
 
   Map<String, dynamic> toMap() {
+     if (this==null) return {};
     return {
       'catID': catID,
       'cat': cat,

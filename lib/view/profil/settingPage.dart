@@ -11,6 +11,8 @@ import 'package:social_app/view/shared/constants.dart';
 class SettingPage extends StatelessWidget {
 
  Talent talent;
+ bool isPasswordVerified=false;
+ GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 final settings setting;
    SettingPage({
     @required this.talent,
@@ -31,38 +33,64 @@ final settings setting;
 
       ),
       child:Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:<Widget>[
-            Container(
-              width: 220,
-
-                   child: TextFormField(
-                      initialValue:talent.email
-                    ),
-                
-                ),
-                SizedBox(
-                  height:20,
-                ),
+        child: Form(
+          key: this._formKey,
+                  child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:<Widget>[
               Container(
-                child: RaisedButton(
-                  color: Colors.lightBlueAccent,
-                  textColor: Colors.white,
-                  child: Text('save'),
-                  onPressed: ()=>print('on pressed')),
-                ),
-                SizedBox(
-                  height:200,
-                )
-          ]
+                width: 220,
+                     child: TextFormField(
+                       keyboardType: TextInputType.emailAddress,
+                       validator:(String value){
+                         if (value.length == 0) {
+                          return "Entrez une addresse email";
+                          }return null;
+                       },
+                       onSaved: (String value){
+                         talent.email=value;
+                         print(talent.email);                       },
+                        initialValue:talent.email,
+                      ),
+                  
+                  ),
+                  Container(
+                    child:Text(message)
+                  ),
+                  SizedBox(
+                    height:20,
+                  ),
+               Container(
+                  child: RaisedButton(
+                    color: Colors.lightBlueAccent,
+                    textColor: Colors.white,
+                    child: Text('save'),
+                    onPressed: (){
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          updateTalent();
+                          }
+                    }),
+                  ),
+                  
+                  SizedBox(
+                    height:200,
+                  )
+            ]
+          ),
         ),
       ) ,
       );
   }
 
 
+
+  updateTalent()async{
+   int r=await  TalentService().updateTalent(talent);
+   if(r==1) return 'champ bien modifié !!';
+   else return 'champ non modifié!!';
+  }
 
 
   @override

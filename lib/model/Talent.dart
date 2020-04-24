@@ -49,13 +49,20 @@ class Talent extends Utilisateur {
 
 
   Map<String, dynamic> toMap() {
+   if (this==null) return {};
     return {
       'uid': uid,
-      'Categorie': categorie.toMap(),
+      'email':email,
+      'nom':nom,
+      'prenom':prenom,
+      'password':password,
+      'genre':genre,
+      'nationalite':nationalite,
+      //'Categorie': categorie.toMap(),
       'photo="sdl"': photo="sdl",
       'video="sdl"': video="sdl",
       'description="sdl"': description="sdl",
-      'posts': List<dynamic>.from(posts.map((x) => x.toMap())),
+      //'posts': List<dynamic>.from(posts.map((x) => x.toMap())),
     };
   }
 

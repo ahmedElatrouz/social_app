@@ -25,6 +25,7 @@ class Post {
   
 
   Map<String, dynamic> toMap() {
+    if (this==null) return {};
     return {
       'postID': postId,
       'nombreLikes': nombreLikes,

@@ -45,7 +45,6 @@ class _RecherchePageState extends State<RecherchePage> {
         onFieldSubmitted: (value) {
           setState(() {
             isWaiting=true;
-            print("trueeeeeee");
           });
           createList(value);
         },
