@@ -44,6 +44,9 @@ class TalentService {
     await talentRepository.signOut();
   }
 
+  Future<Talent> searchById(String id){
+    return talentRepository.searchById(id);
+  }
   
 
 }

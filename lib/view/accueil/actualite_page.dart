@@ -1,8 +1,15 @@
 
 
-import 'package:flutter/material.dart';
-import 'package:social_app/view/shared/reusable_header.dart';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:social_app/model/Post.dart';
+import 'package:social_app/model/Talent.dart';
+import 'package:social_app/services/postService.dart';
+import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/shared/reusable_header.dart';
+final postRef = Firestore.instance.collection('Posts');
 
 class ActualitePage extends StatefulWidget {
 
@@ -13,8 +20,32 @@ class ActualitePage extends StatefulWidget {
 
 class _ActualitePageState extends State<ActualitePage> {
 
+  Talent talent;
+  List<Post> usersPosts=[];
+  List<PostWidget> postWidgets=[];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserAndPosts();
+  }
+  getUserAndPosts()async{
+    talent=await TalentService().getCurrentUser();
+    var doc=await postRef.getDocuments();
 
-
+    List<Post> posts=doc.documents.map((doc)=>Post.fromMap(doc.data)).toList();
+    for(Post post in posts){
+      usersPosts.add(post);
+    }
+    generateList();
+    
+  }
+  generateList()async{
+    for(Post post in usersPosts){
+      //Talent poster=await TalentService().searchById(post.talentId);
+      postWidgets.add(PostWidget(post: post,/*poster: poster,*/context: context,));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return  //Center(child: Text("actualite"));
@@ -23,20 +54,7 @@ class _ActualitePageState extends State<ActualitePage> {
       appBar: header(context,"actualite"),
       backgroundColor: Color(0xFFFFFFFF),
       body:ListView(
-        children: <Widget>[
-          SizedBox(
-              height:10,
-            ),
-          postWidget(),
-          SizedBox(
-              height:10,
-            ),
-          postWidget(),
-          SizedBox(
-              height:10,
-            ),
-          postWidget(),
-        ],
+        children:postWidgets
       ) /*Column(
         children: <Widget>[
           Row(
@@ -78,7 +96,23 @@ class _ActualitePageState extends State<ActualitePage> {
 
 
 
-  Widget postWidget(){
+}
+
+class PostWidget extends StatelessWidget {
+  final Post post;
+   Talent poster=Talent(nom:'ahmed',prenom:'elatrouz',);
+
+   PostWidget({
+    @required this.post,
+    //@required this.poster,
+    @required this.context, 
+  }) ;
+  
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
     return
       Container(
         margin: EdgeInsets.symmetric(horizontal:20),
@@ -95,19 +129,19 @@ class _ActualitePageState extends State<ActualitePage> {
               ListTile(
                 leading: CircleAvatar(
                   backgroundImage: AssetImage(
-                    "assets/images/ahmed.jpg",
+                    poster.photo,
                   ),
                 ),
 
                 contentPadding: EdgeInsets.all(0),
                 title: Text(
-                  "ahmed lbastos",
+                  poster.nom+poster.prenom,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 trailing: Text(
-                  "marrakech,lbit diali",
+                  post.description,
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 11,
@@ -122,8 +156,9 @@ class _ActualitePageState extends State<ActualitePage> {
                 decoration: BoxDecoration(
                   
                 ),
-                child: Image.asset(
-                  "assets/images/ahmed.jpg",
+                child:post.photoUrl!=null?CachedNetworkImageProvider(post.photoUrl):Image.asset(
+                  'assets/images/ahmed.jpg',
+                  
                   height: 170,
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
@@ -139,11 +174,4 @@ class _ActualitePageState extends State<ActualitePage> {
       );
     
   }
-
-
-
-
-
-
-
 }

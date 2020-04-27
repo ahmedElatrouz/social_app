@@ -159,4 +159,17 @@ class TalentRepositoryImpl implements TalentRepository  {
     return user != null ? Talent(uid: user.uid) : null;
   }
 
+  @override
+  Future<Talent> searchById(String id)async {
+    Talent talent;
+    try{
+      var user=await usersRef.document(id).get();
+    talent=Talent.fromMap(user.data);
+    }catch(e){
+      print(e);
+    }
+   
+   return talent;
+  }
+
 }
