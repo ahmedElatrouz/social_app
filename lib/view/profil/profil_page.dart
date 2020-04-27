@@ -78,25 +78,28 @@ TalentService talentService=TalentService();
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
-              highlightColor: Colors.blue,
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0)),
-              color: Colors.lightBlueAccent,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UploadPost(
-                              currentTalent: talent,
-                            )));
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 125),
-                child: Text(
-                  'new post',
-                  style: TextStyle(fontSize: 25),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal:20.0),
+              child: RaisedButton(
+                highlightColor: Colors.blue,
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0)),
+                color: Colors.lightBlueAccent,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UploadPost(
+                                currentTalent: talent,
+                              )));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    'new post',
+                    style: TextStyle(fontSize: 25),
+                  ),
                 ),
               ),
             )

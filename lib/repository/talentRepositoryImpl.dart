@@ -33,6 +33,9 @@ class TalentRepositoryImpl implements TalentRepository  {
     try{
       if(await exists(talent.uid)==true){
         await usersRef.document(talent.uid).updateData(talent.toMap());
+        auth.currentUser().then((resultUser){
+          resultUser.updateEmail(talent.email).then((emptyValue)=>resultUser.updatePassword(talent.password));
+        });
         r=1;
       }
     }catch(e){
@@ -121,19 +124,33 @@ class TalentRepositoryImpl implements TalentRepository  {
 
 
   @override
-  Future signIn(String email, String password) async{
-    dynamic result;
+  Future<int> signIn(String email, String password) async{
     FirebaseUser user;
+    int r=0;
     try{
-       result=await auth.signInWithEmailAndPassword(email: email, password: password);
+      dynamic result=await auth.signInWithEmailAndPassword(email: email, password: password);
         user = result.user;
+        r=1;
       
        
     }catch(e){
       print(e);
+      user=null;
     }
-    return _talentFromFirebaseUser(user);
+    return r;
   }
+
+
+  @override
+  Future signOut() async{
+    try{
+       await auth.signOut();
+    }catch(e){
+      print(e);
+    }
+    
+  }
+
 
     Talent _talentFromFirebaseUser(FirebaseUser user) {
     return user != null ? Talent(uid: user.uid) : null;

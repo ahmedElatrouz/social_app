@@ -27,12 +27,12 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : Scaffold(
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50),
-              child: Container(
-                  child: Form(
-                      key: _formKey,
-                      child: Column(
+            body: Container(
+              margin: EdgeInsets.fromLTRB(10, 20, 10, 30),
+                child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                        child: Column(
                         //crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -68,68 +68,73 @@ class _RegisterState extends State<Register> {
                           SizedBox(
                             height: 20,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                
-                              RaisedButton(
-                                  highlightColor: Colors.blue,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  color: Colors.lightBlueAccent,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 8),
-                                    child: Text('Talent',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  onPressed: () {
-                                    if (_formKey.currentState.validate()) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => InfosPage(
-                                                    email: email,
-                                                    password: password,
-                                                  )));
-                                    }
-                                  }),
+                          Container(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+              
+                                  RaisedButton(
+                                      highlightColor: Colors.blue,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(30)),
+                                      color: Colors.lightBlueAccent,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 8),
+                                        child: Text('Talent',
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                      onPressed: () {
+                                        if (_formKey.currentState.validate()) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => InfosPage(
+                                                        email: email,
+                                                        password: password,
+                                                      )));
+                                        }
+                                      }),
 
-                                  SizedBox(width: 10,),
+                                      SizedBox(width: 10,),
 
-                              RaisedButton(
-                                  highlightColor: Colors.blue,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  color: Colors.lightBlueAccent,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 8),
-                                    child: Text('professionnel',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  onPressed: () {
-                                    if (_formKey.currentState.validate()) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => InfosProPage(
-                                                    email: email,
-                                                    password: password,
-                                                  )));
-                                    }
-                                  }),
-                            ],
+                                  RaisedButton(
+                                      highlightColor: Colors.blue,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(30)),
+                                      color: Colors.lightBlueAccent,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 8),
+                                        child: Text('professionnel',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                      onPressed: () {
+                                        if (_formKey.currentState.validate()) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => InfosProPage(
+                                                        email: email,
+                                                        password: password,
+                                                      )));
+                                        }
+                                      }),
+                                ],
+                              ),
+                            ),
                           )
                         ],
-                      ))),
-            ),
+                      ),
+                    ))),
           );
   }
 }

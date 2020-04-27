@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/repository/talentAuth.dart';
@@ -102,10 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                               if (_formKey.currentState.validate()) {
                                 //setState(() => loading = true );
                                
-                          dynamic result= talentService.signIn(
-                            "dafali@email.com", "123456789");
+                          int result=await talentService.signIn(
+                            "sabo@email.com", "123456");
                           
-                          if(result == null){
+                          if(result==0){
                             setState(() {
                               loading = false;
                               error = 'you have a problem in your email';

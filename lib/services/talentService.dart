@@ -35,11 +35,14 @@ class TalentService {
 
   }
 
-  Future signIn(String email,String password){
-    dynamic result=talentRepository.signIn(email, password);
+  Future<int> signIn(String email,String password){
+    Future<int> result=talentRepository.signIn(email, password);
     return result;
   }
 
+    Future signOut()async {
+    await talentRepository.signOut();
+  }
 
   
 

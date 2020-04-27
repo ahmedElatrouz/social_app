@@ -49,15 +49,14 @@ final settings setting;
                           }return null;
                        },
                        onSaved: (String value){
+                         assignValue(value);
                          talent.email=value;
-                         print(talent.email);                       },
+                                                },
                         initialValue:talent.email,
                       ),
                   
                   ),
-                  Container(
-                    child:Text(message)
-                  ),
+
                   SizedBox(
                     height:20,
                   ),
@@ -68,8 +67,11 @@ final settings setting;
                     child: Text('save'),
                     onPressed: (){
                         if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          updateTalent();
+                          if(_formKey.currentState.validate()){
+                             _formKey.currentState.save();
+                             updateTalent();
+                          }
+                         
                           }
                     }),
                   ),
@@ -84,11 +86,33 @@ final settings setting;
       );
   }
 
-
+  assignValue(var value){
+       switch (setting) {
+      
+      case settings.editProfil:
+        // TODO: Handle this case
+        break;
+      case settings.editEmail:
+        talent.email=value;
+        break;
+      case settings.editTel:
+        talent.tel=value;
+        break;
+      case settings.editPassword:
+        talent.password=value;
+        break;
+      case settings.accesPrive:
+        // TODO: Handle this case.
+        break;
+    }
+  }
 
   updateTalent()async{
    int r=await  TalentService().updateTalent(talent);
-   if(r==1) return 'champ bien modifié !!';
+   if(r==1){
+     //await TalentService().signOut();
+     return 'champ bien modifié !!';
+   } 
    else return 'champ non modifié!!';
   }
 
