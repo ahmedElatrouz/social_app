@@ -39,7 +39,6 @@ class _RecherchePageState extends State<RecherchePage> {
               icon: Icon(Icons.clear,color: Colors.blueGrey,),
               onPressed: () {
                 clearSearch();
-                //TODO:clear the textField
               }),
         ),
         onFieldSubmitted: (value) {
@@ -107,7 +106,7 @@ class _RecherchePageState extends State<RecherchePage> {
   bool isNoContentWidget(){
     if(isWaiting) return false;
     if(rechercheResult.isEmpty) return true;
-    else return false;
+     return false;
   }
 
   Container existContentWidget() {

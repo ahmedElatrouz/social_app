@@ -33,9 +33,12 @@ class TalentRepositoryImpl implements TalentRepository  {
     try{
       if(await exists(talent.uid)==true){
         await usersRef.document(talent.uid).updateData(talent.toMap());
-        auth.currentUser().then((resultUser){
-          resultUser.updateEmail(talent.email).then((emptyValue)=>resultUser.updatePassword(talent.password));
+        auth.currentUser().then((resultUser) async {
+         await resultUser.updateEmail(talent.email);
+          await resultUser.updatePassword(talent.password);
         });
+        
+
         r=1;
       }
     }catch(e){
