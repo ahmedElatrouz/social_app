@@ -17,26 +17,19 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
 
   buildPostHeader(){
-    return FutureBuilder(
-      builder: (context,snapshot){
-        if(!snapshot.hasData){
-          return circularProgress();
-        }
-        return ListTile(
+      return ListTile(
           leading: CircleAvatar(
             backgroundColor: Colors.teal,
             ),
           title: GestureDetector(
             child: Text(widget.talent.nom),
             ),
-          //subtitle:,
+          subtitle: Text(widget.post.description),
           trailing: IconButton(
             onPressed: ()=>print('delete post'),
             icon: Icon(Icons.more_vert),
             ),
           );
-      },
-      );
   }
 
   buildPostImage(){
@@ -73,7 +66,7 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        //buildPostHeader(),
+        buildPostHeader(),
         buildPostImage(),
         buildPostFooter(),
       ],
