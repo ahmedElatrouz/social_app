@@ -4,11 +4,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
+
 final postRef = Firestore.instance.collection('Posts');
 
 class ActualitePage extends StatefulWidget {
@@ -19,7 +22,7 @@ class ActualitePage extends StatefulWidget {
 }
 
 class _ActualitePageState extends State<ActualitePage> {
-
+  bool isWaiting=true;
   Talent talent;
   List<Post> usersPosts=[];
   List<PostWidget> postWidgets=[];
@@ -29,17 +32,34 @@ class _ActualitePageState extends State<ActualitePage> {
     super.initState();
     getUserAndPosts();
   }
+
+
+  @override
+ void dispose(){
+   setState(() {
+     isWaiting=false;
+   });
+   super.dispose();
+  }
+
+
+  
   getUserAndPosts()async{
     talent=await TalentService().getCurrentUser();
     var doc=await postRef.getDocuments();
 
     List<Post> posts=doc.documents.map((doc)=>Post.fromMap(doc.data)).toList();
     for(Post post in posts){
+      print('a post');
       usersPosts.add(post);
     }
+    if(posts.isEmpty)print('noooo postsss');
     generateList();
-    
+    setState(() {
+      isWaiting=false;
+    });
   }
+  
   generateList()async{
     for(Post post in usersPosts){
       //Talent poster=await TalentService().searchById(post.talentId);
@@ -48,12 +68,10 @@ class _ActualitePageState extends State<ActualitePage> {
   }
   @override
   Widget build(BuildContext context) {
-    return  //Center(child: Text("actualite"));
-    
-     Scaffold(
+    return  Scaffold(
       appBar: header(context,"actualite"),
       backgroundColor: Color(0xFFFFFFFF),
-      body:ListView(
+      body:isWaiting?circularProgress():ListView(
         children:postWidgets
       ) /*Column(
         children: <Widget>[
