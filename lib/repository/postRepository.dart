@@ -9,4 +9,5 @@ abstract class PostRepository {
   Future<List<Post>> searchByUser(Talent talent);
   handleSubmitImage(image, captionController,currentTalentUid);
   handleSubmitVideo(video, captionController,currentTalentUid);
+  Future<List<Post>> getProfilPosts(talentId , postCount);
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/profil/post_widget.dart';
 import 'package:social_app/view/profil/upload_post_page.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
@@ -11,31 +14,62 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-bool isWaiting=false;
-Talent talent=new Talent(nom:'NaN',email:'NaN');
-TalentService talentService=TalentService();
 
+  bool isWaiting = false;
+  Talent talent =new Talent();
+  TalentService talentService = TalentService();
+
+  List<Post> posts = [];
+  Post post = Post();
+  PostService postService = PostService();
+  int postCount = 0;
 
   @override
-  initState(){
+  initState() {
     super.initState();
-    isWaiting=true;
+    isWaiting = true;
     getTalent();
+    print(talent);
+    getProfilPosts();
   }
 
-  getTalent()async{
-    
-    try{
-      talent=await talentService.getCurrentUser();
+  getTalent() async {
+    try {
+      talent = await talentService.getCurrentUser();
+      print(talent);
       setState(() {
-      isWaiting=false;
-    });
-    }catch(e){
+        isWaiting = false;
+      });
+    } catch (e) {
       print(e);
     }
-    
-    
-    
+  }
+
+  getProfilPosts() async {
+    try {
+      posts = await postService.getProfilPosts(talent.uid, postCount);
+      print(posts);
+      setState(() {
+        isWaiting = false;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  buildProfilPost() {
+    if (isWaiting) {
+      return circularProgress();
+    }
+    return Column(
+      children: <Widget>[
+        for (int i=0; i < posts.length; i++)
+          PostWidget(
+            post: posts[i],
+            talent: talent,
+          )
+      ],
+    );
   }
 
   Widget profileView() {
@@ -58,7 +92,7 @@ TalentService talentService=TalentService();
             SizedBox(
               height: 8,
             ),
-            Text(talent.nom + ' ' + talent.prenom,
+           Text(talent.nom + ' ' + talent.prenom,
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
             Text(talent.email + ', ' + talent.nationalite,
                 style: TextStyle(
@@ -79,7 +113,7 @@ TalentService talentService=TalentService();
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal:20.0),
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: RaisedButton(
                 highlightColor: Colors.blue,
                 elevation: 5.0,
@@ -105,40 +139,18 @@ TalentService talentService=TalentService();
             )
           ],
         ),
-        Text(
-          'Posts',
-          style: TextStyle(
-              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black87),
+        Divider(
+          height: 0.0,
         ),
-        Container(
-          child: Wrap(
-            children: <Widget>[
-              for (int i = 0; i < 10; i++)
-                Container(
-                  height: MediaQuery.of(context).size.width / 3,
-                  width: MediaQuery.of(context).size.width / 3,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('assets/images/3.jpg'),
-                    fit: BoxFit.cover,
-                  )),
-                )
-            ],
-          ),
-        )
+        buildProfilPost()
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-   
-   return Scaffold(
-     appBar: header(context, "profil"),
-     body:isWaiting?circularProgress():profileView()
-     
-     );
-     
+    return Scaffold(
+        appBar: header(context, "profil"),
+        body: isWaiting ? circularProgress() : profileView());
   }
-
 }

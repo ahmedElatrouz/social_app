@@ -27,9 +27,9 @@ class _ActualitePageState extends State<ActualitePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUserAndPosts();
+    //getUserAndPosts();
   }
-  getUserAndPosts()async{
+  /*getUserAndPosts()async{
     talent=await TalentService().getCurrentUser();
     var doc=await postRef.getDocuments();
 
@@ -39,7 +39,7 @@ class _ActualitePageState extends State<ActualitePage> {
     }
     generateList();
     
-  }
+  }*/
   generateList()async{
     for(Post post in usersPosts){
       //Talent poster=await TalentService().searchById(post.talentId);
