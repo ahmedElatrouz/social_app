@@ -117,7 +117,7 @@ class PostRepositoryImpl implements PostRepository {
       {String mediaUrl, String description, String currentTalentUid}) async {
     await this.createPost(Post(
       postId: postId,
-      likes: {},
+     // likes: {},
       date: new Timestamp.now(),
       description: description,
       photoUrl: mediaUrl,

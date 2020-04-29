@@ -22,7 +22,6 @@ class Post {
     this.photoUrl,
     this.videoUrl,
     this.talentId,
-    this.likes,
   });
 
 
@@ -56,7 +55,7 @@ class Post {
   
     return Post(
       postId: map['postID'],
-      likes: map['likes'],
+      likesCount: map['likesCount'],
       date: map['date'], 
       description: map['description'],
       photoUrl: map['photoUrl'],
