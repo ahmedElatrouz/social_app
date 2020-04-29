@@ -6,6 +6,7 @@ import 'package:social_app/view/shared/constants.dart';
 class PostWidget extends StatefulWidget {
   final Talent talent;
   final Post post;
+ Image image;
   PostWidget({@required this.talent, @required this.post});
 
   @override

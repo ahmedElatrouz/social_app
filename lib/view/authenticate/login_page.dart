@@ -102,9 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 //setState(() => loading = true );
-                               
+                              List<Talent> test=await talentService.searchByName("sabo");
                           int result=await talentService.signIn(
+<<<<<<< HEAD
                             "sabo@email.com", "123456789");
+=======
+                            'dafali2@email.com', '123456789');
+>>>>>>> db78dd4e9d9768cfb1a84016a901096b2d282809
                           
                           if(result==0){
                             setState(() {
