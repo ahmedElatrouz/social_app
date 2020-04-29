@@ -73,38 +73,7 @@ class _ActualitePageState extends State<ActualitePage> {
       backgroundColor: Color(0xFFFFFFFF),
       body:isWaiting?circularProgress():ListView(
         children:postWidgets
-      ) /*Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(child: Text('hello',style: TextStyle(color:Colors.black),)),
-             /* Container(
-                child:Icon(Icons.image)
-              ),
-              Container(
-                child: TextField(),
-              ),
-              Container(
-                child:Icon(Icons.whatshot)
-              ),
-              Container(
-                child:Icon(Icons.photo)
-              ),
-*/
-            ]
-          ),
-          Container(
-            child: Center(
-              child: Text(
-                'actualite',
-                style: TextStyle(
-                  fontSize:20,
-              ),
-              ),
-            ),
-          ),
-        ],
-      ),*/
+      ) 
     );
   }
 
@@ -174,7 +143,7 @@ class PostWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   
                 ),
-                child:post.photoUrl!=null?CachedNetworkImageProvider(post.photoUrl):Image.asset(
+                child:post.photoUrl!=null?Image.network(post.photoUrl):Image.asset(
                   'assets/images/ahmed.jpg',
                   
                   height: 170,

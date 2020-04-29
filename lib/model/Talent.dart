@@ -42,11 +42,6 @@ class Talent extends Utilisateur {
 
   
 
-  void aimerPost(Post post){
-    post.nombreLikes=post.nombreLikes++;
-  }
-  
-
 
   Map<String, dynamic> toMap() {
    if (this==null) return {};
@@ -59,9 +54,9 @@ class Talent extends Utilisateur {
       'genre':genre,
       'nationalite':nationalite,
       //'Categorie': categorie.toMap(),
-      'photo="sdl"': photo="sdl",
-      'video="sdl"': video="sdl",
-      'description="sdl"': description="sdl",
+      'photoUrl': photo,
+      'videoUrl': video,
+      'description': description,
       //'posts': List<dynamic>.from(posts.map((x) => x.toMap())),
     };
   }

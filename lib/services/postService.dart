@@ -38,6 +38,10 @@ PostRepository postRepository;
     return postRepository.handleSubmitVideo(video, captionController, currentTalentUid);
   }
 
+  Future<List<Post>> getProfilPosts(talentId , postCount){
+    return postRepository.getProfilPosts(talentId, postCount);
+  }
+
 
 
 

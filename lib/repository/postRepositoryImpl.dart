@@ -78,9 +78,6 @@ class PostRepositoryImpl implements PostRepository {
     return true;
   }
 
-
-
-
   /// Upload image to firestore  ***************************************
   @override
   handleSubmitImage(image, captionController, currentTalentUid) async {
@@ -120,16 +117,14 @@ class PostRepositoryImpl implements PostRepository {
       {String mediaUrl, String description, String currentTalentUid}) async {
     await this.createPost(Post(
       postId: postId,
-      nombreLikes: 0,
-      date: new DateTime.now(),
+      likes: {},
+      date: new Timestamp.now(),
       description: description,
       photoUrl: mediaUrl,
       videoUrl: '',
       talentId: currentTalentUid,
     ));
   }
-
-
 
   /// Upload video to firestore  ***************************************
   @override
@@ -147,17 +142,38 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   Future<String> uploadVideo({File videoFile, String postId}) async {
-
     StorageUploadTask uploadTask =
         storageRef.child('post_$postId.jpg').putFile(videoFile);
 
     StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
     String downloadUrl = await storageSnap.ref.getDownloadURL();
-    
+
     if (uploadTask.isComplete) {
       return downloadUrl;
     }
     return null;
   }
 
+
+  ///displaying posts in profil page
+  Future<List<Post>> getProfilPosts(talentId , postCount) async {
+    List<Post> posts =[];
+    try{
+   var snapshot = await postRef.where("talent_ID",isEqualTo: talentId)
+        .orderBy('date', descending: true)
+        .getDocuments();
+
+   postCount = snapshot.documents.length;
+
+    posts = snapshot.documents.map((doc) =>
+        Post.fromMap(doc.data)).toList();
+    print(posts);
+    print(postCount);
+    }
+    catch(e){
+      print(e);
+      return null;
+    }
+    return posts;
+    }
 }

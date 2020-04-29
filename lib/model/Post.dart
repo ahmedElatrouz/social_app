@@ -1,34 +1,50 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 //import 'package:social_app/model/Talent.dart';
 
 
 class Post {
   String postId;
-  int nombreLikes;
-  DateTime date;
+  int likesCount;
+  Timestamp date;
   String description;
   String photoUrl;
   String videoUrl;
   String talentId;
+  Map likes;
   
   
   Post({
     this.postId,
-    this.nombreLikes,
+    this.likesCount,
     this.date,
     this.description,
     this.photoUrl,
     this.videoUrl,
     this.talentId,
+    this.likes,
   });
+
+
+  int getLikesCount(){
+    if(likes == null) return 0;
+    int count = 0;
+    likes.values.forEach((val){
+      if(val == true){
+        count +=1;
+      }
+    });
+    return count;
+  }
   
 
   Map<String, dynamic> toMap() {
     if (this==null) return {};
     return {
       'postID': postId,
-      'nombreLikes': nombreLikes,
+      'likes': likes,
       'date': date,
       'description': description,
       'photoUrl': photoUrl,
@@ -42,8 +58,8 @@ class Post {
   
     return Post(
       postId: map['postID'],
-      nombreLikes: map['nombreLikes'],
-      date: map['date'],
+      likes: map['likes'],
+      date: map['date'], 
       description: map['description'],
       photoUrl: map['photoUrl'],
       videoUrl: map['videoUrl'],
