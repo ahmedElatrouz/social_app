@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//import 'package:social_app/model/Talent.dart';
-
 
 class Post {
   String postId;

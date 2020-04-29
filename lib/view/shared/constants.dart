@@ -1,5 +1,6 @@
 
 //import '../profil/edit_profile_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,3 +20,17 @@ const kHeaderTextStyle=TextStyle(
    settings.editPassword:["Mot de passe","Modifier l'adresse e-mail de votre compte"],
    settings.accesPrive:["Visibilité de vos informations","Modifier la  visibilité de votre profil etde vos informations personnelles"],
  };
+
+ Widget cachedNetworkImage(String mediaUrl){
+   return CachedNetworkImage(
+     imageUrl: mediaUrl,
+     fit: BoxFit.cover,
+     placeholder: (contect, url) =>
+     Padding(
+       child: CircularProgressIndicator(),
+       padding: EdgeInsets.all(20),
+     ),
+     errorWidget: (context,url,error)=>
+     Icon(Icons.error),
+   );
+ }

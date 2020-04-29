@@ -14,9 +14,8 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-
   bool isWaiting = false;
-  Talent talent =new Talent();
+  Talent talent = new Talent();
   TalentService talentService = TalentService();
 
   List<Post> posts = [];
@@ -38,7 +37,7 @@ class _ProfilPageState extends State<ProfilPage> {
       talent = await talentService.getCurrentUser();
       print(talent);
       setState(() {
-        isWaiting = false;
+        //isWaiting = false;
       });
     } catch (e) {
       print(e);
@@ -63,7 +62,7 @@ class _ProfilPageState extends State<ProfilPage> {
     }
     return Column(
       children: <Widget>[
-        for (int i=0; i < posts.length; i++)
+        for (int i = 0; i < posts.length; i++)
           PostWidget(
             post: posts[i],
             talent: talent,
@@ -82,9 +81,6 @@ class _ProfilPageState extends State<ProfilPage> {
                   bottomLeft: const Radius.circular(60.0),
                   bottomRight: const Radius.circular(60.0))),
           child: Column(children: <Widget>[
-            SizedBox(
-              height: 3,
-            ),
             CircleAvatar(
               backgroundImage: AssetImage('assets/images/3.jpg'),
               radius: 60,
@@ -92,13 +88,18 @@ class _ProfilPageState extends State<ProfilPage> {
             SizedBox(
               height: 8,
             ),
-           Text(talent.nom + ' ' + talent.prenom,
+            Text(talent.nom + ' ' + talent.prenom,
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
             Text(talent.email + ', ' + talent.nationalite,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black38)),
+            Text(talent.description,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87)),
             Text('Category',
                 style: TextStyle(
                     fontSize: 20,
@@ -119,7 +120,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0)),
-                color: Colors.lightBlueAccent,
+                color: Colors.blueGrey,
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -142,7 +143,7 @@ class _ProfilPageState extends State<ProfilPage> {
         Divider(
           height: 0.0,
         ),
-        buildProfilPost()
+        //buildProfilPost()
       ],
     );
   }
