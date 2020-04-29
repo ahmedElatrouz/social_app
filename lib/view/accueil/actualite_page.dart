@@ -1,13 +1,8 @@
 
-
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
@@ -22,7 +17,7 @@ class ActualitePage extends StatefulWidget {
 }
 
 class _ActualitePageState extends State<ActualitePage> {
-  bool isWaiting=true;
+  bool isWaiting=false;
   Talent talent;
   List<Post> usersPosts=[];
   List<PostWidget> postWidgets=[];
@@ -30,17 +25,12 @@ class _ActualitePageState extends State<ActualitePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    isWaiting = true;
     getUserAndPosts();
   }
 
 
-  @override
- void dispose(){
-   setState(() {
-     isWaiting=false;
-   });
-   super.dispose();
-  }
+ 
 
 
   
@@ -50,11 +40,11 @@ class _ActualitePageState extends State<ActualitePage> {
 
     List<Post> posts=doc.documents.map((doc)=>Post.fromMap(doc.data)).toList();
     for(Post post in posts){
-      print('a post');
+      print(post.description);
       usersPosts.add(post);
     }
     if(posts.isEmpty)print('noooo postsss');
-    generateList();
+  await  generateList();
     setState(() {
       isWaiting=false;
     });
@@ -63,7 +53,12 @@ class _ActualitePageState extends State<ActualitePage> {
   generateList()async{
     for(Post post in usersPosts){
       //Talent poster=await TalentService().searchById(post.talentId);
-      postWidgets.add(PostWidget(post: post,/*poster: poster,*/context: context,));
+      print(post.postId);
+      setState(() {
+        postWidgets.add(PostWidget(post: post,/*poster: poster,*/context: context,));
+      });
+      
+
     }
   }
   @override
@@ -71,8 +66,18 @@ class _ActualitePageState extends State<ActualitePage> {
     return  Scaffold(
       appBar: header(context,"actualite"),
       backgroundColor: Color(0xFFFFFFFF),
-      body:isWaiting?circularProgress():ListView(
+      body:postWidgets.isEmpty?circularProgress():ListView(
         children:postWidgets
+       /* <Widget>[
+          Text('hello'),
+          Text('hello'),
+          Text('hello'),
+          Text('hello'),
+          Text('hello'),
+          Text('hello'),
+          Text('hello'),
+          Text('hello'),
+        ]*/
       ) 
     );
   }
@@ -87,7 +92,7 @@ class _ActualitePageState extends State<ActualitePage> {
 
 class PostWidget extends StatelessWidget {
   final Post post;
-   Talent poster=Talent(nom:'ahmed',prenom:'elatrouz',);
+  final Talent poster=Talent(nom:'ahmed',prenom:'elatrouz',);
 
    PostWidget({
     @required this.post,
@@ -102,9 +107,10 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       Container(
+        
         margin: EdgeInsets.symmetric(horizontal:20),
         decoration: BoxDecoration(
-          color: Color(0xFFF0F0F0),
+          color: Colors.black,//Color(0xFFF0F0F0),
           border:Border.all(color: Colors.blueGrey,width: 1 ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
@@ -116,7 +122,7 @@ class PostWidget extends StatelessWidget {
               ListTile(
                 leading: CircleAvatar(
                   backgroundImage: AssetImage(
-                    poster.photo,
+                    "assets/images/3.jpg",
                   ),
                 ),
 
