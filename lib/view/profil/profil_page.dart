@@ -15,11 +15,15 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   bool isWaiting = false;
-  Talent talent =new Talent(nom: 'ahmed',prenom: 'ksjfkd',email: "sldknfks",nationalite: 'ojifkspo',genre: 'olfkjlz');
+  Talent talent = new Talent(
+      nom: 'ahmed',
+      prenom: 'ksjfkd',
+      email: "sldknfks",
+      nationalite: 'ojifkspo',
+      genre: 'olfkjlz');
   TalentService talentService = TalentService();
 
   List<Post> posts = [];
-  Post post = Post();
   PostService postService = PostService();
   int postCount = 0;
 
@@ -30,14 +34,19 @@ class _ProfilPageState extends State<ProfilPage> {
     getProfilElements();
   }
 
-  getProfilElements()async{
+  getProfilElements() async {
     await getTalent();
     await getProfilPosts();
+    print(talent);
+    print(posts);
+    setState(() {
+      isWaiting = false;
+    });
   }
+
   getTalent() async {
     try {
       talent = await talentService.getCurrentUser();
-      print(talent);
     } catch (e) {
       print(e);
     }
@@ -47,10 +56,6 @@ class _ProfilPageState extends State<ProfilPage> {
     try {
       print(talent.uid);
       posts = await postService.getProfilPosts(talent.uid, postCount);
-      print(posts);
-      setState(() {
-        isWaiting = false;
-      });
     } catch (e) {
       print(e);
     }
@@ -60,11 +65,11 @@ class _ProfilPageState extends State<ProfilPage> {
     if (isWaiting) {
       return circularProgress();
     }
-    var lenght=0;
-    if(posts!=null) lenght=posts.length;
+    var lenght = 0;
+    if (posts != null) lenght = posts.length;
     return Column(
       children: <Widget>[
-        for (int i=0; i < lenght; i++)
+        for (int i = 0; i < lenght; i++)
           PostWidget(
             post: posts[i],
             talent: talent,
@@ -145,7 +150,7 @@ class _ProfilPageState extends State<ProfilPage> {
         Divider(
           height: 0.0,
         ),
-        //buildProfilPost()
+        buildProfilPost()
       ],
     );
   }

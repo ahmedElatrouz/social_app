@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/view/shared/constants.dart';
+import 'package:social_app/view/shared/custom_image.dart';
 
 class PostWidget extends StatefulWidget {
   final Talent talent;
   final Post post;
- Image image;
+ //Image image;
   PostWidget({@required this.talent, @required this.post});
 
   @override
@@ -14,6 +14,7 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
+
   buildPostHeader() {
     return ListTile(
       leading: CircleAvatar(
@@ -41,7 +42,6 @@ class _PostWidgetState extends State<PostWidget> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-         // Image.network(widget.post.photoUrl),
          cachedNetworkImage(widget.post.photoUrl),
         ],
       ),

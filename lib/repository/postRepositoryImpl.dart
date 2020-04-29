@@ -117,7 +117,7 @@ class PostRepositoryImpl implements PostRepository {
       {String mediaUrl, String description, String currentTalentUid}) async {
     await this.createPost(Post(
       postId: postId,
-     // likes: {},
+      // likes: {},
       date: new Timestamp.now(),
       description: description,
       photoUrl: mediaUrl,
@@ -154,26 +154,21 @@ class PostRepositoryImpl implements PostRepository {
     return null;
   }
 
-
   ///displaying posts in profil page
-  Future<List<Post>> getProfilPosts(talentId , postCount) async {
-    List<Post> posts =[];
-    try{
-   var snapshot = await postRef.where("talent_ID",isEqualTo: talentId)
-        .orderBy('date', descending: true)
-        .getDocuments();
-
-   postCount = snapshot.documents.length;
-
-    posts = snapshot.documents.map((doc) =>
-        Post.fromMap(doc.data)).toList();
-    print(posts);
-    print(postCount);
-    }
-    catch(e){
+  Future<List<Post>> getProfilPosts(talentId, postCount) async {
+    List<Post> posts = [];
+    try {
+      var snapshot = await postRef
+          .where("talent_ID", isEqualTo: talentId)
+          //.orderBy('date', descending: true)
+          .getDocuments();
+      postCount = snapshot.documents.length;
+      posts = snapshot.documents.map((doc) => Post.fromMap(doc.data)).toList();
+    } catch (e) {
       print(e);
+      print('problem her');
       return null;
     }
     return posts;
-    }
+  }
 }
