@@ -37,8 +37,6 @@ class _ProfilPageState extends State<ProfilPage> {
   getProfilElements() async {
     await getTalent();
     await getProfilPosts();
-    print(talent);
-    print(posts);
     setState(() {
       isWaiting = false;
     });
@@ -54,7 +52,6 @@ class _ProfilPageState extends State<ProfilPage> {
 
   getProfilPosts() async {
     try {
-      print(talent.uid);
       posts = await postService.getProfilPosts(talent.uid, postCount);
     } catch (e) {
       print(e);

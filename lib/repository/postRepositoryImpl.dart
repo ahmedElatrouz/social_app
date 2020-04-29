@@ -160,15 +160,28 @@ class PostRepositoryImpl implements PostRepository {
     try {
       var snapshot = await postRef
           .where("talent_ID", isEqualTo: talentId)
-          //.orderBy('date', descending: true)
+          //.orderBy("date", descending: true)
           .getDocuments();
       postCount = snapshot.documents.length;
       posts = snapshot.documents.map((doc) => Post.fromMap(doc.data)).toList();
     } catch (e) {
       print(e);
-      print('problem her');
       return null;
     }
-    return posts;
+    return posts; 
+  }
+
+  
+  //liking posts
+  void likePosts(cueentUserId, postId, bool like) async {
+    try{
+    print(cueentUserId);
+    print(postId);
+    await postRef.document(postId).updateData({'likes.$cueentUserId':like});
+    }
+    catch(e){
+      print(e);
+      print("problem hir");
+    }
   }
 }

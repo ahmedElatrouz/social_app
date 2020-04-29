@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/view/shared/custom_image.dart';
+import 'package:social_app/services/postService.dart';
+import 'package:social_app/view/shared/custom_image.dart'; 
 
 class PostWidget extends StatefulWidget {
   final Talent talent;
   final Post post;
- //Image image;
+
   PostWidget({@required this.talent, @required this.post});
 
   @override
@@ -14,6 +15,32 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
+  //PostService postService=PostService();
+  //bool isLiked;
+
+
+  /*handleLikePost() async{
+    bool _isliked = widget.post.likes[widget.talent.uid] == true;
+
+    if(_isliked){
+      postService.likePosts(widget.talent.uid, widget.post.postId, false);
+      setState(() {
+        widget.post.likesCount -= 1;
+        isLiked =  false ;
+        widget.post.likes[widget.talent.uid] = false;
+      });
+    }
+
+    else if(!_isliked){
+      postService.likePosts(widget.talent.uid, widget.post.postId, true);
+      setState(() {
+        widget.post.likesCount += 1;
+        isLiked =  true ;
+        widget.post.likes[widget.talent.uid] = true;
+      });
+    }
+  }*/
+
 
   buildPostHeader() {
     return ListTile(
@@ -37,6 +64,7 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
+
   buildPostImage() {
     return GestureDetector(
       child: Stack(
@@ -48,6 +76,7 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
+
   buildPostFooter() {
     return Column(
       children: <Widget>[
@@ -55,9 +84,9 @@ class _PostWidgetState extends State<PostWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             GestureDetector(
-              onTap: () => print('liking post'),
+              onTap: ()=> print('like'),/*handleLikePost()*/
               child: Icon(
-                Icons.favorite_border,
+                /*isLiked ? Icons.favorite :*/Icons.favorite_border,
                 size: 30,
               ),
             ),
@@ -80,8 +109,10 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
+    //isLiked = (widget.post.likes[widget.talent.uid] == true);
     return Column(
       children: <Widget>[
         buildPostHeader(),
