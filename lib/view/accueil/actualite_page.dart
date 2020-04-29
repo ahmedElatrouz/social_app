@@ -107,10 +107,11 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       Container(
-        
-        margin: EdgeInsets.symmetric(horizontal:20),
+        padding: EdgeInsets.all(5),
+        margin: EdgeInsets.symmetric(horizontal:10,vertical: 1),
         decoration: BoxDecoration(
-          color: Colors.black,//Color(0xFFF0F0F0),
+          
+          color: Color(0xFF009688),//Color(0xFFF0F0F0),
           border:Border.all(color: Colors.blueGrey,width: 1 ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
@@ -127,19 +128,37 @@ class PostWidget extends StatelessWidget {
                 ),
 
                 contentPadding: EdgeInsets.all(0),
-                title: Text(
-                  poster.nom+poster.prenom,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                trailing: Text(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      poster.nom+poster.prenom,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
                   post.description,
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
+                    color: Colors.white,
                     fontSize: 11,
                   ),
                 ),
+                  ],
+                ),
+               /* trailing: Text(
+                  post.description,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white,
+                    fontSize: 11,
+                  ),
+                ),*/
               ),
 
               Container(
