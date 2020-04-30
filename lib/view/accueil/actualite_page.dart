@@ -115,9 +115,10 @@ class PostWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      poster.nom + poster.prenom,
+                      poster.nom +' '+ poster.prenom,
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black54),
+                          fontWeight: FontWeight.bold, color: Colors.black,
+                          fontSize: 18),
                     ),
                     SizedBox(
                       height: 15,

@@ -32,16 +32,13 @@ class _ProfilPageState extends State<ProfilPage> {
     super.initState();
     isWaiting = true;
     getProfilElements();
+    
   }
 
   getProfilElements() async {
     await getTalent();
     await getProfilPosts();
-    print(talent);
-    print(posts);
-    setState(() {
-      isWaiting = false;
-    });
+    
   }
 
   getTalent() async {
@@ -54,8 +51,10 @@ class _ProfilPageState extends State<ProfilPage> {
 
   getProfilPosts() async {
     try {
-      print(talent.uid);
       posts = await postService.getProfilPosts(talent.uid, postCount);
+      setState(() {
+        isWaiting = false;
+      });
     } catch (e) {
       print(e);
     }
@@ -158,6 +157,7 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xFF009688).withOpacity(0.5),
         appBar: header(context, "profil"),
         body: isWaiting ? circularProgress() : profileView());
   }

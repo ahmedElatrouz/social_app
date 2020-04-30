@@ -62,11 +62,11 @@ class _UploadPostState extends State<UploadPost> {
             children: <Widget>[
               SimpleDialogOption(
                 child: Text('add an image'),
-                onPressed: addImage(),
+                onPressed:()=> addImage(),
               ),
               SimpleDialogOption(
                 child: Text('add a video'),
-                onPressed: addVideo(),
+                onPressed:()=> addVideo(),
               )
             ],
           );
