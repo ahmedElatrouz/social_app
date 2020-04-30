@@ -43,7 +43,7 @@ PostRepository postRepository;
   }
 
   likeProfilPosts(cueentUserId,postId, bool like){
-    return likeProfilPosts(cueentUserId, postId, like);
+    return postRepository.likePosts(cueentUserId, postId, like);
   }
 
 

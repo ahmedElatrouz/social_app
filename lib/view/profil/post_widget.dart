@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/view/shared/custom_image.dart';
 
-final postRef = Firestore.instance;
 
 class PostWidget extends StatefulWidget {
   final Talent talent;
@@ -24,19 +22,17 @@ class _PostWidgetState extends State<PostWidget> {
   handleLikePost() async {
     bool _isliked = widget.post.likes[widget.talent.uid] == true;
     String talentId = widget.talent.uid;
+    String postId = widget.post.postId;
+
     if (_isliked) {
       try {
-        /*await postService.likeProfilPosts(
-            widget.talent.uid, widget.post.postId, false);*/
-        postRef.collection('Posts').document(widget.post.postId).updateData({'likes.$talentId':false});
-        
+        await postService.likeProfilPosts(talentId, postId, false);
         setState(() {
           isLiked = false;
           widget.post.likes[widget.talent.uid] = false;
         });
         print(widget.post.likes);
       } 
-      
       catch (e) {
         print(e);
         print('over here');
@@ -44,11 +40,8 @@ class _PostWidgetState extends State<PostWidget> {
     } 
     
     else if(!_isliked) {
-      
       try {
-        /*await postService.likeProfilPosts(
-            widget.talent.uid, widget.post.postId, true);*/
-        postRef.collection('Posts').document(widget.post.postId).updateData({'likes.$talentId':true});
+        await postService.likeProfilPosts(talentId, postId, true);
         setState(() {
           isLiked = true;
           widget.post.likes[widget.talent.uid] = true;
