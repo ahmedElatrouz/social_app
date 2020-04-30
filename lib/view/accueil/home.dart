@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_app/view/accueil/annonce_page.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
@@ -38,10 +39,11 @@ class _HomeState extends State<Home> {
       body: PageView(
             children: <Widget>[
               ActualitePage(),
-              NotificationPage(),
+             // NotificationPage(),
               ProfilPage(),
-              RecherchePage(),
-              RecommandationsPage(),
+              AnnoncePage(),
+              //RecherchePage(),
+              //RecommandationsPage(),
             ],
             controller: pageController,
             onPageChanged: onPageChanged,
@@ -62,12 +64,9 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home), title: Text('Accueil')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications_active),
-                title: Text('Notifications')),
-            BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle), title: Text('Profile')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.search), title: Text('Recherche')),
+                icon: Icon(Icons.work), title: Text('Annonces')),
             //BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Recommandation')),
           ],
         ),

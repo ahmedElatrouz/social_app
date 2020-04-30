@@ -28,6 +28,10 @@ class _ActualitePageState extends State<ActualitePage> {
      isWaiting = true;
     getUserAndPosts();
   }
+  @override
+  dispose(){
+    
+  }
 
   getUserAndPosts() async {
     talent = await TalentService().getCurrentUser();
