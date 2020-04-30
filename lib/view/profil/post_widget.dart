@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
-import 'package:social_app/view/shared/custom_image.dart'; 
+import 'package:social_app/view/shared/custom_image.dart';
+
+final postRef = Firestore.instance;
 
 class PostWidget extends StatefulWidget {
   final Talent talent;
@@ -15,32 +18,48 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  //PostService postService=PostService();
-  //bool isLiked;
+  PostService postService = PostService();
+  bool isLiked;
 
-
-  /*handleLikePost() async{
+  handleLikePost() async {
     bool _isliked = widget.post.likes[widget.talent.uid] == true;
-
-    if(_isliked){
-      postService.likePosts(widget.talent.uid, widget.post.postId, false);
-      setState(() {
-        widget.post.likesCount -= 1;
-        isLiked =  false ;
-        widget.post.likes[widget.talent.uid] = false;
-      });
+    String talentId = widget.talent.uid;
+    if (_isliked) {
+      try {
+        /*await postService.likeProfilPosts(
+            widget.talent.uid, widget.post.postId, false);*/
+        postRef.collection('Posts').document(widget.post.postId).updateData({'likes.$talentId':false});
+        
+        setState(() {
+          isLiked = false;
+          widget.post.likes[widget.talent.uid] = false;
+        });
+        print(widget.post.likes);
+      } 
+      
+      catch (e) {
+        print(e);
+        print('over here');
+      }
+    } 
+    
+    else if(!_isliked) {
+      
+      try {
+        /*await postService.likeProfilPosts(
+            widget.talent.uid, widget.post.postId, true);*/
+        postRef.collection('Posts').document(widget.post.postId).updateData({'likes.$talentId':true});
+        setState(() {
+          isLiked = true;
+          widget.post.likes[widget.talent.uid] = true;
+        });
+         print(widget.post.likes);
+      } catch (e) {
+        print(e);
+        print('over here 2');
+      }
     }
-
-    else if(!_isliked){
-      postService.likePosts(widget.talent.uid, widget.post.postId, true);
-      setState(() {
-        widget.post.likesCount += 1;
-        isLiked =  true ;
-        widget.post.likes[widget.talent.uid] = true;
-      });
-    }
-  }*/
-
+  }
 
   buildPostHeader() {
     return ListTile(
@@ -64,18 +83,16 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
-
   buildPostImage() {
     return GestureDetector(
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-         cachedNetworkImage(widget.post.photoUrl),
+          cachedNetworkImage(widget.post.photoUrl),
         ],
       ),
     );
   }
-
 
   buildPostFooter() {
     return Column(
@@ -84,9 +101,9 @@ class _PostWidgetState extends State<PostWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             GestureDetector(
-              onTap: ()=> print('like'),/*handleLikePost()*/
+              onTap: () => handleLikePost(),
               child: Icon(
-                /*isLiked ? Icons.favorite :*/Icons.favorite_border,
+                isLiked ? Icons.favorite : Icons.favorite_border,
                 size: 30,
               ),
             ),
@@ -109,16 +126,29 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    //isLiked = (widget.post.likes[widget.talent.uid] == true);
-    return Column(
-      children: <Widget>[
-        buildPostHeader(),
-        buildPostImage(),
-        buildPostFooter(),
-      ],
+   isLiked = (widget.post.likes[widget.talent.uid] == true);
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+      decoration: BoxDecoration(
+        color: Colors.grey[100], //Color(0xFFF0F0F0),
+        border: Border.all(color: Colors.blueGrey, width: 1),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: InkWell(
+          child: Column(
+            children: <Widget>[
+              buildPostHeader(),
+              buildPostImage(),
+              buildPostFooter(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

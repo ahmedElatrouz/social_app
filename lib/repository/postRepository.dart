@@ -10,5 +10,5 @@ abstract class PostRepository {
   handleSubmitImage(image, captionController,currentTalentUid);
   handleSubmitVideo(video, captionController,currentTalentUid);
   Future<List<Post>> getProfilPosts(talentId , postCount);
-  void likePosts(cueentUserId, postId, bool like);
+  likePosts(cueentUserId,postId, bool like);
 }

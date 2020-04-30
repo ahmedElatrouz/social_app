@@ -42,8 +42,8 @@ PostRepository postRepository;
     return postRepository.getProfilPosts(talentId, postCount);
   }
 
-  void likePosts(cueentUserId, postId, bool like){
-    return likePosts(cueentUserId, postId, like);
+  likeProfilPosts(cueentUserId,postId, bool like){
+    return likeProfilPosts(cueentUserId, postId, like);
   }
 
 

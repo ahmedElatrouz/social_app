@@ -155,6 +155,7 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xFF009688).withOpacity(0.5),
         appBar: header(context, "profil"),
         body: isWaiting ? circularProgress() : profileView());
   }

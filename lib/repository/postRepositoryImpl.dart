@@ -117,7 +117,7 @@ class PostRepositoryImpl implements PostRepository {
       {String mediaUrl, String description, String currentTalentUid}) async {
     await this.createPost(Post(
       postId: postId,
-      // likes: {},
+      likes: {},
       date: new Timestamp.now(),
       description: description,
       photoUrl: mediaUrl,
@@ -171,17 +171,16 @@ class PostRepositoryImpl implements PostRepository {
     return posts; 
   }
 
-  
+
   //liking posts
-  void likePosts(cueentUserId, postId, bool like) async {
+  @override
+  likePosts(currentUserId,postId,bool like) async {
     try{
-    print(cueentUserId);
-    print(postId);
-    await postRef.document(postId).updateData({'likes.$cueentUserId':like});
+    await postRef.document(postId).updateData({'likes.$currentUserId':like});
     }
     catch(e){
       print(e);
-      print("problem hir");
+      print("problem here");
     }
   }
 }
