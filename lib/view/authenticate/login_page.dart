@@ -39,97 +39,101 @@ class _LoginPageState extends State<LoginPage> {
      
     return loading
       ? Loading()
-      : Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Form(
-              key: _formKey,
-              child: Container(
-                margin: EdgeInsets.only(top:100),
-                child: SingleChildScrollView(
-                      child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Log In',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.bold,
+      : Container(
+         decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/back.jpg'),fit: BoxFit.cover)
+      ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25),
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  margin: EdgeInsets.only(top:100),
+                  child: SingleChildScrollView(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          margin: EdgeInsets.only(top:100),
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
                             
-                          ),
-                        ),
-                        SizedBox(
-                          height: 100,
-                        ),
+                            
 
-                        CreateLogInField(
-                          type: "Email", 
-                          onChange: (val){ setState(() => email = val);}
-                          ),
+                            CreateLogInField(
+                              type: "Email", 
+                              onChange: (val){ setState(() => email = val);}
+                              ),
 
-                        SizedBox(
-                          height: 20,
-                        ),
-                        
+                            SizedBox(
+                              height: 20,
+                            ),
+                            
 
-                        CreateLogInField(
-                          type: "Password",
-                          onChange: (val){
-                            setState(() => password = val);}
-                          ),
+                            CreateLogInField(
+                              type: "Password",
+                              onChange: (val){
+                                setState(() => password = val);}
+                              ),
 
-                        SizedBox(
-                          height: 20,
-                        ),
-                        RaisedButton(
-                            highlightColor: Colors.blue,
-                            elevation: 5.0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
-                            color: Colors.lightBlueAccent,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 8),
-                              child: Text('Login',
-                                  style: TextStyle(
-                                      fontSize: 25.0, color: Colors.white)),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            RaisedButton(
+                                highlightColor: Colors.blue,
+                                elevation: 5.0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                color: Colors.lightBlueAccent,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40, vertical: 8),
+                                  child: Text('Login',
+                                      style: TextStyle(
+                                          fontSize: 25.0, color: Colors.white)),
+                                ),
+
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    //setState(() => loading = true );
+                                  List<Talent> test=await talentService.searchByName("sabo");
+                              int result=await talentService.signIn(
+                                "aelatrouz@gmail.com", "1234567");
+                              if(result==0){
+                                setState(() {
+                                  loading = false;
+                                  error = 'you have a problem in your email';
+                                });
+                              }
+                              else{
+                                setState(() {
+                                  Navigator.pushReplacementNamed(context, Home.id );
+                                    loading=false;
+                                });
+                                    
+                                  }
+                                  }
+                                }),
+
+                            SizedBox(
+                              height: 20,
                             ),
 
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                //setState(() => loading = true );
-                              List<Talent> test=await talentService.searchByName("sabo");
-                          int result=await talentService.signIn(
-                            "aelatrouz@gmail.com", "1234567");
-                          if(result==0){
-                            setState(() {
-                              loading = false;
-                              error = 'you have a problem in your email';
-                            });
-                          }
-                          else{
-                            setState(() {
-                              Navigator.pushReplacementNamed(context, Home.id );
-                                loading=false;
-                            });
-                                
-                              }
-                              }
-                            }),
-
-                        SizedBox(
-                          height: 20,
+                            Text( error , style: TextStyle(color: Colors.red,)),
+                          ]),
                         ),
-
-                        Text( error , style: TextStyle(color: Colors.red,)),
-                      ]),
+                  ),
                 ),
               ),
             ),
           ),
-        );  }
+      );  }
 
 
 
