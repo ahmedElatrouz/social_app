@@ -24,6 +24,7 @@ class _RecherchePageState extends State<RecherchePage> {
     return AppBar(
       backgroundColor:Colors.white,// Colors.white,
       title: TextFormField(
+        scrollPadding: EdgeInsets.all(0),
         controller: searchController,
         decoration: InputDecoration(
           focusColor: Colors.grey,
