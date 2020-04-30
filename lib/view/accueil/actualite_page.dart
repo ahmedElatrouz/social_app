@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/profil/post_widget.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
@@ -23,7 +24,8 @@ class _ActualitePageState extends State<ActualitePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isWaiting = true;
+    if(postWidgets.isEmpty)
+     isWaiting = true;
     getUserAndPosts();
   }
 
@@ -50,7 +52,7 @@ class _ActualitePageState extends State<ActualitePage> {
       setState(() {
         postWidgets.add(PostWidget(
           post: post,
-          poster: poster, context: context,
+          talent: poster,
         ));
       });
     }
@@ -77,7 +79,7 @@ class _ActualitePageState extends State<ActualitePage> {
   }
 }
 
-class PostWidget extends StatelessWidget {
+/*class PostWidget extends StatelessWidget {
   final Post post;
   final Talent poster;
 
@@ -159,3 +161,4 @@ class PostWidget extends StatelessWidget {
     );
   }
 }
+*/

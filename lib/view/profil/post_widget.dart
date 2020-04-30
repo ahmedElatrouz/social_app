@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
@@ -57,8 +58,9 @@ class _PostWidgetState extends State<PostWidget> {
   buildPostHeader() {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Colors.teal,
-      ),
+                  backgroundColor: Colors.transparent,
+                  backgroundImage:widget.talent.photo!=null?CachedNetworkImageProvider(widget.talent.photo):AssetImage('assets/images/ahmed.jpg') ,
+                  ),
       title: GestureDetector(
         child: Text(
           widget.talent.nom + ' ' + widget.talent.prenom,
