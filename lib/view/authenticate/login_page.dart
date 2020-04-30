@@ -7,7 +7,6 @@ import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/shared/loading.dart';
 import 'package:social_app/view/shared/reusable_text_field.dart';
 
-
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
 
@@ -15,18 +14,12 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-
-
-
 class _LoginPageState extends State<LoginPage> {
+  TalentService talentService = TalentService();
 
-
- TalentService talentService=TalentService();
-
-   
   //final TalentAuth _auth = TalentAuth();
   final _formKey = GlobalKey<FormState>();
-  
+
   String email = '';
   String password = '';
   String error = '';
@@ -36,108 +29,103 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-     
     return loading
-      ? Loading()
-      : Container(
-         decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/back.jpg'),fit: BoxFit.cover)
-      ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
-              child: Form(
-                key: _formKey,
-                child: Container(
-                  margin: EdgeInsets.only(top:100),
-                  child: SingleChildScrollView(
-                        child: Container(
-                          decoration: BoxDecoration(
+        ? Loading()
+        : Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/back.jpg'),
+                    fit: BoxFit.cover)),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: Form(
+                  key: _formKey,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 100),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          margin: EdgeInsets.only(top:100),
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            
-                            
-
-                            CreateLogInField(
-                              type: "Email", 
-                              onChange: (val){ setState(() => email = val);}
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        margin: EdgeInsets.only(top: 100),
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CreateLogInField(
+                                  type: "Email",
+                                  onChange: (val) {
+                                    setState(() => email = val);
+                                  }),
+                              SizedBox(
+                                height: 20,
                               ),
-
-                            SizedBox(
-                              height: 20,
-                            ),
-                            
-
-                            CreateLogInField(
-                              type: "Password",
-                              onChange: (val){
-                                setState(() => password = val);}
+                              CreateLogInField(
+                                  type: "Password",
+                                  onChange: (val) {
+                                    setState(() => password = val);
+                                  }),
+                              SizedBox(
+                                height: 20,
                               ),
-
-                            SizedBox(
-                              height: 20,
-                            ),
-                            RaisedButton(
-                                highlightColor: Colors.blue,
-                                elevation: 5.0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0)),
-                                color: Colors.lightBlueAccent,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 40, vertical: 8),
-                                  child: Text('Login',
-                                      style: TextStyle(
-                                          fontSize: 25.0, color: Colors.white)),
-                                ),
-
-                                onPressed: () async {
-                                  if (_formKey.currentState.validate()) {
-                                    //setState(() => loading = true );
-                                  List<Talent> test=await talentService.searchByName("sabo");
-                              int result=await talentService.signIn(
-                                "aelatrouz@gmail.com", "1234567");
-                              if(result==0){
-                                setState(() {
-                                  loading = false;
-                                  error = 'you have a problem in your email';
-                                });
-                              }
-                              else{
-                                setState(() {
-                                  Navigator.pushReplacementNamed(context, Home.id );
-                                    loading=false;
-                                });
-                                    
-                                  }
-                                  }
-                                }),
-
-                            SizedBox(
-                              height: 20,
-                            ),
-
-                            Text( error , style: TextStyle(color: Colors.red,)),
-                          ]),
-                        ),
+                              RaisedButton(
+                                  highlightColor: Colors.blue[900],
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  color: Colors.purple[200],
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 8),
+                                    child: Text('Login',
+                                        style: TextStyle(
+                                            fontSize: 25.0,
+                                            color: Colors.white)),
+                                  ),
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      //setState(() => loading = true );
+                                      List<Talent> test = await talentService
+                                          .searchByName("sabo");
+                                      int result = await talentService.signIn(
+                                          "aelatrouz@gmail.com", "1234567");
+                                      if (result == 0) {
+                                        setState(() {
+                                          loading = false;
+                                          error =
+                                              'you have a problem in your email';
+                                        });
+                                      } else {
+                                        setState(() {
+                                          Navigator.pushReplacementNamed(
+                                              context, Home.id);
+                                          loading = false;
+                                        });
+                                      }
+                                    }
+                                  }),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(error,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  )),
+                            ]),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-      );  }
+          );
+  }
 
-
-
-  @override 
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();

@@ -30,7 +30,7 @@ class _AuthenticateState extends State<Authenticate> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30,
-                  color: Colors.blueGrey,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 )
               ),
@@ -43,15 +43,16 @@ class _AuthenticateState extends State<Authenticate> {
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Material(
                   
-                  elevation: 5,
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.lightBlueAccent,
+                  elevation: 10,
+                  
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.purple[300],
                   child: MaterialButton(
-                      height: 45,
+                      height: 60,
                       child: Text('Log in',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 28,
+                            fontSize: 24,
                           )),
                       onPressed: () {
                         Navigator.pushNamed(context, LoginPage.id);
@@ -63,15 +64,15 @@ class _AuthenticateState extends State<Authenticate> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Material(
-                  elevation: 5,
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.blue,
+                  color:Colors.blue[700],
+                  elevation: 10,
+                  borderRadius: BorderRadius.circular(10),
                   child: MaterialButton(
-                      height: 45,
+                      height: 60,
                       child: Text('Register',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 28,
+                            fontSize: 24,
                           )),
                       onPressed: () {
                         Navigator.pushNamed(context, Register.id);
