@@ -32,14 +32,13 @@ class _ProfilPageState extends State<ProfilPage> {
     super.initState();
     isWaiting = true;
     getProfilElements();
+    
   }
 
   getProfilElements() async {
     await getTalent();
     await getProfilPosts();
-    setState(() {
-      isWaiting = false;
-    });
+    
   }
 
   getTalent() async {
@@ -53,6 +52,9 @@ class _ProfilPageState extends State<ProfilPage> {
   getProfilPosts() async {
     try {
       posts = await postService.getProfilPosts(talent.uid, postCount);
+      setState(() {
+        isWaiting = false;
+      });
     } catch (e) {
       print(e);
     }

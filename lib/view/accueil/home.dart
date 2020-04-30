@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:social_app/model/Talent.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
 import 'package:social_app/view/profil/profil_page.dart';
-import 'package:social_app/view/shared/progress.dart';
 
 import 'actualite_page.dart';
 
