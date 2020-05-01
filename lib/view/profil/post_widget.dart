@@ -9,8 +9,10 @@ import 'package:social_app/view/shared/custom_image.dart';
 class PostWidget extends StatefulWidget {
   final Talent talent;
   final Post post;
+  final Talent poster;
 
   PostWidget({
+    this.poster,
     @required this.talent,
     @required this.post,
   });
@@ -33,7 +35,6 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   void initState() {
-    print(isLiked);
     checkTalent();
     super.initState();
   }
@@ -49,7 +50,6 @@ class _PostWidgetState extends State<PostWidget> {
           isLiked = false;
           widget.post.likes[talent0.uid] = false;
         });
-        print(widget.post.likes);
       } catch (e) {
         print(e);
       }
@@ -60,8 +60,7 @@ class _PostWidgetState extends State<PostWidget> {
         setState(() {
           isLiked = true;
           widget.post.likes[talent0.uid] = true;
-        });
-        print(widget.post.likes);
+        }); 
       } catch (e) {
         print(e);
       }
@@ -72,13 +71,13 @@ class _PostWidgetState extends State<PostWidget> {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.transparent,
-        backgroundImage: widget.talent.photo != ''
-            ? CachedNetworkImageProvider(widget.talent.photo)
+        backgroundImage: widget.poster.photo != ''
+            ? CachedNetworkImageProvider(widget.poster.photo)
             : AssetImage('assets/images/ahmed.jpg'),
       ),
       title: GestureDetector(
         child: Text(
-          widget.talent.nom + ' ' + widget.talent.prenom,
+          widget.poster.nom + ' ' + widget.poster.prenom,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -138,7 +137,8 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    isLiked = (widget.post.likes[talent0.uid] == true);
+    isLiked = (widget.post.likes[talent0.uid] == true) || (widget.post.likes[widget.talent.uid] == true);
+    print(isLiked);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),

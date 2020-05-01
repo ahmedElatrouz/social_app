@@ -170,6 +170,21 @@ class PostRepositoryImpl implements PostRepository {
     }
     return posts; 
   }
+  //allPosts
+  @override
+  Future<List<Post>> getallPosts() async {
+  List<Post> posts = [];
+  try {
+    var snapshot = await postRef
+        .orderBy("date", descending: true)
+        .getDocuments();
+    posts = snapshot.documents.map((doc) => Post.fromMap(doc.data)).toList();
+  } catch (e) {
+    print(e);
+    return null;
+  }
+  return posts; 
+}
 
 
   //liking posts

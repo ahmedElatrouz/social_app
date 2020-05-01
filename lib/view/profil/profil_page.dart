@@ -43,7 +43,6 @@ class _ProfilPageState extends State<ProfilPage> {
     description = talent.description;
     photoUrl = talent.photo;
     getProfilPosts();
-    print(photoUrl);
   }
 
   getProfilPosts() async {
@@ -69,6 +68,7 @@ class _ProfilPageState extends State<ProfilPage> {
           PostWidget(
             post: posts[i],
             talent: talent,
+            poster: talent,
           )
       ],
     );
@@ -101,7 +101,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black38)),
             Text(description,
-                style: TextStyle(
+                style: TextStyle( 
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87)),

@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/profil/post_widget.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
-final postRef = Firestore.instance.collection('Posts');
 
 class ActualitePage extends StatefulWidget {
   static const String id = 'actualite_page';
@@ -20,6 +19,7 @@ class _ActualitePageState extends State<ActualitePage> {
   Talent talent;
   List<Post> usersPosts = [];
   List<PostWidget> postWidgets = [];
+  PostService postService = PostService();
   @override
   void initState() {
     super.initState();
@@ -27,37 +27,26 @@ class _ActualitePageState extends State<ActualitePage> {
      isWaiting = true;
     getUserAndPosts();
   }
-  /*@override
-  dispose(){
-    
-  } */
 
   getUserAndPosts() async {
     talent = await TalentService().getCurrentUser();
-    var doc = await postRef.
-    orderBy("date", descending: true).
-    getDocuments();
-
-    List<Post> posts =
-        doc.documents.map((doc) => Post.fromMap(doc.data)).toList();
-    for (Post post in posts) {
-      //print(post.description);
-      usersPosts.add(post);
-    }
-    if (posts.isEmpty) print('noooo postsss');
+    usersPosts = await postService.getallPosts();
+    if (usersPosts.isEmpty) print('noooo postsss');
     await generateList();
     setState(() {
       isWaiting = false;
     });
   }
 
-  generateList() async {
+  generateList() async { 
     for (Post post in usersPosts) {
        Talent poster=await TalentService().searchById(post.talentId);
+
       setState(() {
         postWidgets.add(PostWidget(
           post: post,
-          talent: poster,
+          talent: talent,
+          poster: poster,
         ));
       });
     }
@@ -72,6 +61,9 @@ class _ActualitePageState extends State<ActualitePage> {
       );
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,6 +75,19 @@ class _ActualitePageState extends State<ActualitePage> {
                 ));
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*class PostWidget extends StatelessWidget {
   final Post post;

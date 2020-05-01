@@ -11,4 +11,5 @@ abstract class PostRepository {
   handleSubmitVideo(video, captionController,currentTalentUid);
   Future<List<Post>> getProfilPosts(talentId , postCount);
   likePosts(cueentUserId,postId, bool like);
+  Future<List<Post>> getallPosts();
 }

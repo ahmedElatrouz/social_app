@@ -46,6 +46,10 @@ PostRepository postRepository;
     return postRepository.likePosts(cueentUserId, postId, like);
   }
 
+  Future<List<Post>> getallPosts(){
+    return postRepository.getallPosts();
+  }
+
 
 
 
