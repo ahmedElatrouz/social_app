@@ -5,7 +5,6 @@ import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/profil/post_widget.dart';
-import 'package:social_app/view/profil/upload_post_page.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
@@ -27,7 +26,6 @@ class _ProfilPageState extends State<ProfilPage> {
   String nationalite = '';
   String description = '';
   String photoUrl = ' ';
-  
 
   @override
   initState() {
@@ -36,17 +34,16 @@ class _ProfilPageState extends State<ProfilPage> {
     getProfileContent();
   }
 
-
   getProfileContent() async {
-      talent = await talentService.getCurrentUser();
-      nom = talent.nom;
-      prenom = talent.prenom;
-      email = talent.email;
-      nationalite = talent.nationalite;
-      description = talent.description;
-      photoUrl = talent.photo;
-      getProfilPosts();
-      print(photoUrl);
+    talent = await talentService.getCurrentUser();
+    nom = talent.nom;
+    prenom = talent.prenom;
+    email = talent.email;
+    nationalite = talent.nationalite;
+    description = talent.description;
+    photoUrl = talent.photo;
+    getProfilPosts();
+    print(photoUrl);
   }
 
   getProfilPosts() async {
@@ -88,9 +85,9 @@ class _ProfilPageState extends State<ProfilPage> {
                   bottomRight: const Radius.circular(60.0))),
           child: Column(children: <Widget>[
             CircleAvatar(
-                  backgroundImage:photoUrl !=''
-                  ?CachedNetworkImageProvider(photoUrl)
-                  :AssetImage('assets/images/ahmed.jpg'),
+              backgroundImage: photoUrl != ''
+                  ? CachedNetworkImageProvider(photoUrl)
+                  : AssetImage('assets/images/ahmed.jpg'),
               radius: 60,
             ),
             SizedBox(
@@ -122,30 +119,24 @@ class _ProfilPageState extends State<ProfilPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 30),
-              /*child: RaisedButton(
-                highlightColor: Colors.blue,
-                elevation: 5.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0)),
-                color: Colors.blueGrey,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => UploadPost(
-                                currentTalent: talent,
-                              )));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    'new post',
-                    style: TextStyle(fontSize: 25),
-                  ),
+                height: 60,
+                width: 350,
+                margin: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.blueGrey, width: 1),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-              ),*/
-            )
+                child:
+                    Padding(padding: const EdgeInsets.all(20),
+                     child: InkWell(
+                       child: Row(
+                         children: <Widget>[
+                         ],
+                       )
+                     ))
+
+                )
           ],
         ),
         Divider(

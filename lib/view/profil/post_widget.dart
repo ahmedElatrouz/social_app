@@ -22,16 +22,18 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   PostService postService = PostService();
   TalentService talentService = TalentService();
+  List<Talent> talents = [];
   bool isLiked;
   Talent talent0 = Talent();
 
   checkTalent() async {
     talent0 = await talentService.getCurrentUser();
-    print(talent0.uid);
     }
+
 
   @override
   void initState() {
+    print(isLiked);
     checkTalent();
     super.initState();
   }
@@ -136,7 +138,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    isLiked = (widget.post.likes[talent0.uid] == true) ;
+    isLiked = (widget.post.likes[talent0.uid] == true);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
