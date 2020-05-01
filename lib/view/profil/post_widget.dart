@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
+import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/custom_image.dart';
-
 
 class PostWidget extends StatefulWidget {
   final Talent talent;
   final Post post;
 
-  PostWidget({@required this.talent, @required this.post});
+  PostWidget({
+    @required this.talent,
+    @required this.post,
+  });
 
   @override
   _PostWidgetState createState() => _PostWidgetState();
@@ -18,39 +21,47 @@ class PostWidget extends StatefulWidget {
 
 class _PostWidgetState extends State<PostWidget> {
   PostService postService = PostService();
+  TalentService talentService = TalentService();
   bool isLiked;
+  Talent talent0 = Talent();
+
+  checkTalent() async {
+    talent0 = await talentService.getCurrentUser();
+    print(talent0.uid);
+    }
+
+  @override
+  void initState() {
+    checkTalent();
+    super.initState();
+  }
 
   handleLikePost() async {
-    bool _isliked = widget.post.likes[widget.talent.uid] == true;
-    String talentId = widget.talent.uid;
-    String postId = widget.post.postId;
-
-    if (_isliked) {
+    bool _isLiked = (widget.post.likes[talent0.uid] == true);
+     
+    if (_isLiked) {
       try {
-        await postService.likeProfilPosts(talentId, postId, false);
+        await postService.likeProfilPosts(
+            talent0.uid, widget.post.postId, false);
         setState(() {
           isLiked = false;
-          widget.post.likes[widget.talent.uid] = false;
+          widget.post.likes[talent0.uid] = false;
         });
         print(widget.post.likes);
-      } 
-      catch (e) {
-        print(e);
-        print('over here');
-      }
-    } 
-    
-    else if(!_isliked) {
-      try {
-        await postService.likeProfilPosts(talentId, postId, true);
-        setState(() {
-          isLiked = true;
-          widget.post.likes[widget.talent.uid] = true;
-        });
-         print(widget.post.likes);
       } catch (e) {
         print(e);
-        print('over here 2');
+      }
+    } else if (!_isLiked) {
+      try {
+        await postService.likeProfilPosts(
+            talent0.uid, widget.post.postId, true);
+        setState(() {
+          isLiked = true;
+          widget.post.likes[talent0.uid] = true;
+        });
+        print(widget.post.likes);
+      } catch (e) {
+        print(e);
       }
     }
   }
@@ -58,9 +69,11 @@ class _PostWidgetState extends State<PostWidget> {
   buildPostHeader() {
     return ListTile(
       leading: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  backgroundImage:widget.talent.photo!=null?CachedNetworkImageProvider(widget.talent.photo):AssetImage('assets/images/ahmed.jpg') ,
-                  ),
+        backgroundColor: Colors.transparent,
+        backgroundImage: widget.talent.photo != ''
+            ? CachedNetworkImageProvider(widget.talent.photo)
+            : AssetImage('assets/images/ahmed.jpg'),
+      ),
       title: GestureDetector(
         child: Text(
           widget.talent.nom + ' ' + widget.talent.prenom,
@@ -123,7 +136,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-   isLiked = (widget.post.likes[widget.talent.uid] == true);
+    isLiked = (widget.post.likes[talent0.uid] == true) ;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
