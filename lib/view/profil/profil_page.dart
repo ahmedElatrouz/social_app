@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
@@ -14,39 +15,38 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+  Talent talent = Talent();
   bool isWaiting = false;
-  Talent talent = new Talent(
-      nom: 'ahmed',
-      prenom: 'ksjfkd',
-      email: "sldknfks",
-      nationalite: 'ojifkspo',
-      genre: 'olfkjlz');
   TalentService talentService = TalentService();
-
   List<Post> posts = [];
   PostService postService = PostService();
   int postCount = 0;
+  String nom = '';
+  String prenom = '';
+  String email = '';
+  String nationalite = '';
+  String description = '';
+  String photoUrl = ' ';
+  
 
   @override
   initState() {
     super.initState();
     isWaiting = true;
-    getProfilElements();
-    
+    getProfileContent();
   }
 
-  getProfilElements() async {
-    await getTalent();
-    await getProfilPosts();
-    
-  }
 
-  getTalent() async {
-    try {
+  getProfileContent() async {
       talent = await talentService.getCurrentUser();
-    } catch (e) {
-      print(e);
-    }
+      nom = talent.nom;
+      prenom = talent.prenom;
+      email = talent.email;
+      nationalite = talent.nationalite;
+      description = talent.description;
+      photoUrl = talent.photo;
+      getProfilPosts();
+      print(photoUrl);
   }
 
   getProfilPosts() async {
@@ -88,20 +88,22 @@ class _ProfilPageState extends State<ProfilPage> {
                   bottomRight: const Radius.circular(60.0))),
           child: Column(children: <Widget>[
             CircleAvatar(
-              backgroundImage: AssetImage('assets/images/3.jpg'),
+                  backgroundImage:photoUrl !=''
+                  ?CachedNetworkImageProvider(photoUrl)
+                  :AssetImage('assets/images/ahmed.jpg'),
               radius: 60,
             ),
             SizedBox(
               height: 8,
             ),
-            Text(talent.nom + ' ' + talent.prenom,
+            Text(nom + ' ' + prenom,
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-            Text(talent.email + ', ' + talent.nationalite,
+            Text(email + ', ' + nationalite,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black38)),
-            Text(talent.description,
+            Text(description,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -120,8 +122,8 @@ class _ProfilPageState extends State<ProfilPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: RaisedButton(
+              padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 30),
+              /*child: RaisedButton(
                 highlightColor: Colors.blue,
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
@@ -142,7 +144,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
-              ),
+              ),*/
             )
           ],
         ),

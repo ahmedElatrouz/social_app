@@ -48,5 +48,8 @@ class TalentService {
     return talentRepository.searchById(id);
   }
   
+  Future<List<Talent>> allTalents(){
+    return talentRepository.allTalents();
+  }
 
 }

@@ -13,5 +13,6 @@ abstract class TalentRepository {
   Future<List<Talent>> searchByCategorie(Categorie categorie);
   Future<Talent> getCurrentTalent();
   Future signOut();
+  Future<List<Talent>> allTalents();
   
 }

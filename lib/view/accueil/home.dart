@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_app/model/Talent.dart';
+import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/annonce_page.dart';
 import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
 import 'package:social_app/view/accueil/recommandations_page.dart';
 import 'package:social_app/view/profil/profil_page.dart';
+import 'package:social_app/view/profil/upload_post_page.dart';
 
 import 'actualite_page.dart';
 
@@ -21,10 +24,17 @@ class _HomeState extends State<Home> {
   PageController pageController;
   int pageIndex = 0;
   bool isContentLoaded=false;
+  Talent talent = Talent();
+  TalentService talentService = TalentService();
 
+  checkTalent() async {
+  talent = await talentService.getCurrentUser();
+  print(talent.uid);
+  }
   @override
   void initState() {
     super.initState();
+    checkTalent();
     pageController = PageController(
       initialPage: 0,
     );
@@ -41,6 +51,7 @@ class _HomeState extends State<Home> {
               ActualitePage(),
              // NotificationPage(),
               ProfilPage(),
+              UploadPost(currentTalent: talent,),
               AnnoncePage(),
               //RecherchePage(),
               //RecommandationsPage(),
@@ -65,6 +76,8 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.home), title: Text('Accueil')),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle), title: Text('Profile')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add_photo_alternate), title: Text('Post')),
             BottomNavigationBarItem(
                 icon: Icon(Icons.work), title: Text('Annonces')),
             //BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Recommandation')),

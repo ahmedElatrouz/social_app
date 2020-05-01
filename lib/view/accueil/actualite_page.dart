@@ -22,25 +22,26 @@ class _ActualitePageState extends State<ActualitePage> {
   List<PostWidget> postWidgets = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if(postWidgets.isEmpty)
      isWaiting = true;
     getUserAndPosts();
   }
-  @override
+  /*@override
   dispose(){
     
-  }
+  } */
 
   getUserAndPosts() async {
     talent = await TalentService().getCurrentUser();
-    var doc = await postRef.getDocuments();
+    var doc = await postRef.
+    orderBy("date", descending: true).
+    getDocuments();
 
     List<Post> posts =
         doc.documents.map((doc) => Post.fromMap(doc.data)).toList();
     for (Post post in posts) {
-      print(post.description);
+      //print(post.description);
       usersPosts.add(post);
     }
     if (posts.isEmpty) print('noooo postsss');

@@ -83,6 +83,20 @@ class TalentRepositoryImpl implements TalentRepository  {
    return talents;
   }
 
+    @override
+  Future<List<Talent>> allTalents()async{
+    List<Talent> talents=[];
+    try{
+        var users=await usersRef.getDocuments();
+        talents=users.documents.map((doc)=>Talent.fromMap(doc.data)).toList();
+    }catch(e){
+      print(e);
+    }
+   return talents;
+  }
+
+  
+
   @override
   Future<List<Talent>> searchByCategorie(Categorie categorie)async {
     List<Talent> talents=[];

@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                                       List<Talent> test = await talentService
                                           .searchByName("sabo");
                                       int result = await talentService.signIn(
-                                          "aelatrouz@gmail.com", "1234567");
+                                          "dafaliyoussef@email.com", "123456");
                                       if (result == 0) {
                                         setState(() {
                                           loading = false;
