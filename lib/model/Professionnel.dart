@@ -36,6 +36,27 @@ class Professionnel extends Utilisateur {
     };
   }
 
+
+
+/*static Talent fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+  
+    return Talent(
+      uid:map['uid'],
+      email:map['email'],
+      nom:map['nom'],
+      prenom:map['prenom'],
+      description:map['description'],
+      password:map['password'],
+      genre:map['genre'],
+      photo:map['photoUrl'],
+      video:map['videoUrl'],
+      nationalite: map['nationalite'],
+      //age: int.tryParse(map['age']),
+     // Categorie categorie.fromMap(map['']),
+    //  List<Post>.from(map['posts']?.map((x) => Post.fromMap(x))),
+    );
+  }*/
   static Professionnel fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 

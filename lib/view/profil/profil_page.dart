@@ -69,7 +69,7 @@ class _ProfilPageState extends State<ProfilPage> {
           PostWidget(
             post: posts[i],
             talent: talent,
-            poster: talent,
+          //  poster: talent,
           )
       ],
     );
