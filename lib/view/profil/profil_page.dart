@@ -48,6 +48,7 @@ class _ProfilPageState extends State<ProfilPage> {
   getProfilPosts() async {
     try {
       posts = await postService.getProfilPosts(talent.uid, postCount);
+      postCount = posts.length;
       setState(() {
         isWaiting = false;
       });
@@ -87,7 +88,7 @@ class _ProfilPageState extends State<ProfilPage> {
             CircleAvatar(
               backgroundImage: photoUrl != ''
                   ? CachedNetworkImageProvider(photoUrl)
-                  : AssetImage('assets/images/ahmed.jpg'),
+                  : AssetImage('assets/images/user_icon.png'),
               radius: 60,
             ),
             SizedBox(
@@ -101,7 +102,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black38)),
             Text(description,
-                style: TextStyle( 
+                style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87)),
@@ -115,32 +116,54 @@ class _ProfilPageState extends State<ProfilPage> {
             )
           ]),
         ),
+        
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
                 height: 60,
-                width: 350,
+                width: 392,
                 margin: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.blueGrey, width: 1),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                child:
-                    Padding(padding: const EdgeInsets.all(20),
-                     child: InkWell(
-                       child: Row(
-                         children: <Widget>[
-                         ],
-                       )
-                     ))
-
-                )
+                child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: InkWell(
+                        child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Posts :',
+                          style: TextStyle(
+                              fontSize: 22),
+                        ),
+                        SizedBox(width: 10,),
+                        Text(
+                          postCount.toString(),
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 110,),
+                        VerticalDivider(
+                          color: Colors.black54,
+                          width: 2,
+                        ),
+                        SizedBox(width: 10,),
+                        RaisedButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.add_a_photo),
+                            label: Text(
+                              'profil picture',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                              ),
+                            ))
+                      ],
+                    ))))
           ],
-        ),
-        Divider(
-          height: 0.0,
         ),
         buildProfilPost()
       ],
