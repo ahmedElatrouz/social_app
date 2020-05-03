@@ -38,6 +38,7 @@ class _HomeState extends State<Home> {
   ProfessionelService proService = ProfessionelService();
   List<Widget> talentPages=[];
   List<Widget> proPages=[];
+
   List<BottomNavigationBarItem> talentNavigationBar=[BottomNavigationBarItem(
                 icon: Icon(Icons.home), title: Text('Accueil')),
             BottomNavigationBarItem(
@@ -52,9 +53,9 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle), title: Text('Profile')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.add_photo_alternate), title: Text('Annonce')),
+                icon: Icon(Icons.add_box), title: Text('Publier Annonce')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.work), title: Text('Recherche')),];
+                icon: Icon(Icons.search), title: Text('Recherche')),];
 
 
 
@@ -63,9 +64,13 @@ class _HomeState extends State<Home> {
   talent = await talentService.getCurrentUser();
   print(talent.uid);
   }
+
+
   checkPro() async {
   pro = await proService.getCurrentUser();
   }
+
+
   @override
   void initState() {
     super.initState();

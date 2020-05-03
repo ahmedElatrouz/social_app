@@ -2,10 +2,10 @@ import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/repository/annonceRepository.dart';
 import 'package:social_app/repository/annonceRepositoryImpl.dart';
 
-class AnnoonceService {
+class AnnonceService {
   AnnonceRepository annonceRepository;
 
-  AnnoonceService() {
+  AnnonceService() {
     annonceRepository = AnnonceRepositoryImpl();
   }
 
