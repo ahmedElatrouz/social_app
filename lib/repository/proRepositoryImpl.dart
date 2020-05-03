@@ -4,7 +4,7 @@ import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/repository/proRepository.dart';
 
 
-final userRef=Firestore.instance.collection('Professionels');
+final userRef=Firestore.instance.collection('Professionnels');
 final FirebaseAuth auth = FirebaseAuth.instance;
 
 

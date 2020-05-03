@@ -6,6 +6,7 @@ import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
 
 class ProProfilPage extends StatefulWidget {
+  static const String id = 'proProfilPage';
   @override
   _ProProfilPageState createState() => _ProProfilPageState();
 }
@@ -33,14 +34,14 @@ class _ProProfilPageState extends State<ProProfilPage> {
   getProfileContent() async {
    
      
-     talent = await talentService.getCurrentUser();
+     pro = await professionelService.getCurrentUser();
 // pro = await professionelService.getCurrentUser();
  
+    if(pro.nom!=null)nom = pro.nom;
     nom = pro.nom;
-    nom = talent.nom;
-    prenom = talent.prenom;
-    email = talent.email;
-    nationalite = talent.nationalite;
+    prenom = pro.prenom;
+    email = pro.email;
+    nationalite = pro.nationalite;
     setState((){
     isWaiting=false;
    });                   
@@ -127,7 +128,7 @@ class _ProProfilPageState extends State<ProProfilPage> {
 
 
               Text(
-                'Morocco',
+                nationalite,
                 style: TextStyle(
                     fontSize: 15.0,
                     fontStyle: FontStyle.italic,
@@ -202,21 +203,3 @@ class _ProProfilPageState extends State<ProProfilPage> {
   }
 }
 
-class GetClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = new Path();
-
-    path.lineTo(0.0, size.height);
-    path.lineTo(size.width + 125, size.height);
-    path.lineTo(size.width, 0.0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
-    return true;
-  }
-}
