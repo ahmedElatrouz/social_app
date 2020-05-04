@@ -21,11 +21,10 @@ class Annonce {
 
   static Annonce fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-
     return Annonce(
       id: map['uid'],
       description: map['description'],
-      date: map['date'],
+      date:DateTime.tryParse(map['date'].toString()) ,
       proRef: map['profRef'],
     );
   }

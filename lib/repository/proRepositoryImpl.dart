@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/repository/proRepository.dart';
 
 
-final userRef=Firestore.instance.collection('Professionels');
-
+final userRef=Firestore.instance.collection('Professionnels');
+final FirebaseAuth auth = FirebaseAuth.instance;
 
 
 class ProfessionelRepositoryImpl implements ProfessionnelRepository{
@@ -38,6 +39,14 @@ class ProfessionelRepositoryImpl implements ProfessionnelRepository{
     }
     return r;
   }
+  @override
+   Future<bool> exists(String id)async{
+      final doc= await userRef.document(id).get();
+      if(!doc.exists){
+        return false;
+      }
+      return true;
+  }
 
 
     @override
@@ -55,7 +64,26 @@ class ProfessionelRepositoryImpl implements ProfessionnelRepository{
     return r;
   }
 
+  @override
+  Future<Professionnel> getCurrentTalent() {
+    // TODO: implement getCurrentTalent
+    return null;
+  }
 
+   @override
+  Future<Professionnel> getCurrentPro() async{
+    
+    Professionnel pro;
+    FirebaseUser user = await auth.currentUser();
+   
+    try{
+      var doc = await userRef.document(user.uid).get();
+          pro =Professionnel.fromMap(doc.data);
+    }catch(e){
+      print(e);
+    }
+    return pro;
+  }
 
 
 }

@@ -35,6 +35,10 @@ class TalentService {
 
   }
 
+  Future<bool> exists(String id){
+    return talentRepository.exists(id);
+  }
+
   Future<int> signIn(String email,String password){
     Future<int> result=talentRepository.signIn(email, password);
     return result;

@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/annonce_page.dart';
-import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
-import 'package:social_app/view/accueil/recommandations_page.dart';
+import 'package:social_app/view/profil/pro_profile_page.dart';
 import 'package:social_app/view/profil/profil_page.dart';
 import 'package:social_app/view/profil/upload_post_page.dart';
+import 'package:social_app/view/shared/constants.dart';
 
+import 'ajouter_annonce_page.dart';
 import 'actualite_page.dart';
 
 class Home extends StatefulWidget {
   static const String id = 'home';
+  final UserType userType;
+
+  const Home({@required this.userType}) ;
   @override
   _HomeState createState() => _HomeState();
 }
@@ -25,16 +31,61 @@ class _HomeState extends State<Home> {
   int pageIndex = 0;
   bool isContentLoaded=false;
   Talent talent = Talent();
+  Professionnel pro=Professionnel();
   TalentService talentService = TalentService();
+  ProfessionelService proService = ProfessionelService();
+  List<Widget> talentPages=[];
+  List<Widget> proPages=[];
+
+  List<BottomNavigationBarItem> talentNavigationBar=[BottomNavigationBarItem(
+                icon: Icon(Icons.home), title: Text('Accueil')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle), title: Text('Profile')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add_photo_alternate), title: Text('Post')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.work), title: Text('Annonces')),];
+  
+  
+  List<BottomNavigationBarItem> proNavigationBar=[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle), title: Text('Profile')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add_box), title: Text('Publier Annonce')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search), title: Text('Recherche')),];
+
+
+
 
   checkTalent() async {
   talent = await talentService.getCurrentUser();
   print(talent.uid);
   }
+
+
+  checkPro() async {
+  pro = await proService.getCurrentUser();
+  }
+
+
   @override
   void initState() {
     super.initState();
-    checkTalent();
+    widget.userType==UserType.talent?checkTalent():checkPro();
+
+    talentPages=[
+              ActualitePage(),
+              ProfilPage(),
+              UploadPost(currentTalent: talent,),
+              AnnoncePage(),];
+    
+    proPages=[
+      ProProfilPage(),
+      AjouterAnnoncePage(),
+      RecherchePage(),
+
+    ];
     pageController = PageController(
       initialPage: 0,
     );
@@ -47,15 +98,7 @@ class _HomeState extends State<Home> {
  Widget homeContent(){
     return Scaffold(
       body: PageView(
-            children: <Widget>[
-              ActualitePage(),
-             // NotificationPage(),
-              ProfilPage(),
-              UploadPost(currentTalent: talent,),
-              AnnoncePage(),
-              //RecherchePage(),
-              //RecommandationsPage(),
-            ],
+            children: widget.userType==UserType.talent?talentPages:proPages,
             controller: pageController,
             onPageChanged: onPageChanged,
             physics: NeverScrollableScrollPhysics(),
@@ -71,17 +114,7 @@ class _HomeState extends State<Home> {
           onTap: onTap,
           unselectedItemColor: Colors.black,
           selectedItemColor: Colors.lightBlueAccent,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text('Accueil')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), title: Text('Profile')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.add_photo_alternate), title: Text('Post')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.work), title: Text('Annonces')),
-            //BottomNavigationBarItem(icon: Icon(Icons.star),title: Text('Recommandation')),
-          ],
+          items:  widget.userType==UserType.talent?talentNavigationBar:proNavigationBar,
         ),
       ),
     );

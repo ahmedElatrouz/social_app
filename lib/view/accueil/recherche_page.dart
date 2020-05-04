@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/profil/other_profile.dart';
 import 'package:social_app/view/shared/progress.dart';
 
 class RecherchePage extends StatefulWidget {
@@ -22,7 +23,9 @@ class _RecherchePageState extends State<RecherchePage> {
   TalentService talentService=TalentService();
   AppBar rechercheTextWidget() {
     return AppBar(
-      backgroundColor:Colors.white,// Colors.white,
+      backgroundColor:Colors.white,
+      //actions: <Widget>[null],// Colors.white,
+      automaticallyImplyLeading: false,
       title: TextFormField(
         scrollPadding: EdgeInsets.all(0),
         controller: searchController,
@@ -57,7 +60,7 @@ class _RecherchePageState extends State<RecherchePage> {
   }
 
   createList(String value) async {
-    List<Talent> talents = await Provider.of<TalentService>(context).searchByName(value);
+    List<Talent> talents = await TalentService().searchByName(value);
     List<ResultWidget> list = [];
     for (Talent t in talents) {
       list.add(ResultWidget(user: t,));
@@ -97,7 +100,7 @@ class _RecherchePageState extends State<RecherchePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       appBar: rechercheTextWidget(),
       body:isNoContentWidget() ? noContentWidget() : existContentWidget(),
     );
@@ -105,7 +108,7 @@ class _RecherchePageState extends State<RecherchePage> {
 
 
   bool isNoContentWidget(){
-    if(isWaiting) return false;
+    if(isWaiting==true) return false;
     if(rechercheResult.isEmpty) return true;
      return false;
   }
@@ -142,11 +145,11 @@ class ResultWidget extends StatelessWidget {
       child: Column(
         children:<Widget>[
           GestureDetector(
-              onTap:()=> print("go to this profil"),
+              onTap:()=> Navigator.pushNamed(context, OtherProfile.id),
               child: ListTile(
                 leading:CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  backgroundImage:user.photo!=null?CachedNetworkImageProvider(user.photo):AssetImage('assets/images/ahmed.jpg') ,
+                  backgroundImage:user.photo!=null && user.photo.isNotEmpty?CachedNetworkImageProvider(user.photo):AssetImage('assets/images/ahmed.jpg') ,
                   ),
                   title: Text(
                     user.nom,

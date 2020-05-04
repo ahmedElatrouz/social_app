@@ -62,21 +62,23 @@ class TalentRepositoryImpl implements TalentRepository {
     return r;
   }
 
-  Future<bool> exists(String id) async {
-    final doc = await usersRef.document(id).get();
-    if (!doc.exists) {
-      return false;
-    }
-    return true;
+  @override
+  Future<bool> exists(String id)async{
+      final doc= await usersRef.document(id).get();
+      if(!doc.exists){
+        return false;
+      }
+      return true;
   }
 
   @override
-  Future<List<Talent>> searchByName(String name) async {
-    List<Talent> talents = [];
-    try {
-      var users = await usersRef.where("nom", isEqualTo: name).getDocuments();
-      talents = users.documents.map((doc) => Talent.fromMap(doc.data)).toList();
-    } catch (e) {
+  Future<List<Talent>> searchByName(String name)async{
+
+    List<Talent> talents=[];
+    try{
+        var users=await usersRef.where("nom",isGreaterThanOrEqualTo: name).getDocuments();
+        talents=users.documents.map((doc)=>Talent.fromMap(doc.data)).toList();
+    }catch(e){
       print(e);
     }
     return talents;
@@ -152,9 +154,9 @@ class TalentRepositoryImpl implements TalentRepository {
     }
   }
 
-  Talent _talentFromFirebaseUser(FirebaseUser user) {
+  /*Talent _talentFromFirebaseUser(FirebaseUser user) {
     return user != null ? Talent(uid: user.uid) : null;
-  }
+  }*/
 
   @override
   Future<Talent> searchById(String id) async {
