@@ -61,7 +61,7 @@ class TalentRepositoryImpl implements TalentRepository  {
     return r;
   }
 
-  
+  @override
   Future<bool> exists(String id)async{
       final doc= await usersRef.document(id).get();
       if(!doc.exists){

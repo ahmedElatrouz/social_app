@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                                         });
                                       } else {
                                         setState(() async {
-                                         await TalentRepositoryImpl().exists(await TalentRepositoryImpl().getcurrentUserUid())?Navigator.pushReplacementNamed(
+                                         await TalentService().exists(await TalentRepositoryImpl().getcurrentUserUid())?Navigator.pushReplacementNamed(
                                               context, Home.id,arguments: UserType.talent): Navigator.pushReplacementNamed(
                                               context,Home.id,arguments: UserType.professionnel );
                                           loading = false;

@@ -20,4 +20,12 @@ class AnnonceService {
   Future<int> deleteAnnonce(String id) {
     return annonceRepository.deleteAnnonce(id);
   }
+
+  Future<List<Annonce>> searchByUser(String id){
+    return annonceRepository.searchByUser(id);
+  }
+
+  Future<List<Annonce>> getAnnoncesByPro(String id){
+    return annonceRepository.searchByUser(id);
+  }
 }

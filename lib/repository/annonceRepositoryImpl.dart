@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/repository/annonceRepository.dart';
 import 'package:social_app/repository/proRepositoryImpl.dart';
+import 'package:social_app/services/professionelService.dart';
 
 
 
@@ -50,6 +51,27 @@ class AnnonceRepositoryImpl implements AnnonceRepository{
       print(e);
     }
     return r;
+  }
+
+
+
+
+   @override
+  Future<List<Annonce>> searchByUser(String id) async {
+    //if (await ProfessionelService().exists(id) == false) return null;
+   List<Annonce> annonces = [];
+    try {
+      var snapshot = await annRef
+          .where("profRef", isEqualTo: id)
+          //.orderBy("date", descending: true)
+          .getDocuments();
+      //postCount = snapshot.documents.length;
+      annonces = snapshot.documents.map((doc) => Annonce.fromMap(doc.data)).toList();
+    } catch (e) {
+      print(e);
+      
+    }
+    return annonces; 
   }
 
 

@@ -20,6 +20,9 @@ class ProfessionelService {
   Future<int> deleteProfessionnel(String id) {
     return professionnelRepository.deleteProfessionnel(id);
   }
+  Future<bool> exists(String id){
+    return professionnelRepository.exists(id);
+  }
 
   Future<Professionnel> getCurrentUser(){
     return professionnelRepository.getCurrentPro();

@@ -39,6 +39,14 @@ class ProfessionelRepositoryImpl implements ProfessionnelRepository{
     }
     return r;
   }
+  @override
+   Future<bool> exists(String id)async{
+      final doc= await userRef.document(id).get();
+      if(!doc.exists){
+        return false;
+      }
+      return true;
+  }
 
 
     @override

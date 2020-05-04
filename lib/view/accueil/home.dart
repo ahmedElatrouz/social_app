@@ -5,15 +5,13 @@ import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/annonce_page.dart';
-import 'package:social_app/view/accueil/notification_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
-import 'package:social_app/view/accueil/recommandations_page.dart';
 import 'package:social_app/view/profil/pro_profile_page.dart';
 import 'package:social_app/view/profil/profil_page.dart';
 import 'package:social_app/view/profil/upload_post_page.dart';
 import 'package:social_app/view/shared/constants.dart';
 
-import 'AjouterAnnoncePage.dart';
+import 'ajouter_annonce_page.dart';
 import 'actualite_page.dart';
 
 class Home extends StatefulWidget {
@@ -76,7 +74,9 @@ class _HomeState extends State<Home> {
     super.initState();
     widget.userType==UserType.talent?checkTalent():checkPro();
 
-    talentPages=[ProfilPage(),
+    talentPages=[
+              ActualitePage(),
+              ProfilPage(),
               UploadPost(currentTalent: talent,),
               AnnoncePage(),];
     
