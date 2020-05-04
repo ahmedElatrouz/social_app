@@ -25,11 +25,12 @@ class Talent extends Utilisateur {
   String nationalite,
   String uid,
   String tel,
+  String photoProfile,
   //Categorie cat,
   String photo,
   String video,
   String description}
-  ):super(nom:nom,prenom:prenom,genre:genre,age:age,password:password,email:email,nationalite:nationalite,tel:tel){
+  ):super(photoProfile:photoProfile,nom:nom,prenom:prenom,genre:genre,age:age,password:password,email:email,nationalite:nationalite,tel:tel){
     this.uid=uid;
    // this.categorie=cat;
     this.photo=photo;
@@ -53,6 +54,7 @@ class Talent extends Utilisateur {
       'password':password,
       'genre':genre,
       'nationalite':nationalite,
+      'photoProfile' :photoProfile,
       //'Categorie': categorie.toMap(),
       'photoUrl': photo,
       'videoUrl': video,
@@ -75,6 +77,7 @@ class Talent extends Utilisateur {
       photo:map['photoUrl'],
       video:map['videoUrl'],
       nationalite: map['nationalite'],
+      photoProfile :map['photoProfile'],
       //age: int.tryParse(map['age']),
      // Categorie categorie.fromMap(map['']),
     //  List<Post>.from(map['posts']?.map((x) => Post.fromMap(x))),

@@ -71,8 +71,8 @@ class _PostWidgetState extends State<PostWidget> {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.red,
-        backgroundImage: widget.poster.photo != ''
-            ? CachedNetworkImageProvider(widget.poster.photo)
+        backgroundImage: widget.poster.photoProfile != ''
+            ? CachedNetworkImageProvider(widget.poster.photoProfile)
             : AssetImage('assets/images/user_icon.png'),
       ),
       title: GestureDetector(

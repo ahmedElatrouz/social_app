@@ -52,4 +52,8 @@ class TalentService {
     return talentRepository.allTalents();
   }
 
+  handleSubmitProfileImage(image , currentTalentUid){
+    return handleSubmitProfileImage(image , currentTalentUid);
+  }
+
 }

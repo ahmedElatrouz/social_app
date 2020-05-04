@@ -9,6 +9,7 @@ class Utilisateur {
   String email;
   String nationalite;
   String tel;
+  String photoProfile;
 
   Utilisateur({
     this.nom,
@@ -19,6 +20,7 @@ class Utilisateur {
     this.email,
     this.nationalite,
     this.tel,
+    this.photoProfile,
   });
 
   @override

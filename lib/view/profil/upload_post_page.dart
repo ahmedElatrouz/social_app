@@ -11,7 +11,7 @@ import 'package:video_player/video_player.dart';
 
 
 
-class UploadPost extends StatefulWidget {
+class UploadPost extends StatefulWidget { 
   final Talent currentTalent;
 
   UploadPost({this.currentTalent});

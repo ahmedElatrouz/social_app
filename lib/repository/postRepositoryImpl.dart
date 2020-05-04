@@ -78,6 +78,7 @@ class PostRepositoryImpl implements PostRepository {
     return true;
   }
 
+
   /// Upload image to firestore  ***************************************
   @override
   handleSubmitImage(image, captionController, currentTalentUid) async {
@@ -92,6 +93,10 @@ class PostRepositoryImpl implements PostRepository {
       currentTalentUid: currentTalentUid,
     );
   }
+
+
+
+
 
   compressImage(image) async {
     final temDir = await getTemporaryDirectory();
@@ -168,32 +173,30 @@ class PostRepositoryImpl implements PostRepository {
       print(e);
       return null;
     }
-    return posts; 
+    return posts;
   }
+
   //allPosts
   @override
   Future<List<Post>> getallPosts() async {
-  List<Post> posts = [];
-  try {
-    var snapshot = await postRef
-        .orderBy("date", descending: true)
-        .getDocuments();
-    posts = snapshot.documents.map((doc) => Post.fromMap(doc.data)).toList();
-  } catch (e) {
-    print(e);
-    return null;
+    List<Post> posts = [];
+    try {
+      var snapshot =
+          await postRef.orderBy("date", descending: true).getDocuments();
+      posts = snapshot.documents.map((doc) => Post.fromMap(doc.data)).toList();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+    return posts;
   }
-  return posts; 
-}
-
 
   //liking posts
   @override
-  likePosts(currentUserId,postId,bool like) async {
-    try{
-    await postRef.document(postId).updateData({'likes.$currentUserId':like});
-    }
-    catch(e){
+  likePosts(currentUserId, postId, bool like) async {
+    try {
+      await postRef.document(postId).updateData({'likes.$currentUserId': like});
+    } catch (e) {
       print(e);
       print("problem here");
     }

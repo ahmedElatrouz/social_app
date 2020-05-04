@@ -14,5 +14,5 @@ abstract class TalentRepository {
   Future<Talent> getCurrentTalent();
   Future signOut();
   Future<List<Talent>> allTalents();
-  
+  handleSubmitProfileImage(image , currentTalentUid);
 }
