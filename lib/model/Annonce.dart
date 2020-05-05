@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Annonce {
   String id;
   DateTime date;
@@ -13,7 +15,7 @@ class Annonce {
   Map<String, dynamic> toMap() {
     return {
       'uid': id,
-      'date': date,
+    //  'date': date,
       'description': description,
       'proRef': proRef,
     };

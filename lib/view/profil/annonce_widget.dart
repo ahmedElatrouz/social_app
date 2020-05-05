@@ -2,16 +2,18 @@
 
 
 import 'package:flutter/material.dart';
+
 import 'package:social_app/model/Annonce.dart';
+import 'package:social_app/model/Professionnel.dart';
 
 class AnnonceWidget extends StatefulWidget {
   
-
+  final Professionnel annonceur;
   final Annonce annonce;
   const AnnonceWidget({
-    Key key,
-    this.annonce,
-  }) : super(key: key);
+   @required this.annonceur,
+   @required this.annonce,
+  }) ;
 
   @override
   _AnnonceWidgetState createState() => _AnnonceWidgetState();
@@ -56,7 +58,7 @@ class _AnnonceWidgetState extends State<AnnonceWidget> {
                   CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                  'nom' +' '+'prenom',
+                  widget.annonceur.nom +' '+widget.annonceur.prenom,
                   style: TextStyle(fontSize:18),
                   textAlign: TextAlign.start,),
                   Container(

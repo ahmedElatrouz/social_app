@@ -61,11 +61,7 @@ class AnnonceRepositoryImpl implements AnnonceRepository{
     //if (await ProfessionelService().exists(id) == false) return null;
    List<Annonce> annonces = [];
     try {
-      var snapshot = await annRef
-          .where("profRef", isEqualTo: id)
-          //.orderBy("date", descending: true)
-          .getDocuments();
-      //postCount = snapshot.documents.length;
+      var snapshot = await annRef.where("proRef", isEqualTo: id).getDocuments();
       annonces = snapshot.documents.map((doc) => Annonce.fromMap(doc.data)).toList();
     } catch (e) {
       print(e);

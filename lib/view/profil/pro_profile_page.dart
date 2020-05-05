@@ -28,6 +28,7 @@ class ProProfilPage extends StatefulWidget {
 class _ProProfilPageState extends State<ProProfilPage> {
   Professionnel pro = Professionnel();
   bool isWaiting = false;
+  bool isWaitingForAnnonces = false;
   ProfessionelService professionelService = ProfessionelService();
   Talent talent = Talent();
   TalentService talentService = TalentService();
@@ -43,7 +44,13 @@ class _ProProfilPageState extends State<ProProfilPage> {
   initState() {
     super.initState();
     isWaiting = true;
+    isWaitingForAnnonces = true;
     getProfileContent();
+  }
+  @override
+  dispose(){
+    isWaiting=false;
+    super.dispose();
   }
 
   getProfileContent() async {
@@ -52,22 +59,25 @@ class _ProProfilPageState extends State<ProProfilPage> {
     prenom = pro.prenom;
     email = pro.email;
     nationalite = pro.nationalite;
-    
+    setState(() {
+        isWaiting = false;
+      });
     getProfilAnnonces();
         
   }
 
    getProfilAnnonces() async {
-    
-      List<Annonce> tempList=await annonceService.searchByUser(pro.proID);
+    //await annonceService.createAnnonce(Annonce(description: 'my first created annonce',proRef: pro.proID));
+      List<Annonce> tempList=await annonceService.searchByUser('b38KREe5UGcuXuYQ1V2wZ42Sa0r1');
+      if(tempList.isNotEmpty)
     for(Annonce an in tempList){
-     // print('description:'+an.description);
-      annoncesWidgets.add(AnnonceWidget(annonce:an));
+      print('description:'+an.description);
+      annoncesWidgets.add(AnnonceWidget(annonce:an,annonceur: pro,));
     }
-     
-      setState(() {
-        isWaiting = false;
-      });
+     setState(() {
+       isWaitingForAnnonces=false;
+     });
+      
   }
 
   ScrollController controller;
@@ -175,8 +185,10 @@ class _ProProfilPageState extends State<ProProfilPage> {
               ),
             ),*/
             SizedBox(height: 10.0),
-            Column(
-              children: annoncesWidgets
+            isWaitingForAnnonces?circularProgress():Container(
+              child: Column(
+                children: annoncesWidgets
+              ),
             )
           ],
         )
