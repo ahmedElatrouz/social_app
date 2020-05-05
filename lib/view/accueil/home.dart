@@ -18,92 +18,81 @@ class Home extends StatefulWidget {
   static const String id = 'home';
   final UserType userType;
 
-  const Home({@required this.userType}) ;
+  const Home({ this.userType});
   @override
   _HomeState createState() => _HomeState();
 }
 
-
-
 class _HomeState extends State<Home> {
-  
   PageController pageController;
   int pageIndex = 0;
-  bool isContentLoaded=false;
+  bool isContentLoaded = false;
   Talent talent = Talent();
-  Professionnel pro=Professionnel();
+  Professionnel pro = Professionnel();
   TalentService talentService = TalentService();
   ProfessionelService proService = ProfessionelService();
-  List<Widget> talentPages=[];
-  List<Widget> proPages=[];
+  List<Widget> talentPages = [];
+  List<Widget> proPages = [];
 
-  List<BottomNavigationBarItem> talentNavigationBar=[BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text('Accueil')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), title: Text('Profile')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.add_photo_alternate), title: Text('Post')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.work), title: Text('Annonces')),];
-  
-  
-  List<BottomNavigationBarItem> proNavigationBar=[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), title: Text('Profile')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.add_box), title: Text('Publier Annonce')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search), title: Text('Recherche')),];
+  List<BottomNavigationBarItem> talentNavigationBar = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Accueil')),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.account_circle), title: Text('Profile')),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.add_photo_alternate), title: Text('Post')),
+    BottomNavigationBarItem(icon: Icon(Icons.work), title: Text('Annonces')),
+  ];
 
-
-
+ /*List<BottomNavigationBarItem> proNavigationBar = [
+    BottomNavigationBarItem(
+        icon: Icon(Icons.account_circle), title: Text('Profile')),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.add_box), title: Text('Publier Annonce')),
+    BottomNavigationBarItem(icon: Icon(Icons.search), title: Text('Recherche')),
+  ];*/
 
   checkTalent() async {
-  talent = await talentService.getCurrentUser();
-  print(talent.uid);
+    talent = await talentService.getCurrentUser();
+   
   }
-
 
   checkPro() async {
-  pro = await proService.getCurrentUser();
+    pro = await proService.getCurrentUser();
   }
-
 
   @override
   void initState() {
     super.initState();
-    widget.userType==UserType.talent?checkTalent():checkPro();
+    //widget.userType == UserType.talent ? checkTalent() : checkPro();
+    checkTalent();
+    talentPages = [
+      ActualitePage(),
+      ProfilPage(),
+      UploadPost(
+        profilPic: false,
+      ),
+      AnnoncePage(),
+    ];
 
-    talentPages=[
-              ActualitePage(),
-              ProfilPage(),
-              UploadPost(currentTalent: talent,),
-              AnnoncePage(),];
-    
-    proPages=[
+    /*proPages = [
       ProProfilPage(),
       AjouterAnnoncePage(),
       RecherchePage(),
-
-    ];
+    ];*/
+    
     pageController = PageController(
       initialPage: 0,
     );
-    
-
-    
   }
- 
 
- Widget homeContent(){
+  Widget homeContent() {
     return Scaffold(
       body: PageView(
-            children: widget.userType==UserType.talent?talentPages:proPages,
-            controller: pageController,
-            onPageChanged: onPageChanged,
-            physics: NeverScrollableScrollPhysics(),
-          ),
-      
+        children: talentPages,//widget.userType == UserType.talent ? talentPages : proPages,
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      ),
       bottomNavigationBar: Container(
         height: 50.0,
         child: BottomNavigationBar(
@@ -114,7 +103,9 @@ class _HomeState extends State<Home> {
           onTap: onTap,
           unselectedItemColor: Colors.black,
           selectedItemColor: Colors.lightBlueAccent,
-          items:  widget.userType==UserType.talent?talentNavigationBar:proNavigationBar,
+          items: talentNavigationBar// widget.userType == UserType.talent
+              //? talentNavigationBar
+              //: proNavigationBar,
         ),
       ),
     );
@@ -122,7 +113,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return  homeContent();
+    return homeContent();
   }
 
   @override

@@ -7,7 +7,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class TalentAuth { 
 
-
+ 
   Future<FirebaseUser> currentUser() async {
     return await _auth.currentUser();
   }

@@ -11,10 +11,11 @@ import 'talentRepository.dart';
 
 //import 'package:social_app/view/accueil/actualite_page.dart';
 final StorageReference storageRef = FirebaseStorage.instance.ref();
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final usersRef = Firestore.instance.collection("Talents");
 
 class TalentRepositoryImpl implements TalentRepository {
-  final usersRef = Firestore.instance.collection("Talents");
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  
   String uid = '';
 
   @override
@@ -35,7 +36,7 @@ class TalentRepositoryImpl implements TalentRepository {
     try {
       if (await exists(talent.uid) == true) {
         await usersRef.document(talent.uid).updateData(talent.toMap());
-        auth.currentUser().then((resultUser) async {
+        _auth.currentUser().then((resultUser) async {
           await resultUser.updateEmail(talent.email);
           await resultUser.updatePassword(talent.password);
         });
@@ -112,51 +113,51 @@ class TalentRepositoryImpl implements TalentRepository {
   }
 
   Future<String> getcurrentUserUid() async {
-    return (await auth.currentUser()).uid;
+    return (await _auth.currentUser()).uid;
   }
 
   @override
   Future<Talent> getCurrentTalent() async {
     Talent talent;
-    FirebaseUser user = await auth.currentUser();
-
+    FirebaseUser user = await _auth.currentUser();
     try {
       var doc = await usersRef.document(user.uid).get();
       talent = Talent.fromMap(doc.data);
+      return talent;
     } catch (e) {
       print(e);
+      return null;
     }
-    return talent;
+    
   }
 
   @override
-  Future<int> signIn(String email, String password) async {
-    FirebaseUser user;
-    int r = 0;
+  Future signIn(String email, String password) async {
     try {
-      dynamic result = await auth.signInWithEmailAndPassword(
+      AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      user = result.user;
-      r = 1;
+      FirebaseUser talent = result.user;
+      print(talent);
+      return _talentFromFirebaseUser(talent);
     } catch (e) {
       print(e);
-      user = null;
+      print('here');
+      return null ;
     }
-    return r;
   }
 
   @override
   Future signOut() async {
     try {
-      await auth.signOut();
+      await _auth.signOut();
     } catch (e) {
       print(e);
     }
   }
 
-  /*Talent _talentFromFirebaseUser(FirebaseUser user) {
+  Talent _talentFromFirebaseUser(FirebaseUser user) {
     return user != null ? Talent(uid: user.uid) : null;
-  }*/
+  }
 
   @override
   Future<Talent> searchById(String id) async {

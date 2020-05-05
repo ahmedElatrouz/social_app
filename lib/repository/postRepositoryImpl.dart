@@ -84,8 +84,8 @@ class PostRepositoryImpl implements PostRepository {
   handleSubmitImage(image, captionController, currentTalentUid) async {
     await compressImage(image);
 
-    String mediaUrl = await PostRepositoryImpl()
-        .uploadImage(imageFile: image, postId: postId);
+    String mediaUrl = await 
+        this.uploadImage(imageFile: image, postId: postId);
 
     createPostInFirestore(
       mediaUrl: mediaUrl,
@@ -93,10 +93,6 @@ class PostRepositoryImpl implements PostRepository {
       currentTalentUid: currentTalentUid,
     );
   }
-
-
-
-
 
   compressImage(image) async {
     final temDir = await getTemporaryDirectory();

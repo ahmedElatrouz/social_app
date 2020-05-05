@@ -1,15 +1,11 @@
-
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
-import 'package:social_app/view/profil/add_profile_image.dart';
 import 'package:social_app/view/profil/post_widget.dart';
+import 'package:social_app/view/profil/upload_post_page.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
@@ -37,7 +33,6 @@ class _ProfilPageState extends State<ProfilPage> {
     super.initState();
     isWaiting = true;
     getProfileContent();
-    print(image);
   }
 
   getProfileContent() async {
@@ -75,40 +70,12 @@ class _ProfilPageState extends State<ProfilPage> {
           PostWidget(
             post: posts[i],
             talent: talent,
-          //  poster: talent,
+            poster: talent,
           )
       ],
     );
   }
 
-
-//add profile image ****
-  File image;
-
-  addImage() async {
-    Navigator.pop(context);
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50);
-    setState(() {
-      this.image = image;
-    });
-  }
-
-  /*handleSubmit() async {
-
-   /* setState(() {
-      isWaiting = true;
-    });*/
-    if(image != null){
-    await talentService.handleSubmitProfileImage(image, talent);
-    }
-    print(image);
-    /*setState(() {
-      image = null;
-      isWaiting = false;
-    });*/
-  }*/
-  
   Widget profileView() {
     return ListView(
       children: <Widget>[
@@ -150,7 +117,6 @@ class _ProfilPageState extends State<ProfilPage> {
             )
           ]),
         ),
-        
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -170,35 +136,40 @@ class _ProfilPageState extends State<ProfilPage> {
                       children: <Widget>[
                         Text(
                           'Posts :',
-                          style: TextStyle(
-                              fontSize: 22),
+                          style: TextStyle(fontSize: 22),
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           postCount.toString(),
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 110,),
+                        SizedBox(
+                          width: 110,
+                        ),
                         VerticalDivider(
                           color: Colors.black54,
                           width: 2,
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         RaisedButton.icon(
                             onPressed: () {
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context)=>AddProfileImage()) 
-                                );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UploadPost(
+                                            profilPic: true,
+                                          )));
                             },
                             icon: Icon(Icons.add_a_photo),
                             label: Text(
                               'profil picture',
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                              ),
+                                  fontWeight: FontWeight.bold, fontSize: 18),
                             ))
                       ],
                     ))))

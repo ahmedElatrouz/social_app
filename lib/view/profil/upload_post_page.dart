@@ -5,26 +5,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
+import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:video_player/video_player.dart';
 
+class UploadPost extends StatefulWidget {
+  final bool profilPic;
 
-
-
-class UploadPost extends StatefulWidget { 
-  final Talent currentTalent;
-
-  UploadPost({this.currentTalent});
+  UploadPost({ this.profilPic});
 
   @override
   _UploadPostState createState() => _UploadPostState();
 }
 
-
-
 class _UploadPostState extends State<UploadPost> {
-
+  TalentService talentService = TalentService();
   PostService postService = PostService();
+  Talent talent = Talent();
   File image;
   File video;
 
@@ -32,14 +29,15 @@ class _UploadPostState extends State<UploadPost> {
 
   TextEditingController captionController = TextEditingController();
   bool isUploading = false;
-
+  
   addImage() async {
     Navigator.pop(context);
     File image = await ImagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 50);
-    setState(() {
-      this.image = image;
-    });
+        setState(() {
+          this.image = image;
+        });
+      print(image);
   }
 
   addVideo() async {
@@ -62,11 +60,12 @@ class _UploadPostState extends State<UploadPost> {
             children: <Widget>[
               SimpleDialogOption(
                 child: Text('add an image'),
-                onPressed:()=> addImage(),
+                onPressed: () => addImage(),
               ),
+              if(widget.profilPic == false)
               SimpleDialogOption(
                 child: Text('add a video'),
-                onPressed:()=> addVideo(),
+                onPressed: () => addVideo(),
               )
             ],
           );
@@ -91,14 +90,14 @@ class _UploadPostState extends State<UploadPost> {
               child: Text('Upload post',
                   style: TextStyle(color: Colors.white, fontSize: 20)),
               color: Colors.deepOrange,
-              onPressed: () => selectPost(context),
+              onPressed: () =>
+                  selectPost(context),
             ),
           )
         ],
       ),
     );
   }
-
 
   clearPost() {
     setState(() {
@@ -108,18 +107,33 @@ class _UploadPostState extends State<UploadPost> {
 
 
   handleSubmit() async {
-
     setState(() {
       isUploading = true;
     });
-    if(image != null){
-    await postService.handleSubmitImage(image, captionController , widget.currentTalent.uid);
+    if (image != null) {
+      await postService.handleSubmitImage(
+          image, captionController, talent.uid);
     }
-    if(video != null){
-      await postService.handleSubmitVideo(video, captionController , widget.currentTalent.uid);
+    if (video != null) {
+      await postService.handleSubmitVideo(
+          video, captionController, talent.uid);
     }
     captionController.clear();
 
+    setState(() {
+      image = null;
+      isUploading = false;
+    });
+  }
+
+  handleSubmitProfileImage() async {
+    setState(() {
+      isUploading = true;
+    });
+    if (image != null) {
+      await talentService.handleSubmitProfileImage(
+          image, talent.uid);
+    }
     setState(() {
       image = null;
       isUploading = false;
@@ -139,19 +153,21 @@ class _UploadPostState extends State<UploadPost> {
           ),
           onPressed: clearPost,
         ),
-        title: Text('caption post', style: TextStyle(color: Colors.black)),
+        title: Text(widget.profilPic == true ? 'profile pic' : 'caption post',
+            style: TextStyle(color: Colors.black)),
         actions: [
           FlatButton(
-            child: Text('Post',
+            child: Text(widget.profilPic == true ? 'Select' : 'Post',
                 style: TextStyle(
                     color: Colors.blueAccent,
                     fontWeight: FontWeight.bold,
                     fontSize: 20)),
-            onPressed: isUploading ? null : () => handleSubmit(),
+            onPressed: widget.profilPic == true // isUploading 
+                ? () => handleSubmitProfileImage()
+                : () => handleSubmit(),
           )
         ],
       ),
-
       body: ListView(
         children: <Widget>[
           isUploading ? linearProgress() : Text(''),
@@ -189,33 +205,42 @@ class _UploadPostState extends State<UploadPost> {
                     ),
                   )
                 : Container(),
+          SizedBox(
+            height: 8,
+          ),
 
-
-          SizedBox(height: 8,),
-
-          ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.blueGrey,
-            ),
-            title: Container(
-              width: 250,
-              child: TextField(
-                controller: captionController,
-                decoration: InputDecoration(
-                  hintText: "write a discription...",
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          )
+          if(widget.profilPic == false)
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.blueGrey,
+                  ),
+                  title: Container(
+                    width: 250,
+                    child: TextField(
+                      controller: captionController,
+                      decoration: InputDecoration(
+                        hintText: "write a discription...",
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                )
         ],
       ),
     );
   }
-
+ checkTalent() async {
+   talent = await talentService.getCurrentUser();
+ }
+  @override
+  void initState() {
+    checkTalent();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return image == null && video == null
+    
+    return image == null 
         ? buildSplashScrean()
         : buildUploadForm();
   }

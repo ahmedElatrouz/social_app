@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/talentRepositoryImpl.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/home.dart';
-import 'package:social_app/view/profil/pro_profile_page.dart';
 import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/loading.dart';
 import 'package:social_app/view/shared/reusable_text_field.dart';
@@ -92,21 +90,34 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       //setState(() => loading = true );
-                                      int result = await talentService.signIn(
+                                      dynamic result = await talentService.signIn(
                                           "sabo@email.com", "123456789");
-                                      if (result == 0) {
+                                      if (result == null) {
                                         setState(() {
                                           loading = false;
                                           error =
                                               'you have a problem in your email';
                                         });
                                       } else {
-                                        setState(() async {
-                                         await TalentService().exists(await TalentRepositoryImpl().getcurrentUserUid())?Navigator.pushReplacementNamed(
-                                              context, Home.id,arguments: UserType.talent): Navigator.pushReplacementNamed(
-                                              context,Home.id,arguments: UserType.professionnel );
+                                        Navigator.pushReplacementNamed(
+                                            context, Home.id,
+                                            arguments: UserType.talent);
+                                            setState(() {
+                                              loading = false; 
+                                            });
+                                        /*setState(() async {
+                                          await TalentService().exists(
+                                                  await TalentRepositoryImpl()
+                                                      .getcurrentUserUid())
+                                              ? Navigator.pushReplacementNamed(
+                                                  context, Home.id,
+                                                  arguments: UserType.talent)
+                                              : Navigator.pushReplacementNamed(
+                                                  context, Home.id,
+                                                  arguments:
+                                                      UserType.professionnel);
                                           loading = false;
-                                        });
+                                        });*/
                                       }
                                     }
                                   }),

@@ -138,7 +138,6 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     isLiked = (widget.post.likes[talent0.uid] == true) || (widget.post.likes[widget.talent.uid] == true);
-    print(isLiked);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
