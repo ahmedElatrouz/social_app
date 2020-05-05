@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/view/accueil/home.dart';
+import 'package:social_app/view/profil/upload_post_page.dart';
 import 'package:social_app/view/shared/loading.dart';
 import 'package:social_app/view/shared/reusable_text_field.dart';
 
@@ -29,8 +30,11 @@ class _InfosPageState extends State<InfosPage> {
   String description = '';
   bool loading = false;
 
-
-
+  @override
+  void initState() {
+    print(photoUrl);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,7 @@ class _InfosPageState extends State<InfosPage> {
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         Text(
                           'Talent',
@@ -50,7 +55,7 @@ class _InfosPageState extends State<InfosPage> {
                               TextStyle(fontSize: 30, color: Colors.blueGrey),
                         ),
                         SizedBox(
-                          height: 25,
+                          height: 5,
                         ),
                         Expanded(
                             child: CreateField(
@@ -76,7 +81,7 @@ class _InfosPageState extends State<InfosPage> {
                             child: CreateField(
                           fieldName: "Genre",
                           change: (val) {
-                           genre = val;
+                            genre = val;
                           },
                         )),
                         SizedBox(
@@ -114,17 +119,6 @@ class _InfosPageState extends State<InfosPage> {
                         ),
                         Expanded(
                             child: CreateField(
-                          fieldName: "Url",
-                          change: (val) {
-                            photoUrl = val;
-                            videoUrl = val;
-                          },
-                        )),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Expanded(
-                            child: CreateField(
                           fieldName: "Description",
                           change: (val) {
                             description = val;
@@ -133,50 +127,82 @@ class _InfosPageState extends State<InfosPage> {
                         SizedBox(
                           height: 15,
                         ),
-                        RaisedButton(
-                          highlightColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          color: Colors.lightBlueAccent,
-                          child: Text('Register',
-                              style: TextStyle(
-                                  fontSize: 20.0, color: Colors.white)),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              //setState(() => loading = true);
-                              dynamic result = await _auth
-                                  .signUp(widget.email, widget.password)
-                                  .then((currentUser) => _auth.createDocumment(
-                                      age,
-                                      widget.email,
-                                      genre,
-                                      nationalite,
-                                      nom,
-                                      widget.password,
-                                      prenom,
-                                      tel,
-                                      photoUrl,
-                                      videoUrl,
-                                      description));
+                        Text(photoUrl),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(
+                          child: RaisedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UploadPost(
+                                            profilPic: false,
+                                            firstPost: true,
+                                            newPost : false,
+                                            nom: nom,
+                                          ))).then((val) {
+                                photoUrl = val;
+                              });
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Text('add your first post',
+                                style: TextStyle(
+                                    fontSize: 20.0, color: Colors.black)),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Expanded(
+                          child: RaisedButton(
+                            highlightColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            color: Colors.lightBlueAccent,
+                            child: Text('Register',
+                                style: TextStyle(
+                                    fontSize: 20.0, color: Colors.white)),
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                //setState(() => loading = true);
+                                dynamic result = await _auth
+                                    .signUp(widget.email, widget.password)
+                                    .then((currentUser) =>
+                                        _auth.createDocumment(
+                                            age,
+                                            widget.email,
+                                            genre,
+                                            nationalite,
+                                            nom,
+                                            widget.password,
+                                            prenom,
+                                            tel,
+                                            photoUrl,
+                                            videoUrl,
+                                            description));
 
-                              if (result == null) {
-                                setState(() {
-                                  //loading = false;
-                                  error = "this email is already used!";
-                                  //Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
-                                });
-                              } else {
-                                setState(() {
-                                  // loading = false;
-                                  Navigator.pushReplacementNamed(
-                                      context, Home.id);
-                                });
+                                if (result == null) {
+                                  setState(() {
+                                    //loading = false;
+                                    error = "this email is already used!";
+                                    //Navigator.push(context,MaterialPageRoute(builder: (context)=>ActualitePage()));
+                                  });
+                                } else {
+                                  setState(() {
+                                    // loading = false;
+                                    Navigator.pushReplacementNamed(
+                                        context, Home.id);
+                                  });
 
-                                //ActualitePage();
+                                  //ActualitePage();
 
+                                }
                               }
-                            }
-                          },
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 20,
@@ -190,4 +216,3 @@ class _InfosPageState extends State<InfosPage> {
           );
   }
 }
-

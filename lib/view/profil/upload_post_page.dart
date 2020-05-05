@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
@@ -11,8 +12,10 @@ import 'package:video_player/video_player.dart';
 
 class UploadPost extends StatefulWidget {
   final bool profilPic;
-
-  UploadPost({ this.profilPic});
+  final bool firstPost;
+  final bool newPost;
+  final String nom;
+  UploadPost({this.profilPic, this.nom, this.firstPost,this.newPost,});
 
   @override
   _UploadPostState createState() => _UploadPostState();
@@ -21,6 +24,7 @@ class UploadPost extends StatefulWidget {
 class _UploadPostState extends State<UploadPost> {
   TalentService talentService = TalentService();
   PostService postService = PostService();
+  TalentAuth talentAuth = TalentAuth();
   Talent talent = Talent();
   File image;
   File video;
@@ -29,15 +33,15 @@ class _UploadPostState extends State<UploadPost> {
 
   TextEditingController captionController = TextEditingController();
   bool isUploading = false;
-  
+
   addImage() async {
     Navigator.pop(context);
     File image = await ImagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 50);
-        setState(() {
-          this.image = image;
-        });
-      print(image);
+    setState(() {
+      this.image = image;
+    });
+    print(image);
   }
 
   addVideo() async {
@@ -56,17 +60,19 @@ class _UploadPostState extends State<UploadPost> {
         context: context,
         builder: (context) {
           return SimpleDialog(
-            title: Text('create post'),
+            title: Text(
+              widget.profilPic == true ? 'add profil picture' : 'create post',
+            ),
             children: <Widget>[
               SimpleDialogOption(
                 child: Text('add an image'),
                 onPressed: () => addImage(),
               ),
-              if(widget.profilPic == false)
-              SimpleDialogOption(
-                child: Text('add a video'),
-                onPressed: () => addVideo(),
-              )
+              if (widget.profilPic == false)
+                SimpleDialogOption(
+                  child: Text('add a video'),
+                  onPressed: () => addVideo(),
+                )
             ],
           );
         });
@@ -90,8 +96,7 @@ class _UploadPostState extends State<UploadPost> {
               child: Text('Upload post',
                   style: TextStyle(color: Colors.white, fontSize: 20)),
               color: Colors.deepOrange,
-              onPressed: () =>
-                  selectPost(context),
+              onPressed: () => selectPost(context),
             ),
           )
         ],
@@ -105,18 +110,15 @@ class _UploadPostState extends State<UploadPost> {
     });
   }
 
-
   handleSubmit() async {
     setState(() {
       isUploading = true;
     });
     if (image != null) {
-      await postService.handleSubmitImage(
-          image, captionController, talent.uid);
+      await postService.handleSubmitImage(image, captionController, talent.uid);
     }
     if (video != null) {
-      await postService.handleSubmitVideo(
-          video, captionController, talent.uid);
+      await postService.handleSubmitVideo(video, captionController, talent.uid);
     }
     captionController.clear();
 
@@ -131,8 +133,7 @@ class _UploadPostState extends State<UploadPost> {
       isUploading = true;
     });
     if (image != null) {
-      await talentService.handleSubmitProfileImage(
-          image, talent.uid);
+      await talentService.handleSubmitProfileImage(image, talent.uid);
     }
     setState(() {
       image = null;
@@ -140,10 +141,27 @@ class _UploadPostState extends State<UploadPost> {
     });
   }
 
+  handleSunmitFirstPost() async {
+    String mediaUrl;
+    setState(() {
+      isUploading = true;
+    });
+    if (image != null) {
+      mediaUrl = await talentAuth.handleSubmitFirstPost(image, widget.nom);
+    }
+    if (video != null) {
+      mediaUrl = await talentAuth.handleSubmitFirstPost(image, widget.nom);
+    }
+
+    setState(() {
+      image = null;
+      isUploading = false;
+    });
+    Navigator.pop(context, mediaUrl);
+  }
 
   Scaffold buildUploadForm() {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.white70,
         leading: IconButton(
@@ -156,16 +174,17 @@ class _UploadPostState extends State<UploadPost> {
         title: Text(widget.profilPic == true ? 'profile pic' : 'caption post',
             style: TextStyle(color: Colors.black)),
         actions: [
-          FlatButton(
-            child: Text(widget.profilPic == true ? 'Select' : 'Post',
-                style: TextStyle(
-                    color: Colors.blueAccent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20)),
-            onPressed: widget.profilPic == true // isUploading 
-                ? () => handleSubmitProfileImage()
-                : () => handleSubmit(),
-          )
+          if (widget.newPost == true || widget.profilPic == true)
+            FlatButton(
+              child: Text(widget.profilPic == true ? 'Done' : 'Post',
+                  style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
+              onPressed: widget.profilPic == true // isUploading
+                  ? () => handleSubmitProfileImage()
+                  : () => handleSubmit(),
+            )
         ],
       ),
       body: ListView(
@@ -208,40 +227,52 @@ class _UploadPostState extends State<UploadPost> {
           SizedBox(
             height: 8,
           ),
-
-          if(widget.profilPic == false)
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.blueGrey,
+          if (widget.newPost == true)
+            ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.blueGrey,
+              ),
+              title: Container(
+                width: 250,
+                child: TextField(
+                  controller: captionController,
+                  decoration: InputDecoration(
+                    hintText: "write a discription...",
+                    border: InputBorder.none,
                   ),
-                  title: Container(
-                    width: 250,
-                    child: TextField(
-                      controller: captionController,
-                      decoration: InputDecoration(
-                        hintText: "write a discription...",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                )
+                ),
+              ),
+            ),
+          if (widget.firstPost == true)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 40),
+              child: RaisedButton(
+                onPressed: () {
+                  handleSunmitFirstPost();
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                child: Text('Done',
+                    style: TextStyle(fontSize: 20.0, color: Colors.white)),
+              ),
+            )
         ],
       ),
     );
   }
- checkTalent() async {
-   talent = await talentService.getCurrentUser();
- }
+
+  checkTalent() async {
+    talent = await talentService.getCurrentUser();
+  }
+
   @override
   void initState() {
     checkTalent();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
-    return image == null 
-        ? buildSplashScrean()
-        : buildUploadForm();
+    return image == null ? buildSplashScrean() : buildUploadForm();
   }
 }

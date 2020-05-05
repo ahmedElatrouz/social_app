@@ -205,7 +205,7 @@ class TalentRepositoryImpl implements TalentRepository {
 
   Future<String> uploadImage({File imageFile, String talentId}) async {
     StorageUploadTask uploadTask =
-        storageRef.child('post_talentId.jpg').putFile(imageFile);
+        storageRef.child('post_$talentId.jpg').putFile(imageFile);
     StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
     String downloadUrl = await storageSnap.ref.getDownloadURL();
     if (uploadTask.isComplete) {

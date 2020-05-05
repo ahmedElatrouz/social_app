@@ -70,6 +70,8 @@ class _HomeState extends State<Home> {
       ProfilPage(),
       UploadPost(
         profilPic: false,
+        firstPost: false,
+        newPost : true,
       ),
       AnnoncePage(),
     ];

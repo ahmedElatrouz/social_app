@@ -163,6 +163,8 @@ class _ProfilPageState extends State<ProfilPage> {
                                   MaterialPageRoute(
                                       builder: (context) => UploadPost(
                                             profilPic: true,
+                                            firstPost: false,
+                                            newPost: false,
                                           )));
                             },
                             icon: Icon(Icons.add_a_photo),
