@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:social_app/main.dart';
+import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/talentRepositoryImpl.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/home.dart';
@@ -91,33 +93,28 @@ class _LoginPageState extends State<LoginPage> {
                                     if (_formKey.currentState.validate()) {
                                       //setState(() => loading = true );
                                       dynamic result = await talentService.signIn(
-                                          "youssef@email.com", "youssegf");
-                                      if (result == null) {
+                                          "netero@hunter.com", "123456");
+                                      if (result == 0) {
                                         setState(() {
                                           loading = false;
                                           error =
                                               'you have a problem in your email';
                                         });
                                       } else {
-                                        Navigator.pushReplacementNamed(
+                                        /*Navigator.pushReplacementNamed(
                                             context, Home.id,
                                             arguments: UserType.talent);
                                             setState(() {
                                               loading = false; 
-                                            });
-                                        /*setState(() async {
-                                          await TalentService().exists(
-                                                  await TalentRepositoryImpl()
-                                                      .getcurrentUserUid())
-                                              ? Navigator.pushReplacementNamed(
-                                                  context, Home.id,
-                                                  arguments: UserType.talent)
-                                              : Navigator.pushReplacementNamed(
-                                                  context, Home.id,
-                                                  arguments:
-                                                      UserType.professionnel);
+                                            });*/
+                                                 if(result ==1) MyApp.userType=UserType.talent;
+                                                 else MyApp.userType=UserType.professionnel;
+                                               Navigator.pushReplacementNamed(
+                                                  context, Home.id
+                                               );
+                                        setState((){
                                           loading = false;
-                                        });*/
+                                        });
                                       }
                                     }
                                   }),
@@ -140,7 +137,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

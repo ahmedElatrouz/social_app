@@ -9,6 +9,7 @@ import 'package:social_app/view/authenticate/login_page.dart';
 import 'package:social_app/view/authenticate/register_page.dart';
 import 'package:social_app/view/profil/other_profile.dart';
 import 'package:social_app/view/profil/pro_profile_page.dart';
+import 'package:social_app/view/shared/constants.dart';
 
 //GetIt getIt = GetIt.instance;
 
@@ -19,6 +20,7 @@ runApp(MyApp());
 } 
 
 class MyApp extends StatelessWidget {
+ static UserType userType;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
         LoginPage.id : (context) => LoginPage(),
         Register.id : (context) => Register(),
         ActualitePage.id : (context) => ActualitePage(),
-        Home.id : (context) => Home(),
+        Home.id : (context) => Home(userType: userType,),
         ProProfilPage.id:(context)=>ProProfilPage(),
         OtherProfile.id:(context)=>OtherProfile()
      },
