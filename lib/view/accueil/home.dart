@@ -69,12 +69,10 @@ class _HomeState extends State<Home> {
       ActualitePage(),
       ProfilPage(),
       UploadPost(
-        profilPic: false,
-        firstPost: false,
-        newPost : true,
+        post: witchPost.newPost,
       ),
       AnnoncePage(),
-    ];
+    ]; 
 
     /*proPages = [
       ProProfilPage(),

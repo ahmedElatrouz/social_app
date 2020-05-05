@@ -6,6 +6,7 @@ import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/profil/post_widget.dart';
 import 'package:social_app/view/profil/upload_post_page.dart';
+import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
@@ -162,9 +163,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => UploadPost(
-                                            profilPic: true,
-                                            firstPost: false,
-                                            newPost: false,
+                                            post: witchPost.profilePic,
                                           )));
                             },
                             icon: Icon(Icons.add_a_photo),

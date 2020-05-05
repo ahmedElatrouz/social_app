@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,15 +8,17 @@ import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:video_player/video_player.dart';
 
 class UploadPost extends StatefulWidget {
+  final witchPost post;
   final bool profilPic;
   final bool firstPost;
   final bool newPost;
   final String nom;
-  UploadPost({this.profilPic, this.nom, this.firstPost,this.newPost,});
+  UploadPost({this.profilPic, this.nom, this.firstPost,this.newPost,this.post});
 
   @override
   _UploadPostState createState() => _UploadPostState();
@@ -26,6 +29,7 @@ class _UploadPostState extends State<UploadPost> {
   PostService postService = PostService();
   TalentAuth talentAuth = TalentAuth();
   Talent talent = Talent();
+  String photoUrl = '';
   File image;
   File video;
 
@@ -61,14 +65,14 @@ class _UploadPostState extends State<UploadPost> {
         builder: (context) {
           return SimpleDialog(
             title: Text(
-              widget.profilPic == true ? 'add profil picture' : 'create post',
+              widget.post == witchPost.profilePic ? 'add profil picture' : 'create post',
             ),
             children: <Widget>[
               SimpleDialogOption(
                 child: Text('add an image'),
                 onPressed: () => addImage(),
               ),
-              if (widget.profilPic == false)
+              if (widget.post != witchPost.profilePic)
                 SimpleDialogOption(
                   child: Text('add a video'),
                   onPressed: () => addVideo(),
@@ -171,17 +175,17 @@ class _UploadPostState extends State<UploadPost> {
           ),
           onPressed: clearPost,
         ),
-        title: Text(widget.profilPic == true ? 'profile pic' : 'caption post',
+        title: Text(widget.post == witchPost.profilePic ? 'profile pic' : 'caption post',
             style: TextStyle(color: Colors.black)),
         actions: [
-          if (widget.newPost == true || widget.profilPic == true)
+          if (widget.post != witchPost.firstPost)
             FlatButton(
-              child: Text(widget.profilPic == true ? 'Done' : 'Post',
+              child: Text( widget.post == witchPost.profilePic ? 'Done' : 'Post',
                   style: TextStyle(
                       color: Colors.blueAccent,
                       fontWeight: FontWeight.bold,
                       fontSize: 20)),
-              onPressed: widget.profilPic == true // isUploading
+              onPressed: widget.post == witchPost.profilePic // isUploading
                   ? () => handleSubmitProfileImage()
                   : () => handleSubmit(),
             )
@@ -227,9 +231,12 @@ class _UploadPostState extends State<UploadPost> {
           SizedBox(
             height: 8,
           ),
-          if (widget.newPost == true)
+          if (widget.post == witchPost.newPost)
             ListTile(
               leading: CircleAvatar(
+              backgroundImage: photoUrl != ''
+                  ? CachedNetworkImageProvider(photoUrl)
+                  : AssetImage('assets/images/user_icon.png'),
                 backgroundColor: Colors.blueGrey,
               ),
               title: Container(
@@ -243,7 +250,7 @@ class _UploadPostState extends State<UploadPost> {
                 ),
               ),
             ),
-          if (widget.firstPost == true)
+          if (widget.post == witchPost.firstPost)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 40),
               child: RaisedButton(
@@ -263,6 +270,8 @@ class _UploadPostState extends State<UploadPost> {
 
   checkTalent() async {
     talent = await talentService.getCurrentUser();
+    photoUrl = talent.photoProfile;
+    print(photoUrl);
   }
 
   @override

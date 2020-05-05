@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_app/repository/talentAuth.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/profil/upload_post_page.dart';
+import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/loading.dart';
 import 'package:social_app/view/shared/reusable_text_field.dart';
 
@@ -123,7 +124,7 @@ class _InfosPageState extends State<InfosPage> {
                           change: (val) {
                             description = val;
                           },
-                        )),
+                        )), 
                         SizedBox(
                           height: 15,
                         ),
@@ -138,9 +139,7 @@ class _InfosPageState extends State<InfosPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => UploadPost(
-                                            profilPic: false,
-                                            firstPost: true,
-                                            newPost : false,
+                                            post: witchPost.firstPost,
                                             nom: nom,
                                           ))).then((val) {
                                 photoUrl = val;
