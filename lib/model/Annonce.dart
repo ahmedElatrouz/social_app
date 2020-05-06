@@ -15,7 +15,7 @@ class Annonce {
   Map<String, dynamic> toMap() {
     return {
       'uid': id,
-    //  'date': date,
+      'date': date,
       'description': description,
       'proRef': proRef,
     };
@@ -26,7 +26,7 @@ class Annonce {
     return Annonce(
       id: map['uid'],
       description: map['description'],
-      date:DateTime.tryParse(map['date'].toString()) ,
+      date:map['date'].toDate(),
       proRef: map['profRef'],
     );
   }
