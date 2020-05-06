@@ -131,7 +131,7 @@ class _AjouterAnnoncePageState extends State<AjouterAnnoncePage> {
 
 
   addAnnonce()async{
-   Professionnel pro= await ProfessionelService().getCurrentUser();
+   Professionnel pro= await ProfessionelService().getCurrentPro();
     Annonce annonce=Annonce(proRef: pro.proID,description: contenu,date: DateTime.now());
     int a=0;
     a=await annonceService.createAnnonce(annonce);

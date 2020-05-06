@@ -66,9 +66,9 @@ class ProfessionelRepositoryImpl implements ProfessionnelRepository{
 
   @override
   Future<Professionnel> getCurrentTalent() {
-    // TODO: implement getCurrentTalent
     return null;
   }
+
 
    @override
   Future<Professionnel> getCurrentPro() async{
@@ -80,6 +80,19 @@ class ProfessionelRepositoryImpl implements ProfessionnelRepository{
       var doc = await userRef.document(user.uid).get();
           pro =Professionnel.fromMap(doc.data);
     }catch(e){
+      print(e);
+    }
+    return pro;
+  }
+
+  @override 
+  Future<Professionnel> searchById(String id) async {
+    Professionnel pro;
+    try {
+      var user = await userRef.document(id).get();
+      pro = Professionnel.fromMap(user.data);
+      print(pro);
+    } catch (e) {
       print(e);
     }
     return pro;

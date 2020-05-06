@@ -24,7 +24,12 @@ class ProfessionelService {
     return professionnelRepository.exists(id);
   }
 
-  Future<Professionnel> getCurrentUser(){
+  Future<Professionnel> getCurrentPro(){
     return professionnelRepository.getCurrentPro();
   }
+
+  Future<Professionnel> searchById(String id){
+    return professionnelRepository.searchById(id);
+  }
+
 }

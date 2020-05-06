@@ -28,4 +28,8 @@ class AnnonceService {
   Future<List<Annonce>> getAnnoncesByPro(String id){
     return annonceRepository.searchByUser(id);
   }
+
+  Future<List<Annonce>> allAnnonces(){
+    return annonceRepository.allAnnonces();
+  }
 }

@@ -20,6 +20,7 @@ class _ActualitePageState extends State<ActualitePage> {
   List<Post> usersPosts = [];
   List<PostWidget> postWidgets = [];
   PostService postService = PostService();
+  
   @override
   void initState() {
     super.initState();
@@ -27,7 +28,7 @@ class _ActualitePageState extends State<ActualitePage> {
      isWaiting = true;
     getUserAndPosts();
   }
-
+ 
   getUserAndPosts() async {
     talent = await TalentService().getCurrentUser();
     usersPosts = await postService.getallPosts();
@@ -69,7 +70,7 @@ class _ActualitePageState extends State<ActualitePage> {
     return Scaffold(
         appBar: header(context, "actualite"),
         backgroundColor: Color(0xFF009688).withOpacity(0.5),
-        body:isWaiting|| postWidgets.isEmpty
+        body: isWaiting|| postWidgets.isEmpty
             ? alternativeScreen()
             : ListView(children: postWidgets
                 ));

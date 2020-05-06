@@ -1,8 +1,4 @@
-
-
-
 import 'package:flutter/material.dart';
-
 import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/model/Professionnel.dart';
 

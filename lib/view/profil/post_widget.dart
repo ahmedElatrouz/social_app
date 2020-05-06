@@ -24,7 +24,6 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   PostService postService = PostService();
   TalentService talentService = TalentService();
-  List<Talent> talents = [];
   bool isLiked;
   Talent talent0 = Talent();
 

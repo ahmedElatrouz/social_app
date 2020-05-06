@@ -8,4 +8,5 @@ abstract class AnnonceRepository{
    Future<int> updateAnnonce(Annonce annonce);
    Future<int> deleteAnnonce(String id); 
    Future<List<Annonce>> searchByUser(String id);
+   Future<List<Annonce>> allAnnonces();
 }

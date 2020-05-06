@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
   }
 
   checkPro() async {
-    pro = await proService.getCurrentUser();
+    pro = await proService.getCurrentPro();
   }
 
   @override

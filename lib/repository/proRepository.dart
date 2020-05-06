@@ -8,4 +8,5 @@ abstract class ProfessionnelRepository{
   Future<int> deleteProfessionnel(String id);
   Future<bool> exists(String id);
   Future<Professionnel> getCurrentPro();
+  Future<Professionnel> searchById(String id);
 }

@@ -54,7 +54,7 @@ class _ProProfilPageState extends State<ProProfilPage> {
   }
 
   getProfileContent() async {
-    pro = await professionelService.getCurrentUser();
+    pro = await professionelService.getCurrentPro();
     nom = pro.nom;
     prenom = pro.prenom;
     email = pro.email;

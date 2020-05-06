@@ -5,19 +5,21 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Annonce {
-  String id;
+  String id; 
   DateTime date;
   String description;
   String proRef;
+  Map comments ;
 
-  Annonce({this.id, this.date, this.description, this.proRef});
+  Annonce({this.id, this.date, this.description, this.proRef,this.comments});
 
   Map<String, dynamic> toMap() {
     return {
       'uid': id,
-    //  'date': date,
+      'date': date,
       'description': description,
       'proRef': proRef,
+      'comments':comments,
     };
   }
 
@@ -26,8 +28,9 @@ class Annonce {
     return Annonce(
       id: map['uid'],
       description: map['description'],
-      date:DateTime.tryParse(map['date'].toString()) ,
+      date:DateTime.tryParse(map['date'].toString()),
       proRef: map['profRef'],
+      comments: map['comments'],
     );
   }
 
