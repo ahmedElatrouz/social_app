@@ -58,6 +58,7 @@ class _AjouterAnnoncePageState extends State<AjouterAnnoncePage> {
                          },
                          onSaved: (String value){
                            titre=value;
+                           this.controller.clear();
                             },
                     cursorColor: Colors.purple,
                     decoration: InputDecoration(
@@ -87,6 +88,7 @@ class _AjouterAnnoncePageState extends State<AjouterAnnoncePage> {
                          },
                          onSaved: (String value){
                            contenu=value;
+                           this.controller.clear();
                             },
                   decoration: InputDecoration(
                     
@@ -114,6 +116,7 @@ class _AjouterAnnoncePageState extends State<AjouterAnnoncePage> {
                       if (_formKey.currentState.validate()) {
                             if(_formKey.currentState.validate()){
                                _formKey.currentState.save();
+                               
                              await  addAnnonce();
                             }
                            
@@ -135,6 +138,6 @@ class _AjouterAnnoncePageState extends State<AjouterAnnoncePage> {
     Annonce annonce=Annonce(proRef: pro.proID,description: contenu,date: DateTime.now());
     int a=0;
     a=await annonceService.createAnnonce(annonce);
-    if(a!=0) print('annonce added hahahahhha');
+    if(a==0) print('erreur:annonce non publiée!!');
   }
 }
