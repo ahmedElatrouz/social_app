@@ -16,6 +16,7 @@ class AnnonceWidget extends StatefulWidget {
 }
 
 class _AnnonceWidgetState extends State<AnnonceWidget> {
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,10 +59,9 @@ class _AnnonceWidgetState extends State<AnnonceWidget> {
                   style: TextStyle(fontSize:18),
                   textAlign: TextAlign.start,),
                   Container(
-                  child: Text('time',
-                  //widget.annonce.date.day.toString()+'/'+widget.annonce.date.month.toString()+'/'+widget.annonce.date.year.toString(),
+                  child:widget.annonce.date!=null? Text(widget.annonce.date.day.toString()+'/'+widget.annonce.date.month.toString()+'/'+widget.annonce.date.year.toString(),
                   style: TextStyle(fontSize:12),
-                  textAlign: TextAlign.start,),
+                  textAlign: TextAlign.start,):Text("time"),
               ),
                 ],
               ),
