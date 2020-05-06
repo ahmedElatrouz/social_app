@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //initialRoute:Authenticate.id,
-      initialRoute:Authenticate.id,
+      initialRoute:Home.id,
       routes: {
         Authenticate.id : (context) => Authenticate(),
         LoginPage.id : (context) => LoginPage(),

@@ -6,6 +6,8 @@ import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/annonce_page.dart';
 import 'package:social_app/view/accueil/recherche_page.dart';
+import 'package:social_app/view/admin/categories_page.dart';
+import 'package:social_app/view/admin/profiles_page.dart';
 import 'package:social_app/view/profil/pro_profile_page.dart';
 import 'package:social_app/view/profil/profil_page.dart';
 import 'package:social_app/view/profil/upload_post_page.dart';
@@ -33,6 +35,7 @@ class _HomeState extends State<Home> {
   ProfessionelService proService = ProfessionelService();
   List<Widget> talentPages = [];
   List<Widget> proPages = [];
+  List<Widget> adminPages = [];
 
   List<BottomNavigationBarItem> talentNavigationBar = [
     BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Accueil')),
@@ -51,6 +54,12 @@ class _HomeState extends State<Home> {
     BottomNavigationBarItem(icon: Icon(Icons.search), title: Text('Recherche')),
   ];
 
+List<BottomNavigationBarItem> adminNavigationBar = [
+    BottomNavigationBarItem(
+        icon: Icon(Icons.person_add), title: Text('Profiles')),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.art_track), title: Text('Categories')),
+  ];
   checkTalent() async {
     talent = await talentService.getCurrentUser();
    
@@ -60,11 +69,11 @@ class _HomeState extends State<Home> {
     pro = await proService.getCurrentUser();
   }
 
+ 
   @override
   void initState() {
     super.initState();
     widget.userType == UserType.talent ? checkTalent() : checkPro();
-    checkTalent();
     talentPages = [
       ActualitePage(),
       ProfilPage(),
@@ -78,6 +87,10 @@ class _HomeState extends State<Home> {
       ProProfilPage(),
       AjouterAnnoncePage(),
       RecherchePage(),
+    ];
+    adminPages=[
+      ProfilesPage(),
+      CategoriesPage()
     ];
     
     pageController = PageController(

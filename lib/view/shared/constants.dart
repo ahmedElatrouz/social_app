@@ -12,7 +12,7 @@ const kHeaderTextStyle=TextStyle(
     editProfil,editEmail,editTel,editPassword,accesPrive
   }
  enum UserType{
-    talent,professionnel
+    talent,professionnel,admin
   }
   enum genre{
     homme,femme
