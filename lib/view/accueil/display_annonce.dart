@@ -16,8 +16,8 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
   String descripton = '';
 
   infos() {
-    //nom = widget.prof.nom;
-    //prenom = widget.prof.prenom;
+    nom = widget.prof.nom;
+    prenom = widget.prof.prenom;
     descripton = widget.annonce.description;
   }
 
@@ -29,53 +29,54 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
 
   buildAnnonceContent() {
     return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-              width: 80.0,
-              height: 80.0,
-              decoration: BoxDecoration(
-                  color: Colors.red,
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/3.jpg'),
-                      fit: BoxFit.cover),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  boxShadow: [
-                    BoxShadow(blurRadius: 7.0, color: Colors.black)
-                  ])),
-          SizedBox(
-            width: 10,
-          ),
-          Container(
-              child: Column(
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Container(
+                  width: 60.0,
+                  height: 60.0,
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/3.jpg'),
+                          fit: BoxFit.cover),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      boxShadow: [
+                        BoxShadow(blurRadius: 7.0, color: Colors.black)
+                      ])),
+              SizedBox(width: 10,),
               Text(
-                'Nom Prenom',
+                nom +' '+ prenom,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Container(
-                  height: 100,
-                  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    border: Border.all(color: Colors.blueGrey, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(descripton),
-                ),
-              )
-            ],
-          ))
+            ]
+          ),
+          Container(
+           
+            margin: EdgeInsets.symmetric( vertical: 5),
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              border: Border.all(color: Colors.black, width: 1),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Text(
+              descripton,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          )
         ],
-      ),
+    )
     );
   }
 
@@ -126,19 +127,12 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
         border: Border.all(color: Colors.blueGrey, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: InkWell(
-          child: Column(
-            children: <Widget>[
-              buildAnnonceContent(),
-              SizedBox(
-                height: 10,
-              ),
-              buildAnnonceFooter(),
-            ],
-          ),
-        ),
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          buildAnnonceContent(),
+          buildAnnonceFooter(),
+        ],
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:uuid/uuid.dart';
+
 class Annonce {
-  String id; 
+  String id ;
   DateTime date;
   String description;
   String proRef;
@@ -11,11 +13,11 @@ class Annonce {
 
   Map<String, dynamic> toMap() {
     return {
-      'uid': id,
+      'uid': Uuid().v4(),
       'date': date,
       'description': description,
       'proRef': proRef,
-      'comments':comments,
+      'comments': {},
     };
   }
 
@@ -25,7 +27,7 @@ class Annonce {
       id: map['uid'],
       description: map['description'],
       date:map['date'].toDate(),
-      proRef: map['profRef'],
+      proRef: map['proRef'],
       comments: map['comments'],
     );
   }

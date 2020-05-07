@@ -2,17 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/repository/annonceRepository.dart';
 import 'package:social_app/repository/proRepositoryImpl.dart';
-import 'package:uuid/uuid.dart';
 
 final annRef = Firestore.instance.collection('Annonces');
 
 class AnnonceRepositoryImpl implements AnnonceRepository {
-  String postId = Uuid().v4();
+  
   @override
   Future<int> createAnnonce(Annonce annonce) async {
     int r = 0;
     try {
-      await annRef.document(postId).setData(annonce.toMap());
+      await annRef.document(annonce.id).setData(annonce.toMap());
       r = 1;
     } catch (e) {
       print(e);

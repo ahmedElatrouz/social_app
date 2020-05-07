@@ -17,6 +17,9 @@ class _AnnoncePageState extends State<AnnoncePage> {
   List<Annonce> annonces = [];
   List<DisplayAnnonce> displayAnnonce = [];
   AnnonceService annonceService = AnnonceService();
+  Professionnel prof = Professionnel();
+  ProfessionelService professionelService =ProfessionelService();
+
 
   @override
   void initState() {
@@ -37,8 +40,7 @@ class _AnnoncePageState extends State<AnnoncePage> {
   listAnnonses() async {
 
     for (Annonce annonce in annonces) {
-      Professionnel prof = await ProfessionelService().searchById(annonce.proRef);
-        print(prof);
+      Professionnel prof = await professionelService.searchById(annonce.proRef);
 
         setState(() {
         displayAnnonce.add(DisplayAnnonce(

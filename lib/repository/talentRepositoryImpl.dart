@@ -161,6 +161,7 @@ class TalentRepositoryImpl implements TalentRepository {
     return user != null ? Talent(uid: user.uid) : null;
   }
 
+
   @override
   Future<Talent> searchById(String id) async {
     Talent talent;

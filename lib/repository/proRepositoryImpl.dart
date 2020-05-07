@@ -91,7 +91,6 @@ class ProfessionelRepositoryImpl implements ProfessionnelRepository{
     try {
       var user = await userRef.document(id).get();
       pro = Professionnel.fromMap(user.data);
-      print(pro);
     } catch (e) {
       print(e);
     }
