@@ -131,22 +131,6 @@ class TalentRepositoryImpl implements TalentRepository {
     
   }
 
-  @override
-  Future signIn(String email, String password) async {
-    var result=0;
-    try {
-      AuthResult authResult = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser user = authResult.user;
-      if(user!=null ){
-       await  exists(user.uid)?result=1:result=2;
-      }
-      
-    } catch (e) {
-      print(e);
-    }
-    return result;
-  }
 
   @override
   Future signOut() async {

@@ -24,14 +24,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute:Authenticate.id,
-      //initialRoute:Home.id,
+      //initialRoute:Authenticate.id,
+      initialRoute:Home.id,
       routes: {
         Authenticate.id : (context) => Authenticate(),
         LoginPage.id : (context) => LoginPage(),
         Register.id : (context) => Register(),
         ActualitePage.id : (context) => ActualitePage(),
-        Home.id : (context) => Home(userType: userType,),
+        Home.id : (context) => Home(userType: UserType.admin,),
         ProProfilPage.id:(context)=>ProProfilPage(),
         OtherProfile.id:(context)=>OtherProfile()
      },

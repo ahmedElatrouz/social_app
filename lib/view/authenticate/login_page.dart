@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:social_app/main.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/repository/authService.dart';
 import 'package:social_app/repository/talentRepositoryImpl.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/home.dart';
@@ -92,8 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       //setState(() => loading = true );
-                                      dynamic result = await talentService.signIn(
-                                          "youssef@email.com", "youssegf");
+                                      dynamic result = await AuthService().signIn(
+                                          "netero@hunter.com", "123456");
                                       if (result == 0) {
                                         setState(() {
                                           loading = false;
@@ -107,8 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               loading = false; 
                                             });*/
-                                                 if(result ==1) MyApp.userType=UserType.talent;
-                                                 else MyApp.userType=UserType.professionnel;
+                                                 
                                                Navigator.pushReplacementNamed(
                                                   context, Home.id
                                                );

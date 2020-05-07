@@ -8,4 +8,5 @@ abstract class AdminRepository{
   Future<int> createAdmin(Admin admin);
   Future<int> updateAdmin(Admin admin);
   Future<int> deleteAdmin(String id); 
+  Future<bool> exists(String id);
 }
