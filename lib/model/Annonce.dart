@@ -1,8 +1,4 @@
-//import 'package:social_app/model/Professionnel.dart';
-
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Annonce {
   String id; 
@@ -28,11 +24,7 @@ class Annonce {
     return Annonce(
       id: map['uid'],
       description: map['description'],
-<<<<<<< HEAD
-      date:DateTime.tryParse(map['date'].toString()),
-=======
       date:map['date'].toDate(),
->>>>>>> ea4694e6bfb9a371a282b99e18263ff0800999c4
       proRef: map['profRef'],
       comments: map['comments'],
     );

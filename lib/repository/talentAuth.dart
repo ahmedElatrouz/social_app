@@ -87,7 +87,7 @@ class TalentAuth {
         return null;
       }
     }
-  }
+  } 
 
 
 

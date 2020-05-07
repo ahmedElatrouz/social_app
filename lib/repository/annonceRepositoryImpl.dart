@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/repository/annonceRepository.dart';
 import 'package:social_app/repository/proRepositoryImpl.dart';
-import 'package:social_app/services/professionelService.dart';
 import 'package:uuid/uuid.dart';
 
 final annRef = Firestore.instance.collection('Annonces');
