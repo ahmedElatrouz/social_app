@@ -17,6 +17,7 @@ class Professionnel extends Utilisateur {
     String nationalite,
     String tel,
     String proID,
+    String photoProfile,
   }) : super(
             nom: nom,
             prenom: prenom,
@@ -25,7 +26,8 @@ class Professionnel extends Utilisateur {
             password: password,
             email: email,
             nationalite: nationalite,
-            tel: tel) {
+            tel: tel,
+            photoProfile : photoProfile) {
     this.proID = proID;
   }
 
@@ -33,6 +35,7 @@ class Professionnel extends Utilisateur {
     return {
       'uid': proID,
       'annonce': List<dynamic>.from(annonces.map((x) => x.toMap())),
+      'photoProfile' :photoProfile
     };
   }
 
@@ -69,6 +72,7 @@ class Professionnel extends Utilisateur {
       genre: map['genre'],
       nationalite: map['nationalite'],
       age: int.tryParse(map['age']),
+      photoProfile: map['photoProfile']
       // List<Annonce>.from(map['annonces']?.map((x) => Annonce.fromMap(x))),
     );
   }

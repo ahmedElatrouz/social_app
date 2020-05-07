@@ -68,7 +68,7 @@ class AnnonceRepositoryImpl implements AnnonceRepository {
     List<Annonce> annonces = [];
     try {
       var snapshot =
-          await annRef/*.orderBy('date', descending: true)*/.getDocuments();
+          await annRef.orderBy('date', descending: true).getDocuments();
       annonces =
           snapshot.documents.map((doc) => Annonce.fromMap(doc.data)).toList();
       print(annonces.length);

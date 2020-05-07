@@ -29,8 +29,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   checkTalent() async {
     talent0 = await talentService.getCurrentUser();
-    }
-
+  }
 
   @override
   void initState() {
@@ -40,7 +39,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   handleLikePost() async {
     bool _isLiked = (widget.post.likes[talent0.uid] == true);
-     
+
     if (_isLiked) {
       try {
         await postService.likeProfilPosts(
@@ -59,7 +58,7 @@ class _PostWidgetState extends State<PostWidget> {
         setState(() {
           isLiked = true;
           widget.post.likes[talent0.uid] = true;
-        }); 
+        });
       } catch (e) {
         print(e);
       }
@@ -68,11 +67,14 @@ class _PostWidgetState extends State<PostWidget> {
 
   buildPostHeader() {
     return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.red,
-        backgroundImage: widget.poster.photoProfile != ''
-            ? CachedNetworkImageProvider(widget.poster.photoProfile)
-            : AssetImage('assets/images/user_icon.png'),
+      leading: GestureDetector(
+        onTap: () => print('go to profile'),
+        child: CircleAvatar(
+          backgroundColor: Colors.red,
+          backgroundImage: widget.poster.photoProfile != ''
+              ? CachedNetworkImageProvider(widget.poster.photoProfile)
+              : AssetImage('assets/images/user_icon.png'),
+        ),
       ),
       title: GestureDetector(
         child: Text(
@@ -136,7 +138,8 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    isLiked = (widget.post.likes[talent0.uid] == true) || (widget.post.likes[widget.talent.uid] == true);
+    isLiked = (widget.post.likes[talent0.uid] == true) ||
+        (widget.post.likes[widget.talent.uid] == true);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
