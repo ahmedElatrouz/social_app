@@ -20,4 +20,7 @@ class AdminService {
   Future<int> deleteAdmin(String id) {
     return adminRepository.deleteAdmin(id);
   }
+  Future<bool> exists(String id){
+    return adminRepository.exists(id);
+  }
 }

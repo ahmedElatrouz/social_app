@@ -33,11 +33,6 @@ class TalentService {
     return talentRepository.exists(id);
   }
 
-  Future signIn(String email, String password) {
-    Future result = talentRepository.signIn(email, password);
-    return result;
-  }
-
   Future signOut() async {
     await talentRepository.signOut();
   }

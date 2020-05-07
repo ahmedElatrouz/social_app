@@ -98,10 +98,44 @@ List<BottomNavigationBarItem> adminNavigationBar = [
     );
   }
 
+  List getPages(){
+    List list=[];
+    switch (widget.userType) {
+      case UserType.talent:
+        list= talentPages;
+        break;
+      case UserType.professionnel:
+        list=proPages;
+        break;
+      case UserType.admin:
+        list=adminPages;
+        break;
+    }
+    return list;
+      
+  }
+
+  List getNavigationBar(){
+    List list=[];
+    switch (widget.userType) {
+      case UserType.talent:
+        list= talentNavigationBar;
+        break;
+      case UserType.professionnel:
+        list=proNavigationBar;
+        break;
+      case UserType.admin:
+        list=adminNavigationBar;
+        break;
+    }
+    return list;
+     
+  }
+
   Widget homeContent() {
     return Scaffold(
       body: PageView(
-        children: widget.userType == UserType.talent ? talentPages : proPages,
+        children: getPages(),
         controller: pageController,
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
@@ -116,9 +150,7 @@ List<BottomNavigationBarItem> adminNavigationBar = [
           onTap: onTap,
           unselectedItemColor: Colors.black,
           selectedItemColor: Colors.lightBlueAccent,
-          items:  widget.userType == UserType.talent
-              ? talentNavigationBar
-              : proNavigationBar,
+          items: getNavigationBar(),
         ),
       ),
     );
