@@ -1,21 +1,23 @@
 import 'dart:convert';
 
-import 'package:social_app/model/Annonce.dart';
-import 'package:social_app/model/Talent.dart';
 
 class Commentaire {
   String uid;
   String contenue;
   DateTime date;
-  Talent talent;
-  Annonce annonce;
+  String talentID;
+  String annonceID;
+  String nomTalent;
+  String photoProfile;
 
   Commentaire({
     this.uid,
     this.contenue,
     this.date,
-    this.talent,
-    this.annonce,
+    this.talentID,
+    this.annonceID,
+    this.nomTalent,
+    this.photoProfile,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,8 +25,11 @@ class Commentaire {
       'uid': uid,
       'date': date,
       'contenue': contenue,
-      'talent': talent.toMap(),
-      'annonce': annonce.toMap(),
+      'talent_ID': talentID,
+      'annonce_ID': annonceID,
+      'nomTalent': nomTalent,
+      'photoProfile': photoProfile,
+
     };
   }
 
@@ -35,8 +40,10 @@ class Commentaire {
       uid: map['uid'],
       contenue: map['contenue'],
       date: map['date'],
-      //talent: Talent.fromMap(),
-      annonce: Annonce.fromMap(map['annonce']),
+      talentID : map['talent_ID'],
+      annonceID: map['annonce_ID'],
+      nomTalent: map['nomTalent'],
+      photoProfile: map['photoProfile'],
     );
   }
 
