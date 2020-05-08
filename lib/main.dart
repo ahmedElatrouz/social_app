@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         LoginPage.id : (context) => LoginPage(),
         Register.id : (context) => Register(),
         ActualitePage.id : (context) => ActualitePage(),
-        Home.id : (context) => Home(userType: UserType.talent,),
+        Home.id : (context) => Home(userType: userType,),
         ProProfilPage.id:(context)=>ProProfilPage(),
         OtherProfile.id:(context)=>OtherProfile()
      },

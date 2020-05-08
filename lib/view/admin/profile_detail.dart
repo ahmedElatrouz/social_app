@@ -15,7 +15,20 @@ class _ProfileDetailState extends State<ProfileDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body:Container(),
+      body:Column(
+        children:<Widget>[
+          RaisedButton(
+            color: Colors.red[400],
+            onPressed: ()=>print('supprimer compte'),
+            child:Text('supprimer ce compte') ,
+            ),
+            RaisedButton(
+              color: Colors.green[400],
+            onPressed: ()=>print('valider compte'),
+            child:Text('valider ce compte') ,
+            ),
+        ]
+      ),
     );
   }
 }

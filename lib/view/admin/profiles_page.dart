@@ -41,8 +41,9 @@ class _ProfilesPageState extends State<ProfilesPage> {
     return Scaffold(
       
       appBar: AppBar(
+        title: Text('Profiles'),
         automaticallyImplyLeading:false,
-        backgroundColor:Colors.grey[600],
+        backgroundColor:Colors.purple[300],
        // elevation: 0.0,
       ),
       backgroundColor: Colors.grey[200],

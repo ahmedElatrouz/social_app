@@ -94,21 +94,14 @@ class _LoginPageState extends State<LoginPage> {
                                     if (_formKey.currentState.validate()) {
                                       //setState(() => loading = true );
                                       dynamic result = await AuthService().signIn(
-                                          "youssef@email.com", "youssegf");
+                                          "admin@email.com", "123456");
                                       if (result == 0) {
                                         setState(() {
                                           loading = false;
                                           error =
                                               'you have a problem in your email';
                                         });
-                                      } else {
-                                        /*Navigator.pushReplacementNamed(
-                                            context, Home.id,
-                                            arguments: UserType.talent);
-                                            setState(() {
-                                              loading = false; 
-                                            });*/
-                                                 
+                                      } else {   
                                                Navigator.pushReplacementNamed(
                                                   context, Home.id
                                                );
