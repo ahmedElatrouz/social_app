@@ -68,7 +68,7 @@ class _ActualitePageState extends State<ActualitePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: header(context, "actualite"),
+        appBar: header(context, "actualite",'Artiness'),
         backgroundColor: Color(0xFF009688).withOpacity(0.5),
         body: isWaiting|| postWidgets.isEmpty
             ? alternativeScreen()

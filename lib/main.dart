@@ -1,8 +1,6 @@
 
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:social_app/model/Talent.dart';
 import 'package:social_app/view/accueil/actualite_page.dart';
 import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/authenticate/authenticate.dart';
@@ -33,7 +31,7 @@ class MyApp extends StatelessWidget {
         LoginPage.id : (context) => LoginPage(),
         Register.id : (context) => Register(),
         ActualitePage.id : (context) => ActualitePage(),
-        Home.id : (context) => Home(userType: userType,),
+        Home.id : (context) => Home(userType: userType),
         ProProfilPage.id:(context)=>ProProfilPage(),
         OtherProfile.id:(context)=>OtherProfile()
      },

@@ -65,7 +65,7 @@ class _AnnoncePageState extends State<AnnoncePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF009688).withOpacity(0.5),
-      appBar: header(context, "annonce"),
+      appBar: header(context, "annonce", 'Annonces'),
       body: isWaiting || displayAnnonce.isEmpty
           ? alternativeScreen()
           : ListView(children: displayAnnonce),

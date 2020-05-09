@@ -76,13 +76,13 @@ List<BottomNavigationBarItem> adminNavigationBar = [
     widget.userType == UserType.talent ? checkTalent() : checkPro();
     talentPages = [
       ActualitePage(),
-      ProfilPage(),
+      ProfilPage(poster: null,),
       UploadPost(
         post: witchPost.newPost,
       ),
       AnnoncePage(),
     ]; 
-
+    
     proPages = [
       ProProfilPage(),
       AjouterAnnoncePage(),

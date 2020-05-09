@@ -4,6 +4,7 @@ import 'package:social_app/model/Post.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/profil/profil_page.dart';
 import 'package:social_app/view/shared/custom_image.dart';
 
 class PostWidget extends StatefulWidget {
@@ -26,6 +27,9 @@ class _PostWidgetState extends State<PostWidget> {
   TalentService talentService = TalentService();
   bool isLiked;
   Talent talent0 = Talent();
+  String nom = '';
+  String prenom = '';
+  String photoProfil = '';
 
   checkTalent() async {
     talent0 = await talentService.getCurrentUser();
@@ -34,6 +38,9 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   void initState() {
     checkTalent();
+    photoProfil = widget.poster.photoProfile;
+    nom = widget.poster.nom;
+    prenom = widget.poster.prenom;
     super.initState();
   }
 
@@ -65,20 +72,29 @@ class _PostWidgetState extends State<PostWidget> {
     }
   }
 
+  goToProfile() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProfilPage(
+                  poster: widget.poster,
+                )));
+  }
+
   buildPostHeader() {
     return ListTile(
       leading: GestureDetector(
-        onTap: () => print('go to profile'),
+        onTap: () => goToProfile(),
         child: CircleAvatar(
           backgroundColor: Colors.red,
-          backgroundImage: widget.poster.photoProfile != ''
-              ? CachedNetworkImageProvider(widget.poster.photoProfile)
+          backgroundImage: photoProfil != ''
+              ? CachedNetworkImageProvider(photoProfil)
               : AssetImage('assets/images/user_icon.png'),
         ),
       ),
       title: GestureDetector(
         child: Text(
-          widget.poster.nom + ' ' + widget.poster.prenom,
+          nom + ' ' + prenom,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,

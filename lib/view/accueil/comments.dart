@@ -71,7 +71,7 @@ class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, 'Comments'),
+      appBar: header(context, 'Comments','Commentaires'),
       body: Column(
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[

@@ -11,6 +11,8 @@ import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
 class ProfilPage extends StatefulWidget {
+  final Talent poster;
+  ProfilPage({this.poster});
   @override
   _ProfilPageState createState() => _ProfilPageState();
 }
@@ -38,19 +40,34 @@ class _ProfilPageState extends State<ProfilPage> {
 
   getProfileContent() async {
     talent = await talentService.getCurrentUser();
-    nom = talent.nom;
-    prenom = talent.prenom;
-    email = talent.email;
-    nationalite = talent.nationalite;
-    description = talent.description;
-    photoUrl = talent.photoProfile;
+    if (widget.poster == talent || widget.poster == null) {
+      nom = talent.nom;
+      prenom = talent.prenom;
+      email = talent.email;
+      nationalite = talent.nationalite;
+      description = talent.description;
+      photoUrl = talent.photoProfile;
+    } else {
+      nom = widget.poster.nom;
+      prenom = widget.poster.prenom;
+      email = widget.poster.email;
+      nationalite = widget.poster.nationalite;
+      description = widget.poster.description;
+      photoUrl = widget.poster.photoProfile;
+    }
     getProfilPosts();
   }
 
   getProfilPosts() async {
     try {
+      if(talent == widget.poster || widget.poster == null){
       posts = await postService.getProfilPosts(talent.uid, postCount);
       postCount = posts.length;
+      }
+      else{
+      posts = await postService.getProfilPosts(widget.poster.uid, postCount);
+      postCount = posts.length;
+      }
       setState(() {
         isWaiting = false;
       });
@@ -71,7 +88,7 @@ class _ProfilPageState extends State<ProfilPage> {
           PostWidget(
             post: posts[i],
             talent: talent,
-            poster: talent,
+            poster: widget.poster == null ? talent : widget.poster,
           )
       ],
     );
@@ -157,8 +174,10 @@ class _ProfilPageState extends State<ProfilPage> {
                         SizedBox(
                           width: 10,
                         ),
+                        if(talent == widget.poster)
                         RaisedButton.icon(
                             onPressed: () {
+                              
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -185,7 +204,7 @@ class _ProfilPageState extends State<ProfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFF009688).withOpacity(0.5),
-        appBar: header(context, "profil"),
+        appBar: talent == widget.poster ? header(context, "profil",'Artiness') : header(context, '_','artiness'),
         body: isWaiting ? circularProgress() : profileView());
   }
 }
