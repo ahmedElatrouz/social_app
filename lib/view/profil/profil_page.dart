@@ -39,8 +39,9 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   getProfileContent() async {
-    talent = await talentService.getCurrentUser();
-    if (widget.poster == talent || widget.poster == null) {
+    
+    if ( widget.poster == null) {
+      talent = await talentService.getCurrentUser();
       nom = talent.nom;
       prenom = talent.prenom;
       email = talent.email;

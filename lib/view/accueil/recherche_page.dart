@@ -5,6 +5,7 @@ import 'package:social_app/model/Talent.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/profil/other_profile.dart';
+import 'package:social_app/view/profil/profil_page.dart';
 import 'package:social_app/view/shared/progress.dart';
 
 class RecherchePage extends StatefulWidget {
@@ -135,7 +136,14 @@ class ResultWidget extends StatelessWidget {
 
   const ResultWidget({ this.user});
 
-
+  goToProfile(context){
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProfilPage(
+                  poster: user,
+                )));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +153,7 @@ class ResultWidget extends StatelessWidget {
       child: Column(
         children:<Widget>[
           GestureDetector(
-              onTap:()=> Navigator.pushNamed(context, OtherProfile.id),
+              onTap:()=> goToProfile(context),
               child: ListTile(
                 leading:CircleAvatar(
                   backgroundColor: Colors.transparent,
