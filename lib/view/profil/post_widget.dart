@@ -97,7 +97,7 @@ class _PostWidgetState extends State<PostWidget> {
           nom + ' ' + prenom,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 15,
           ),
         ),
       ),
@@ -111,42 +111,33 @@ class _PostWidgetState extends State<PostWidget> {
 
   buildPostImage() {
     return GestureDetector(
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          cachedNetworkImage(widget.post.photoUrl),
-        ],
-      ),
+      child: Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width-30,
+        color: Colors.grey,
+        child: cachedNetworkImage(widget.post.photoUrl,context),),
     );
   }
 
   buildPostFooter() {
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () => handleLikePost(),
-              child: Icon(
-                isLiked ? Icons.favorite : Icons.favorite_border,
-                size: 30,
-              ),
-            ),
-          ],
+        GestureDetector(
+          onTap: () => handleLikePost(),
+          child: Icon(
+            isLiked ? Icons.favorite : Icons.favorite_border,
+            size: 30,
+          ),
         ),
-        Row(
-          children: <Widget>[
-            Container(
-              child: Text(
-                widget.post.getLikesCount().toString() + ' likes',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
-          ],
+        Container(
+          child: Text(
+            widget.post.getLikesCount().toString() + ' likes',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         )
       ],
     );
@@ -158,20 +149,26 @@ class _PostWidgetState extends State<PostWidget> {
         (widget.post.likes[widget.talent.uid] == true);
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+      height: MediaQuery.of(context).size.height/2,
+      margin: EdgeInsets.symmetric(horizontal:0, vertical: 1),
       decoration: BoxDecoration(
-        color: Colors.grey[100], //Color(0xFFF0F0F0),
+        color: Colors.white, //Color(0xFFF0F0F0),
         border: Border.all(color: Colors.blueGrey, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal:10,vertical:0),
         child: InkWell(
           child: Column(
             children: <Widget>[
-              buildPostHeader(),
-              buildPostImage(),
+              Expanded(child: buildPostHeader(),),
+              Expanded(flex: 2,child: buildPostImage(),),
+              SizedBox(
+                height: 5,
+              ),
               buildPostFooter(),
+              SizedBox(
+                height: 5,
+              ),
             ],
           ),
         ),

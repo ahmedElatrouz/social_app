@@ -99,36 +99,63 @@ class _ProfilPageState extends State<ProfilPage> {
     return ListView(
       children: <Widget>[
         Container(
+          height: MediaQuery.of(context).size.height/2.6,
+          margin: EdgeInsets.only(bottom:20),
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              color: Color(0xFF009688),
+            color: Colors.white,
               borderRadius: new BorderRadius.only(
-                  bottomLeft: const Radius.circular(60.0),
-                  bottomRight: const Radius.circular(60.0))),
-          child: Column(children: <Widget>[
-            CircleAvatar(
-              backgroundImage: photoUrl != ''
-                  ? CachedNetworkImageProvider(photoUrl)
-                  : AssetImage('assets/images/user_icon.png'),
-              radius: 60,
+                  bottomLeft: const Radius.circular(5.0),
+                  bottomRight: const Radius.circular(5.0))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+
+              Expanded(
+                              child: CircleAvatar(
+                backgroundImage: photoUrl != ''
+                    ? CachedNetworkImageProvider(photoUrl)
+                    : AssetImage('assets/images/user_icon.png'),
+                radius: 40,
             ),
+              ),
             SizedBox(
-              height: 8,
+              width:10,
             ),
-            Text(nom + ' ' + prenom,
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-            Text(email + ', ' + nationalite,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black38)),
-            Text(description,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87)),
+            Expanded(
+              flex: 2,
+                          child: Column(
+                crossAxisAlignment: 
+                CrossAxisAlignment.start,
+                children: <Widget>[
+                Text(nom + ' ' + prenom,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text(email + ', ' + nationalite,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black38)),
+             
+              ]),
+            )
+            
+            ]),
+            SizedBox(
+              height:20
+            ),
+             Text('description: '+description,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87)),
+            
             Text('Category',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.black45)),
             SizedBox(
@@ -136,12 +163,12 @@ class _ProfilPageState extends State<ProfilPage> {
             )
           ]),
         ),
-        Row(
+       /* Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
                 height: 60,
-                width: 392,
+                width: MediaQuery.of(context).size.width-10,
                 margin: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -166,9 +193,9 @@ class _ProfilPageState extends State<ProfilPage> {
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
-                          width: 110,
+                          width: 10,
                         ),
-                        VerticalDivider(
+                        if(talent == widget.poster)VerticalDivider(
                           color: Colors.black54,
                           width: 2,
                         ),
@@ -195,7 +222,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       ],
                     ))))
           ],
-        ),
+        ),*/
         buildProfilPost()
       ],
     );
@@ -204,8 +231,8 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFF009688).withOpacity(0.5),
-        appBar: talent == widget.poster ? header(context, "profil",'Artiness') : header(context, '_','artiness'),
+        backgroundColor: Colors.grey[200],
+        appBar: talent == widget.poster ? header(context, "profil",'Artness') : AppBar(title:Text('Profile'),),
         body: isWaiting ? circularProgress() : profileView());
   }
 }
