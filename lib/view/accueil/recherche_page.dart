@@ -148,8 +148,13 @@ class ResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
-      color: Colors.lightBlueAccent.withOpacity(0.7),
+      margin: EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        
+      color: Colors.white,
+        borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+      ),
       child: Column(
         children:<Widget>[
           GestureDetector(
@@ -159,16 +164,21 @@ class ResultWidget extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   backgroundImage:user.photo!=null && user.photo.isNotEmpty?CachedNetworkImageProvider(user.photo):AssetImage('assets/images/ahmed.jpg') ,
                   ),
-                  title: Text(
-                    user.nom,
-                    style: TextStyle(
-                      color:Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                    subtitle: Text(user.nom+" "+user.prenom,
-                    style:TextStyle(color:Colors.white), ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        user.nom + ' ' + user.prenom,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),),
+                    ],
+                  ),
+                    subtitle: 
+                      Text('musician'),
               ),
           ),
+          
           Divider(
             height: 2.0,
             color: Colors.white54,
