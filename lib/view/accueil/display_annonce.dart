@@ -57,15 +57,15 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
               width: 40.0,
               height: 40.0,
               decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: Colors.grey,
                   image: DecorationImage(
                       image: photoProfile != ''
                           ? CachedNetworkImageProvider(photoProfile)
                           : AssetImage('assets/images/3.jpg'),
                       fit: BoxFit.cover),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   boxShadow: [
-                    BoxShadow(blurRadius: 7.0, color: Colors.black)
+                    BoxShadow(blurRadius: 2.0, color: Colors.grey)
                   ])),
           SizedBox(
             width: 10,
@@ -76,21 +76,23 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
               Text(
                 nom + ' ' + prenom,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
                 width: 10,
               ),
-              Text(day + '/' + month + '/' + year + '  ' + hour + ':' + min)
+              Text(day + '/' + month + '/' + year + '  ' + hour + ':' + min,style: TextStyle(fontSize:10),)
             ],
           ),
         ]),
         Container(
+          height: MediaQuery.of(context).size.height/7,
           margin: EdgeInsets.symmetric(vertical: 5),
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
+            
             color: Colors.white,
             //border: Border.all(color: Colors.grey, width: 1),
             borderRadius: BorderRadius.circular(8)
@@ -99,8 +101,7 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
             descripton,
             style: TextStyle(
               color: Colors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontSize: 14,
             ),
           ),
         )
@@ -117,15 +118,15 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
           child: Icon(
             Icons.chat,
             //color: Colors.blue,
-            size: 30,
+            size: 20,
           ),
         ),
         SizedBox(width: 4,),
         Container(
           child: Text(
-            '0 comment',
+            '0 comments',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -137,10 +138,12 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+      
+      
+      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 1.5),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
-        border: Border.all(color: Colors.grey[400], width: 1), 
+        color: Colors.white,
+       // border: Border.all(color: Colors.grey[400], width: 1), 
       ),
       padding: EdgeInsets.all(10),
       child: Column(

@@ -9,14 +9,6 @@ import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/display_annonce.dart';
 import 'package:social_app/view/shared/progress.dart';
 
-List<Annonce> annonces = [
-  Annonce(
-      date: DateTime.now(),
-      description: 'Opportunité pour rejoindre les acteurs de Breaking bad'),
-       Annonce(
-      date: DateTime.now(),
-      description: 'Working with picasso!')
-];
 
 class ProProfilPage extends StatefulWidget {
   static const String id = 'proProfilPage';
