@@ -30,6 +30,7 @@ class _PostWidgetState extends State<PostWidget> {
   String nom = '';
   String prenom = '';
   String photoProfil = '';
+  String id= '';
 
   checkTalent() async {
     talent0 = await talentService.getCurrentUser();
@@ -148,7 +149,7 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     isLiked = (widget.post.likes[talent0.uid] == true) ||
-        (widget.post.likes[widget.talent.uid] == true);
+        (widget.post.likes[widget.poster.uid] == true);
 
     return Container(
       //height: MediaQuery.of(context).size.height,

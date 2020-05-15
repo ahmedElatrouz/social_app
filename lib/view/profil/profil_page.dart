@@ -29,8 +29,8 @@ class _ProfilPageState extends State<ProfilPage> {
   String email = '';
   String nationalite = '';
   String description = '';
-  String photoUrl = ' ';
-  String cat = ' ';
+  String photoUrl = '';
+  String cat = '';
 
   @override
   initState() {
@@ -40,15 +40,15 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   getProfileContent() async {
-    if (widget.poster == null) {
-      talent = await talentService.getCurrentUser();
+    talent = await talentService.getCurrentUser();
+    if (widget.poster == null ) {
       nom = talent.nom;
       prenom = talent.prenom;
       email = talent.email;
       nationalite = talent.nationalite;
       description = talent.description;
       photoUrl = talent.photoProfile;
-      cat = talent.categorie.cat;
+      //cat = talent.categorie.cat;
     } else {
       nom = widget.poster.nom;
       prenom = widget.poster.prenom;
@@ -56,14 +56,14 @@ class _ProfilPageState extends State<ProfilPage> {
       nationalite = widget.poster.nationalite;
       description = widget.poster.description;
       photoUrl = widget.poster.photoProfile;
-      cat = widget.poster.categorie.cat;
+      //cat = widget.poster.categorie.cat;
     }
     getProfilPosts();
   }
 
   getProfilPosts() async {
     try {
-      if (talent == widget.poster || widget.poster == null) {
+      if (widget.poster == null ) {
         posts = await postService.getProfilPosts(talent.uid, postCount);
         postCount = posts.length;
       } else {
@@ -87,10 +87,13 @@ class _ProfilPageState extends State<ProfilPage> {
     return Column(
       children: <Widget>[
         for (int i = 0; i < lenght; i++)
+        
           PostWidget(
             post: posts[i],
             talent: talent,
-            poster: widget.poster == null ? talent : widget.poster,
+            poster: widget.poster != null 
+                ? widget.poster
+                : talent,
           )
       ],
     );
@@ -101,7 +104,9 @@ class _ProfilPageState extends State<ProfilPage> {
       children: <Widget>[
         Container(
           height: MediaQuery.of(context).size.height / 2.6,
-          margin: widget.poster == null ? EdgeInsets.only(bottom: 0) : EdgeInsets.only(bottom: 8),
+          margin: widget.poster == null || talent == widget.poster
+              ? EdgeInsets.only(bottom: 0)
+              : EdgeInsets.only(bottom: 8),
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
               color: Colors.white,
@@ -146,7 +151,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87)),
-                Text(cat == null ? 'categorie' : cat,
+                Text('categorie',
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -156,15 +161,15 @@ class _ProfilPageState extends State<ProfilPage> {
                 )
               ]),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            if (widget.poster == null)
+        if (widget.poster == null || talent == widget.poster)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: RaisedButton.icon(
-                  color: Colors.blueAccent,
-                  textColor: Colors.white,
+                    color: Colors.blueAccent,
+                    textColor: Colors.white,
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -176,11 +181,12 @@ class _ProfilPageState extends State<ProfilPage> {
                     icon: Icon(Icons.add_a_photo),
                     label: Text(
                       'profil picture',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     )),
               )
-          ],
-        ),
+            ],
+          ),
         buildProfilPost()
       ],
     );
@@ -190,7 +196,7 @@ class _ProfilPageState extends State<ProfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        appBar: widget.poster == null
+        appBar: widget.poster == null || talent == widget.poster
             ? header(context, "profil", 'Artness')
             : AppBar(
                 title: Text('Profile'),
