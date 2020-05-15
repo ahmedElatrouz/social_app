@@ -9,4 +9,6 @@ abstract class CategorieRepository {
   Future<int> updateCategorie(Categorie categorie);
   Future<int> deleteCategorie(String id);
   Future<List<Categorie>> searchByName(String name);
+  Future<List<Categorie>> allCategories();
+  Future<Categorie> getCategory(String name);
 }

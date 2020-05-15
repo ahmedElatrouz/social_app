@@ -94,10 +94,10 @@ class _PostWidgetState extends State<PostWidget> {
       ),
       title: GestureDetector(
         child: Text(
-          nom + ' ' + prenom,
+          prenom + ' ' + nom,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: 18,
           ),
         ),
       ),
@@ -111,11 +111,12 @@ class _PostWidgetState extends State<PostWidget> {
 
   buildPostImage() {
     return GestureDetector(
-      child: Container(
-        height: 200,
-        width: MediaQuery.of(context).size.width-30,
-        color: Colors.grey,
-        child: cachedNetworkImage(widget.post.photoUrl,context),),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          cachedNetworkImage(widget.post.photoUrl),
+        ],
+        )
     );
   }
 
@@ -127,14 +128,15 @@ class _PostWidgetState extends State<PostWidget> {
           onTap: () => handleLikePost(),
           child: Icon(
             isLiked ? Icons.favorite : Icons.favorite_border,
-            size: 30,
+            size: 25,
           ),
         ),
+        SizedBox(width: 4,),
         Container(
           child: Text(
             widget.post.getLikesCount().toString() + ' likes',
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -149,26 +151,22 @@ class _PostWidgetState extends State<PostWidget> {
         (widget.post.likes[widget.talent.uid] == true);
 
     return Container(
-      height: MediaQuery.of(context).size.height/2,
+      //height: MediaQuery.of(context).size.height,
       margin: EdgeInsets.symmetric(horizontal:0, vertical: 1),
       decoration: BoxDecoration(
         color: Colors.white, //Color(0xFFF0F0F0),
         border: Border.all(color: Colors.blueGrey, width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal:10,vertical:0),
+        padding: const EdgeInsets.symmetric(horizontal:1,vertical:0),
         child: InkWell(
           child: Column(
             children: <Widget>[
-              Expanded(child: buildPostHeader(),),
-              Expanded(flex: 2,child: buildPostImage(),),
-              SizedBox(
-                height: 5,
-              ),
+              buildPostHeader(),
+              buildPostImage(),
+              SizedBox(height: 10,),
               buildPostFooter(),
-              SizedBox(
-                height: 5,
-              ),
+              SizedBox(height: 10,)
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:social_app/model/Categorie.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:image/image.dart' as Im;
 final _authStore = Firestore.instance.collection('Talents');
@@ -58,7 +59,8 @@ class TalentAuth {
       String tel,
       String photoUrl,
       String videoUrl,
-      String description) async {
+      String description,
+      Categorie category) async {
         
     FirebaseUser user = await _auth.currentUser();
     print(email +' '+ password);
@@ -78,7 +80,8 @@ class TalentAuth {
           "photoUrl": photoUrl,
           "videoUrl": videoUrl,
           "photoProfile": '',
-          "description": description
+          "description": description,
+          "Categorie" : category.toMap(),
         });
         doc = await _authStore.document(user.uid).get();
         return doc;

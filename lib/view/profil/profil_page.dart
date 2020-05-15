@@ -30,6 +30,7 @@ class _ProfilPageState extends State<ProfilPage> {
   String nationalite = '';
   String description = '';
   String photoUrl = ' ';
+  String cat = ' ';
 
   @override
   initState() {
@@ -39,8 +40,7 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   getProfileContent() async {
-    
-    if ( widget.poster == null) {
+    if (widget.poster == null) {
       talent = await talentService.getCurrentUser();
       nom = talent.nom;
       prenom = talent.prenom;
@@ -48,6 +48,7 @@ class _ProfilPageState extends State<ProfilPage> {
       nationalite = talent.nationalite;
       description = talent.description;
       photoUrl = talent.photoProfile;
+      cat = talent.categorie.cat;
     } else {
       nom = widget.poster.nom;
       prenom = widget.poster.prenom;
@@ -55,19 +56,19 @@ class _ProfilPageState extends State<ProfilPage> {
       nationalite = widget.poster.nationalite;
       description = widget.poster.description;
       photoUrl = widget.poster.photoProfile;
+      cat = widget.poster.categorie.cat;
     }
     getProfilPosts();
   }
 
   getProfilPosts() async {
     try {
-      if(talent == widget.poster || widget.poster == null){
-      posts = await postService.getProfilPosts(talent.uid, postCount);
-      postCount = posts.length;
-      }
-      else{
-      posts = await postService.getProfilPosts(widget.poster.uid, postCount);
-      postCount = posts.length;
+      if (talent == widget.poster || widget.poster == null) {
+        posts = await postService.getProfilPosts(talent.uid, postCount);
+        postCount = posts.length;
+      } else {
+        posts = await postService.getProfilPosts(widget.poster.uid, postCount);
+        postCount = posts.length;
       }
       setState(() {
         isWaiting = false;
@@ -99,130 +100,87 @@ class _ProfilPageState extends State<ProfilPage> {
     return ListView(
       children: <Widget>[
         Container(
-          height: MediaQuery.of(context).size.height/2.6,
-          margin: EdgeInsets.only(bottom:20),
+          height: MediaQuery.of(context).size.height / 2.6,
+          margin: widget.poster == null ? EdgeInsets.only(bottom: 0) : EdgeInsets.only(bottom: 8),
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: Colors.white,
+              color: Colors.white,
               borderRadius: new BorderRadius.only(
                   bottomLeft: const Radius.circular(5.0),
                   bottomRight: const Radius.circular(5.0))),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
-              Expanded(
-                              child: CircleAvatar(
-                backgroundImage: photoUrl != ''
-                    ? CachedNetworkImageProvider(photoUrl)
-                    : AssetImage('assets/images/user_icon.png'),
-                radius: 40,
-            ),
-              ),
-            SizedBox(
-              width:10,
-            ),
-            Expanded(
-              flex: 2,
-                          child: Column(
-                crossAxisAlignment: 
-                CrossAxisAlignment.start,
-                children: <Widget>[
-                Text(nom + ' ' + prenom,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text(email + ', ' + nationalite,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black38)),
-             
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundImage: photoUrl != ''
+                            ? CachedNetworkImageProvider(photoUrl)
+                            : AssetImage('assets/images/user_icon.png'),
+                        radius: 50,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(prenom + ' ' + nom,
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              Text(email + ', ' + nationalite,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black38)),
+                            ]),
+                      )
+                    ]),
+                SizedBox(height: 20),
+                Text('description: ' + description,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87)),
+                Text(cat == null ? 'categorie' : cat,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black45)),
+                SizedBox(
+                  height: 8,
+                )
               ]),
-            )
-            
-            ]),
-            SizedBox(
-              height:20
-            ),
-             Text('description: '+description,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87)),
-            
-            Text('Category',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black45)),
-            SizedBox(
-              height: 8,
-            )
-          ]),
         ),
-       /* Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width-10,
-                margin: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.blueGrey, width: 1),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: InkWell(
-                        child: Row(
-                      children: <Widget>[
-                        Text(
-                          'Posts :',
-                          style: TextStyle(fontSize: 22),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          postCount.toString(),
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        if(talent == widget.poster)VerticalDivider(
-                          color: Colors.black54,
-                          width: 2,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        if(talent == widget.poster)
-                        RaisedButton.icon(
-                            onPressed: () {
-                              
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UploadPost(
-                                            post: witchPost.profilePic,
-                                          )));
-                            },
-                            icon: Icon(Icons.add_a_photo),
-                            label: Text(
-                              'profil picture',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ))
-                      ],
-                    ))))
+            if (widget.poster == null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton.icon(
+                  color: Colors.blueAccent,
+                  textColor: Colors.white,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UploadPost(
+                                    post: witchPost.profilePic,
+                                  )));
+                    },
+                    icon: Icon(Icons.add_a_photo),
+                    label: Text(
+                      'profil picture',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    )),
+              )
           ],
-        ),*/
+        ),
         buildProfilPost()
       ],
     );
@@ -232,7 +190,11 @@ class _ProfilPageState extends State<ProfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        appBar: talent == widget.poster ? header(context, "profil",'Artness') : AppBar(title:Text('Profile'),),
+        appBar: widget.poster == null
+            ? header(context, "profil", 'Artness')
+            : AppBar(
+                title: Text('Profile'),
+              ),
         body: isWaiting ? circularProgress() : profileView());
   }
 }

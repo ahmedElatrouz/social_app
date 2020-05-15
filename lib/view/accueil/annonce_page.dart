@@ -70,5 +70,5 @@ class _AnnoncePageState extends State<AnnoncePage> {
           ? alternativeScreen()
           : ListView(children: displayAnnonce),
     );
-  }
+  } 
 }

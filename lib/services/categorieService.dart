@@ -25,5 +25,12 @@ class CategorieService {
   Future<List<Categorie>> searchByName(String name){
     return categorieRepository.searchByName(name);
   }
+  Future<List<Categorie>> allCategories(){
+    return categorieRepository.allCategories();
+  }
+
+  Future<Categorie> getCategory(String name){
+    return categorieRepository.getCategory(name);
+  }
   
 }

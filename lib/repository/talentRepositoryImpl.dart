@@ -7,10 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:social_app/model/Categorie.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:image/image.dart' as Im;
-import 'package:social_app/repository/proRepositoryImpl.dart';
 import 'talentRepository.dart';
 
-//import 'package:social_app/view/accueil/actualite_page.dart';
 final StorageReference storageRef = FirebaseStorage.instance.ref();
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final usersRef = Firestore.instance.collection("Talents");

@@ -6,9 +6,8 @@ import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/annonceService.dart';
 import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/accueil/display_annonce.dart';
 import 'package:social_app/view/shared/progress.dart';
-
-import 'annonce_widget.dart';
 
 List<Annonce> annonces = [
   Annonce(
@@ -39,6 +38,7 @@ class _ProProfilPageState extends State<ProProfilPage> {
   String nationalite = '';
   String description = '';
   String photoUrl = ' ';
+  String id = '';
   List<Widget> annoncesWidgets=[];
   @override
   initState() {
@@ -59,6 +59,8 @@ class _ProProfilPageState extends State<ProProfilPage> {
     prenom = pro.prenom;
     email = pro.email;
     nationalite = pro.nationalite;
+    id = pro.proID;
+    print(id);
     setState(() {
         isWaiting = false;
       });
@@ -68,11 +70,11 @@ class _ProProfilPageState extends State<ProProfilPage> {
 
    getProfilAnnonces() async {
     //await annonceService.createAnnonce(Annonce(description: 'my first created annonce',proRef: pro.proID));
-      List<Annonce> tempList=await annonceService.searchByUser('b38KREe5UGcuXuYQ1V2wZ42Sa0r1');
+      List<Annonce> tempList=await annonceService.searchByUser(id);
       if(tempList.isNotEmpty)
     for(Annonce an in tempList){
       print('description:'+an.description);
-      annoncesWidgets.add(AnnonceWidget(annonce:an,annonceur: pro,));
+      annoncesWidgets.add(DisplayAnnonce(annonce:an,prof: pro,));
     }
      setState(() {
        isWaitingForAnnonces=false;
@@ -155,7 +157,7 @@ class _ProProfilPageState extends State<ProProfilPage> {
                 color: Colors.white70,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(20), 
               child: Text(
                 '   My name is ahmed and I am watching better call saul, my best serie is breaking bad, '
                 'I don\'t like game of thrones that much. Favorite anime is hunter x hunter + attack on titan.',

@@ -15,7 +15,7 @@ class CreateField extends StatelessWidget {
       //si on est dans le field password l'ecriture devient obscure (pour que personne ne voit le password)
       obscureText: fieldName == "Password",
       validator: (val) => val.isEmpty ? 'cant be empty' : null,
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 17,color: Colors.black, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         border: UnderlineInputBorder(),//OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
         labelText: fieldName,

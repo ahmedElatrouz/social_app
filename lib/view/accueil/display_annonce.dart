@@ -54,8 +54,8 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
       children: <Widget>[
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           Container(
-              width: 60.0,
-              height: 60.0,
+              width: 40.0,
+              height: 40.0,
               decoration: BoxDecoration(
                   color: Colors.red,
                   image: DecorationImage(
@@ -91,9 +91,9 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
           margin: EdgeInsets.symmetric(vertical: 5),
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.grey[300],
-            border: Border.all(color: Colors.black, width: 1),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Colors.white,
+            //border: Border.all(color: Colors.grey, width: 1),
+            borderRadius: BorderRadius.circular(8)
           ),
           child: Text(
             descripton,
@@ -109,35 +109,26 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
   }
 
   buildAnnonceFooter() {
-    return Column(
+    return Row(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () =>
-                  showComents(context, annonceID: annonceId, proID: proId),
-              child: Icon(
-                Icons.chat,
-                //color: Colors.blue,
-                size: 30,
-              ),
-            ),
-          ],
+        GestureDetector(
+          onTap: () =>
+              showComents(context, annonceID: annonceId, proID: proId),
+          child: Icon(
+            Icons.chat,
+            //color: Colors.blue,
+            size: 30,
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Text(
-                '0 comment',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
-          ],
+        SizedBox(width: 4,),
+        Container(
+          child: Text(
+            '0 comment',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         )
       ],
     );
@@ -146,11 +137,10 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+      margin: EdgeInsets.symmetric(horizontal: 3, vertical: 1),
       decoration: BoxDecoration(
         color: Colors.grey[100],
-        border: Border.all(color: Colors.blueGrey, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: Border.all(color: Colors.grey[400], width: 1), 
       ),
       padding: EdgeInsets.all(10),
       child: Column(
