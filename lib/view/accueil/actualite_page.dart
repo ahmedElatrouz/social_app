@@ -69,7 +69,7 @@ class _ActualitePageState extends State<ActualitePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: header(context, "actualite",'Artiness'),
-        backgroundColor: Color(0xFF009688).withOpacity(0.5),
+        backgroundColor: Colors.grey[300],
         body: isWaiting|| postWidgets.isEmpty
             ? alternativeScreen()
             : ListView(children: postWidgets

@@ -91,7 +91,7 @@ class _ProProfilPageState extends State<ProProfilPage> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/back.jpg"),
+                    image: AssetImage("assets/images/Dance.jpg"),
                     fit: BoxFit.cover),
               ),
               height: MediaQuery.of(context).size.height / 6,

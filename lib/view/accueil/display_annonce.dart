@@ -38,7 +38,6 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
     photoProfile = widget.prof.photoProfile;
     annonceId = widget.annonce.id;
     proId = widget.prof.proID;
-    print(annonceId);
   }
 
   @override
@@ -157,7 +156,7 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
 }
 
 showComents(BuildContext context, {String annonceID, String proID}) {
-  print(annonceID);
+  
   Navigator.push(
       context,
       MaterialPageRoute(
