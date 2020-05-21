@@ -34,113 +34,111 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  ModalProgressHUD(
-          child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/back.jpg'),
-                  fit: BoxFit.cover)),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
-              child: Form(
-                  key: _formKey,
+    return ModalProgressHUD(
+      child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/back.jpg'),
+                fit: BoxFit.cover)),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            child: Form(
+              key: _formKey,
+              child: Container(
+                margin: EdgeInsets.only(top: 90),
+                child: SingleChildScrollView(
                   child: Container(
+                    height: MediaQuery.of(context).size.height / 2,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                     margin: EdgeInsets.only(top: 100),
-                    child: SingleChildScrollView(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height/2.2,
-                        decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius:
-                  BorderRadius.all(Radius.circular(10))),
-                        margin: EdgeInsets.only(top: 100),
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                SizedBox(
-                  height: 30,
-                ),
-                CreateLogInField(
-                    type: "Email",
-                    onChange: (val) {
-                      setState(() => email = val);
-                    }),
-                SizedBox(
-                  height: 30,
-                ),
-                CreateLogInField(
-                    type: "Password",
-                    onChange: (val) {
-                      setState(() => password = val);
-                    }),
-                SizedBox(
-                  height: 30,
-                ),
-                RaisedButton(
-                    highlightColor: Colors.blue[900],
-                    elevation: 5.0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(30.0)),
-                    color: Colors.purple[200],
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 8),
-                      child: Text('Login',
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              color: Colors.white)),
-                    ),
-                    onPressed: ()  {
-                      logIn();
-                    }),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(error,
-                    style: TextStyle(
-                      color: Colors.red,
-                    )),
-              ]),
-                      ),
-                    ),
+                    padding: EdgeInsets.all(15),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CreateLogInField(
+                              type: "Email",
+                              onChange: (val) {
+                                setState(() => email = val);
+                              }),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          CreateLogInField(
+                              type: "Password",
+                              onChange: (val) {
+                                setState(() => password = val);
+                              }),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          RaisedButton(
+                              highlightColor: Colors.blue[900],
+                              elevation: 5.0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              color: Colors.purple[200],
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 8),
+                                child: Text('Login',
+                                    style: TextStyle(
+                                        fontSize: 25.0, color: Colors.white)),
+                              ),
+                              onPressed: () {
+                                logIn();
+                              }),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(error,
+                              style: TextStyle(
+                                color: Colors.red,
+                              )),
+                        ]),
                   ),
                 ),
+              ),
             ),
           ),
-        ), inAsyncCall: loading,
+        ),
+      ),
+      inAsyncCall: loading,
     );
   }
 
-  logIn()async{
+  logIn() async {
     if (_formKey.currentState.validate()) {
-                                    setState(() {
-                                       loading = true ;
-                                    });
-                                    dynamic result = await AuthService().signIn(
-                                        "youssef@email.com", "youssegf");
-                                        //"netero@hunter.com", "123456"); 
-                                        //"admin@email.com", "123456");  
-                                    if (result == 0) {
-                                      setState(() {
-                                        error =
-                                            'you have a problem in your email';
-                                      });
-                                    } else {   
-                                             Navigator.pushReplacementNamed(
-                                                context, Home.id
-                                             );
-                                    }
-                                  }
-                                  setState(()=>loading = false);
+     /* setState(() {
+        loading = true;
+      });*/
+      try {
+        dynamic result = await AuthService().signIn(
+            //"youssef@email.com", "youssegf");
+            //"netero@hunter.com", "123456");
+            "admin@email.com",
+            "123456");
+            setState(() => loading = false);
+        if (result == 0) {
+          setState(() {
+            error = 'you have a problem in your email';
+          });
+        } else {
+          Navigator.pushReplacementNamed(context, Home.id);
+        }
+      } catch (e) {setState(() => loading = false);print(e);}
+    }
+    
   }
 
   @override
   void dispose() {
-    
     super.dispose();
   }
 }

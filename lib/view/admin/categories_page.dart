@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:social_app/model/Categorie.dart';
+import 'package:social_app/services/categorieService.dart';
 import 'package:social_app/view/admin/create_category_page.dart';
 
 class CategoriesPage extends StatefulWidget {
@@ -13,34 +15,53 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Categorie(cat:'Music',description:'cette categorie rejoint les talents en musique'),
   Categorie(cat:'Dance',description:'cette categorie rejoint les talents en musique'),
   Categorie(cat:'Photography',description:'cette categorie rejoint les talents en musique')];
-  List<CategorieCard> catCards;
+  List<CategorieCard> catCards=[CategorieCard(categorie:categories[0])];
+  CategorieService categorieService=CategorieService();
+  bool isWaiting=false;
  @override
   void initState() {
     super.initState();
+    loading();
      catCards=[CategorieCard(categorie:categories[0]),CategorieCard(categorie:categories[1]),CategorieCard(categorie:categories[2])];
- 
+getCategories();
   }
   @override
   void dispose() {
+    loading();
     super.dispose();
   }
+  loading(){
+    setState(() {
+      
+    isWaiting=!isWaiting;
+    });
+  }
 
-  
+  getCategories()async{
+    List<Categorie> cats=await categorieService.allCategories();
+    for(Categorie c in cats){
+      print('object');
+    catCards.add(CategorieCard(categorie: c));
+    }
+  loading();
+  }
  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child:Icon(Icons.add),
-        onPressed:()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateCategoryPage()))),
-      appBar: AppBar(
-        automaticallyImplyLeading:false,
-        backgroundColor:Colors.purple[300],
-        title:Text('Categories')
-      ),
-      body:ListView(
-        children: catCards
-      ),
+    return ModalProgressHUD(
+          child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child:Icon(Icons.add),
+          onPressed:()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateCategoryPage()))),
+        appBar: AppBar(
+          automaticallyImplyLeading:false,
+          backgroundColor:Colors.purple[300],
+          title:Text('Categories')
+        ),
+        body:ListView(
+          children: catCards
+        ),
+      ), inAsyncCall: isWaiting,
     );
   }
 }
@@ -90,8 +111,8 @@ void _showDialog(context) {
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
+             FlatButton(
+              child:  Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -110,7 +131,7 @@ void _showDialog(context) {
       decoration: BoxDecoration(
       borderRadius: BorderRadius.all(
                         Radius.circular(5.0)),
-                        color: Colors.white,
+                        color: Colors.grey,
                         image: DecorationImage(image: AssetImage('assets/images/'+categorie.cat+'.jpg'),fit: BoxFit.cover,)
       ),
       
@@ -123,8 +144,9 @@ void _showDialog(context) {
             categorie.cat,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w900
+              fontSize: 25,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Signatra'
               ),
             
             ),
