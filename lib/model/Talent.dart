@@ -14,6 +14,7 @@ class Talent extends Utilisateur {
   String video;
   String description;
   List<Post> posts;
+  bool isValidated;
   
   Talent({ 
   String nom,
@@ -29,13 +30,15 @@ class Talent extends Utilisateur {
   Categorie categorie,
   String photo,
   String video,
-  String description}
+  String description,
+  bool isValidated}
   ):super(photoProfile:photoProfile,nom:nom,prenom:prenom,genre:genre,age:age,password:password,email:email,nationalite:nationalite,tel:tel){
     this.uid=uid;
     this.categorie=categorie;
     this.photo=photo;
     this.video=video;
     this.description=description;
+    this.isValidated=true;//isValidated;
     
   }
   
@@ -59,6 +62,7 @@ class Talent extends Utilisateur {
       'photoUrl': photo,
       'videoUrl': video,
       'description': description,
+      'isValidated':isValidated
       //'posts': List<dynamic>.from(posts.map((x) => x.toMap())),
     };
   }
@@ -78,6 +82,7 @@ class Talent extends Utilisateur {
       video:map['videoUrl'],
       nationalite: map['nationalite'],
       photoProfile :map['photoProfile'],
+      isValidated:true, //map['isValidated'],
       //age: int.tryParse(map['age']),
       categorie : Categorie.fromMap(map['Categorie']),
     //  List<Post>.from(map['posts']?.map((x) => Post.fromMap(x))),
@@ -90,7 +95,7 @@ class Talent extends Utilisateur {
 
   @override
   String toString() {
-    return 'Talent(${super.toString()} , uid: $uid , photo: $photo, video: $video, description: $description, posts: $posts)';
+    return 'Talent(${super.toString()} , uid: $uid , photo: $photo, video: $video, description: $description, posts: $posts, isValidated:$isValidated)';
   }
 }
 

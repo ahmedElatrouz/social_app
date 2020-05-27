@@ -12,7 +12,8 @@ import 'package:social_app/view/shared/reusable_header.dart';
 
 class ProfilPage extends StatefulWidget {
   final Talent poster;
-  ProfilPage({this.poster});
+  UserType visitor;
+  ProfilPage({@required this.poster,this.visitor});
   @override
   _ProfilPageState createState() => _ProfilPageState();
 }
@@ -191,10 +192,33 @@ class _ProfilPageState extends State<ProfilPage> {
       ],
     );
   }
-
+ Widget validationButton(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children:<Widget>[
+         FloatingActionButton(
+      backgroundColor: Colors.lightGreen,
+      child: Icon(Icons.check),
+  onPressed: () { print('Clicked'); },
+      ),
+      SizedBox(
+        width:30
+      ),
+       FloatingActionButton(
+      backgroundColor: Colors.redAccent,
+      child: Icon(Icons.delete_outline),
+  onPressed: () { print('Clicked'); },
+      )
+      ]
+    );
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
+       floatingActionButton:widget.visitor==UserType.admin?validationButton():null ,
+     
         backgroundColor: Colors.grey[200],
         appBar: widget.poster == null || talent == widget.poster
             ? header(context, "profil", 'Artness')

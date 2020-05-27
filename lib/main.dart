@@ -6,7 +6,6 @@ import 'package:social_app/view/accueil/home.dart';
 import 'package:social_app/view/authenticate/authenticate.dart';
 import 'package:social_app/view/authenticate/login_page.dart';
 import 'package:social_app/view/authenticate/register_page.dart';
-import 'package:social_app/view/profil/other_profile.dart';
 import 'package:social_app/view/profil/pro_profile_page.dart';
 import 'package:social_app/view/shared/constants.dart';
 
@@ -33,7 +32,6 @@ class MyApp extends StatelessWidget {
         ActualitePage.id : (context) => ActualitePage(),
         Home.id : (context) => Home(userType: userType),
         ProProfilPage.id:(context)=>ProProfilPage(),
-        OtherProfile.id:(context)=>OtherProfile()
      },
     );
   }

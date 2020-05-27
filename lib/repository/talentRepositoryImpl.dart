@@ -201,4 +201,16 @@ class TalentRepositoryImpl implements TalentRepository {
     }
     return null;
   }
+
+  @override
+  Future<List<Talent>> searchByIsValidated(bool isValidated) async {
+     List<Talent> talents=[];
+    try{
+        var users=await usersRef.where("isValidated",isEqualTo: isValidated).getDocuments();
+        talents=users.documents.map((doc)=>Talent.fromMap(doc.data)).toList();
+    }catch(e){
+      print(e);
+    }
+    return talents;
+  }
 }

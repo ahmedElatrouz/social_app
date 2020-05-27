@@ -7,7 +7,8 @@ abstract class TalentRepository {
   Future<int> updateTalent(Talent talent);
   Future<int> deleteTalent(String id);
   Future<List<Talent>> searchByName(String name);
-    Future<Talent> searchById(String id);
+  Future<Talent> searchById(String id);
+  Future<List<Talent>> searchByIsValidated(bool isValidated);
   Future<bool> exists(String id);
   Future<List<Talent>> searchByCategorie(Categorie categorie);
   Future<Talent> getCurrentTalent();

@@ -40,6 +40,9 @@ class TalentService {
   Future<Talent> searchById(String id) {
     return talentRepository.searchById(id);
   }
+   Future<List<Talent>> searchByIsValidated(bool isValidated){
+     return talentRepository.searchByIsValidated(isValidated);
+   }
 
   Future<List<Talent>> allTalents() {
     return talentRepository.allTalents();
