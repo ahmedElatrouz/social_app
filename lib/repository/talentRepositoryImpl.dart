@@ -55,8 +55,15 @@ class TalentRepositoryImpl implements TalentRepository {
   Future<int> deleteTalent(String id) async {
     int r = 0;
     try {
+      DocumentSnapshot res=await usersRef.document(id).get();
+      Talent talent=Talent.fromMap(res.data);
+        await _auth.signInWithEmailAndPassword(email: talent.email, password: talent.password);
       if (await exists(id) == true) {
         await usersRef.document(id).delete();
+        _auth.currentUser().then((resultUser) async {
+          await resultUser.delete();
+          _auth.signOut();
+        });
         r = 1;
       }
       
