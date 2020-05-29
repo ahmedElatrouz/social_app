@@ -15,4 +15,5 @@ abstract class TalentRepository {
   Future signOut();
   Future<List<Talent>> allTalents();
   handleSubmitProfileImage(image , currentTalentUid);
+  likeTalentProfil(currentProId,talentId, bool like);
 }

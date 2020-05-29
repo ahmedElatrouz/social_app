@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Post.dart';
+import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/services/postService.dart';
+import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/profil/post_widget.dart';
 import 'package:social_app/view/profil/upload_post_page.dart';
@@ -13,7 +15,7 @@ import 'package:social_app/view/shared/reusable_header.dart';
 class ProfilPage extends StatefulWidget {
   final Talent poster;
   UserType visitor;
-  ProfilPage({@required this.poster,this.visitor});
+  ProfilPage({@required this.poster, this.visitor});
   @override
   _ProfilPageState createState() => _ProfilPageState();
 }
@@ -32,12 +34,22 @@ class _ProfilPageState extends State<ProfilPage> {
   String description = '';
   String photoUrl = '';
   String cat = '';
-
+  String uid = '';
+  Professionnel pro = Professionnel();
+  ProfessionelService proService = ProfessionelService();
+  bool isLiked;
+  String proID = '';
   @override
   initState() {
     super.initState();
     isWaiting = true;
     getProfileContent();
+    getCurrentPro();
+  }
+
+  getCurrentPro() async {
+    pro = await proService.getCurrentPro();
+    if(pro != null) proID = pro.proID;
   }
 
   getProfileContent() async {
@@ -50,6 +62,7 @@ class _ProfilPageState extends State<ProfilPage> {
       nationalite = talent.nationalite;
       description = talent.description;
       photoUrl = talent.photoProfile;
+      uid = talent.uid;
       //cat = talent.categorie.cat;
     } else {
       nom = widget.poster.nom;
@@ -58,6 +71,7 @@ class _ProfilPageState extends State<ProfilPage> {
       nationalite = widget.poster.nationalite;
       description = widget.poster.description;
       photoUrl = widget.poster.photoProfile;
+      uid = widget.poster.uid;
       //cat = widget.poster.categorie.cat;
     }
     getProfilPosts();
@@ -65,11 +79,11 @@ class _ProfilPageState extends State<ProfilPage> {
 
   getProfilPosts() async {
     try {
-      if (widget.poster == null ) {
-        posts = await postService.getProfilPosts(talent.uid, postCount);
+      if (widget.poster == null) {
+        posts = await postService.getProfilPosts(uid, postCount);
         postCount = posts.length;
       } else {
-        posts = await postService.getProfilPosts(widget.poster.uid, postCount);
+        posts = await postService.getProfilPosts(uid, postCount);
         postCount = posts.length;
       }
       setState(() {
@@ -77,6 +91,34 @@ class _ProfilPageState extends State<ProfilPage> {
       });
     } catch (e) {
       print(e);
+    }
+  }
+
+  handleProfilLikes() async {
+    bool _isLiked = (widget.poster.profilLikes[proID] == true);
+
+    if (_isLiked) {
+      try {
+        await talentService.likeTalentProfil(
+            proID, widget.poster.uid, false);
+        setState(() {
+          isLiked = false;
+          widget.poster.profilLikes[proID] = false;
+        });
+      } catch (e) {
+        print(e);
+      }
+    } else if (!_isLiked) {
+      try {
+        await talentService.likeTalentProfil(
+            proID, widget.poster.uid, true);
+        setState(() {
+          isLiked = true;
+          widget.poster.profilLikes[proID] = true;
+        });
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -89,13 +131,10 @@ class _ProfilPageState extends State<ProfilPage> {
     return Column(
       children: <Widget>[
         for (int i = 0; i < lenght; i++)
-        
           PostWidget(
             post: posts[i],
             talent: talent,
-            poster: widget.poster != null 
-                ? widget.poster
-                : talent,
+            poster: widget.poster != null ? widget.poster : talent,
           )
       ],
     );
@@ -115,53 +154,70 @@ class _ProfilPageState extends State<ProfilPage> {
               borderRadius: new BorderRadius.only(
                   bottomLeft: const Radius.circular(5.0),
                   bottomRight: const Radius.circular(5.0))),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                  Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              CircleAvatar(
+                backgroundImage: photoUrl != ''
+                    ? CachedNetworkImageProvider(photoUrl)
+                    : AssetImage('assets/images/user_icon.png'),
+                radius: 50,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: photoUrl != ''
-                            ? CachedNetworkImageProvider(photoUrl)
-                            : AssetImage('assets/images/user_icon.png'),
-                        radius: 50,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(prenom + ' ' + nom,
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold)),
-                              Text(email + ', ' + nationalite,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black38)),
-                            ]),
-                      )
+                      Text(prenom + ' ' + nom,
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold)),
+                      Text(email + ', ' + nationalite,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black38)),
                     ]),
-                SizedBox(height: 20),
-                Text('description: ' + description,
+              )
+            ]),
+            SizedBox(height: 20),
+            Text('description: ' + description,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87)),
+            Text('categorie',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black45)),
+            SizedBox(
+              height: 8,
+            ),
+            if (pro != null)
+              RaisedButton.icon(
+                  color: Colors.lightBlueAccent,
+                  onPressed: () {
+                    if(pro !=null && widget.poster != null) handleProfilLikes();
+                  },
+                  icon: Icon(Icons.thumb_up,
+                      color: isLiked == false ? Colors.white : Colors.blueGrey),
+                  label: Text(
+                    'J\'aime',
                     style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87)),
-                Text('categorie',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black45)),
-                SizedBox(
-                  height: 8,
-                )
-              ]),
+                        color:
+                            isLiked == false ? Colors.white : Colors.blueGrey),
+                  )),
+            Text(widget.poster !=null  ? ' ' +  widget.poster.getLikesCount().toString() + ' J\'aimes'
+            : ' ' +  talent.getLikesCount().toString() + ' J\'aimes',
+                style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold)),
+          ]),
         ),
         if (widget.poster == null || talent == widget.poster)
           Column(
@@ -230,6 +286,8 @@ class _ProfilPageState extends State<ProfilPage> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.poster != null) isLiked = (widget.poster.profilLikes[proID] == true);
+
     return Scaffold(
      
        floatingActionButton:widget.visitor==UserType.admin?floatButtons():null ,
@@ -289,4 +347,4 @@ class _ProfilPageState extends State<ProfilPage> {
       },
     );
   }
-}
+  }

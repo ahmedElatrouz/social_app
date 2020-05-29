@@ -63,9 +63,7 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
                           : AssetImage('assets/images/3.jpg'),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  boxShadow: [
-                    BoxShadow(blurRadius: 2.0, color: Colors.grey)
-                  ])),
+                  boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.grey)])),
           SizedBox(
             width: 10,
           ),
@@ -82,20 +80,21 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
               SizedBox(
                 width: 10,
               ),
-              Text(day + '/' + month + '/' + year + '  ' + hour + ':' + min,style: TextStyle(fontSize:10),)
+              Text(
+                day + '/' + month + '/' + year + '  ' + hour + ':' + min,
+                style: TextStyle(fontSize: 10),
+              )
             ],
           ),
         ]),
         Container(
-          height: MediaQuery.of(context).size.height/7,
+          height: MediaQuery.of(context).size.height / 7,
           margin: EdgeInsets.symmetric(vertical: 5),
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-            
-            color: Colors.white,
-            //border: Border.all(color: Colors.grey, width: 1),
-            borderRadius: BorderRadius.circular(8)
-          ),
+              color: Colors.white,
+              //border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(8)),
           child: Text(
             descripton,
             style: TextStyle(
@@ -108,22 +107,33 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
     ));
   }
 
+  showComents({String annonceID, String proID}) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Comments(
+                  annonceID: annonceID,
+                  proID: proID,
+                )));
+  }
+
   buildAnnonceFooter() {
     return Row(
       children: <Widget>[
         GestureDetector(
-          onTap: () =>
-              showComents(context, annonceID: annonceId, proID: proId),
+          onTap: () => showComents(annonceID: annonceId, proID: proId),
           child: Icon(
             Icons.chat,
             //color: Colors.blue,
             size: 20,
           ),
         ),
-        SizedBox(width: 4,),
+        SizedBox(
+          width: 4,
+        ),
         Container(
           child: Text(
-            '0 comments',
+            'comments',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -137,12 +147,10 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
-      
       margin: EdgeInsets.symmetric(horizontal: 0, vertical: 1.5),
       decoration: BoxDecoration(
         color: Colors.white,
-       // border: Border.all(color: Colors.grey[400], width: 1), 
+        // border: Border.all(color: Colors.grey[400], width: 1),
       ),
       padding: EdgeInsets.all(10),
       child: Column(
@@ -152,24 +160,5 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
         ],
       ),
     );
-  } 
+  }
 }
-
-showComents(BuildContext context, {String annonceID, String proID}) {
-  
-  Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => Comments(
-                annonceID: annonceID,
-                proID: proID,
-              )));
-}
-
-
-
-
-
-
-
-

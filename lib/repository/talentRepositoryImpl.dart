@@ -142,7 +142,7 @@ class TalentRepositoryImpl implements TalentRepository {
       await _auth.signOut();
     } catch (e) {
       print(e);
-    }
+    } 
   }
 
   Talent _talentFromFirebaseUser(FirebaseUser user) {
@@ -215,5 +215,18 @@ class TalentRepositoryImpl implements TalentRepository {
       print(e);
     }
     return talents;
+  }
+
+
+
+  //**Like profile */
+  @override
+  likeTalentProfil(currentProId, talentId, bool like) async{
+    try{
+      await usersRef.document(talentId).updateData({'profilLikes.$currentProId':like});
+    }catch(e){
+      print(e);
+    }
+    return null;
   }
 }
