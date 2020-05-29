@@ -2,9 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Commentaire.dart';
+import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/model/Talent.dart';
+import 'package:social_app/model/Utilisateur.dart';
 import 'package:social_app/repository/commentaireRepositoryImpl.dart';
 import 'package:social_app/services/commentaireService.dart';
+import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
@@ -27,10 +30,17 @@ class _CommentsState extends State<Comments> {
   final String annonceID;
   final String proID;
   _CommentsState({this.proID, this.annonceID});
-
+  ProfessionelService proService = ProfessionelService();
+  Professionnel pro;
   @override
   void initState() {
     super.initState();
+    getCurrentPro();
+  }
+
+  getCurrentPro()async{
+    pro = await proService.getCurrentPro();
+    print(pro);
   }
 
   buildComment() {
@@ -79,6 +89,7 @@ class _CommentsState extends State<Comments> {
             child: buildComment(),
           ),
           Divider(),
+          if(pro == null)
           ListTile(
             title: TextFormField(
               controller: commentController,

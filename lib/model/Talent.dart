@@ -15,7 +15,9 @@ class Talent extends Utilisateur {
   String description;
   List<Post> posts;
   bool isValidated;
-  
+  Map profilLikes;
+  int likesCount;
+
   Talent({ 
   String nom,
   String prenom,
@@ -31,7 +33,10 @@ class Talent extends Utilisateur {
   String photo,
   String video,
   String description,
-  bool isValidated}
+  bool isValidated,
+  Map profilLikes,
+  int likesCount,
+  }
   ):super(photoProfile:photoProfile,nom:nom,prenom:prenom,genre:genre,age:age,password:password,email:email,nationalite:nationalite,tel:tel){
     this.uid=uid;
     this.categorie=categorie;
@@ -39,10 +44,20 @@ class Talent extends Utilisateur {
     this.video=video;
     this.description=description;
     this.isValidated=true;//isValidated;
-    
+    this.profilLikes = profilLikes; 
+    this.likesCount = likesCount;
   }
   
-  
+  int getLikesCount(){
+  if(profilLikes == null) return 0;
+  int count = 0;
+  profilLikes.values.forEach((val){
+    if(val == true){
+      count +=1;
+    }
+  });
+  return count;
+}
 
   
 
@@ -62,7 +77,8 @@ class Talent extends Utilisateur {
       'photoUrl': photo,
       'videoUrl': video,
       'description': description,
-      'isValidated':isValidated
+      'isValidated':isValidated,
+      'profilLikes':profilLikes,
       //'posts': List<dynamic>.from(posts.map((x) => x.toMap())),
     };
   }
@@ -85,6 +101,7 @@ class Talent extends Utilisateur {
       isValidated:true, //map['isValidated'],
       //age: int.tryParse(map['age']),
       categorie : Categorie.fromMap(map['Categorie']),
+      profilLikes: map['profilLikes'],
     //  List<Post>.from(map['posts']?.map((x) => Post.fromMap(x))),
     );
   }

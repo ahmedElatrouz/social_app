@@ -51,4 +51,8 @@ class TalentService {
   handleSubmitProfileImage(image, currentTalentUid) {
     return talentRepository.handleSubmitProfileImage(image, currentTalentUid);
   }
+
+  likeTalentProfil(currentProId, talentId, bool like){
+    return talentRepository.likeTalentProfil(currentProId, talentId, like);
+  }
 }

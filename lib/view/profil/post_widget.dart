@@ -30,10 +30,12 @@ class _PostWidgetState extends State<PostWidget> {
   String nom = '';
   String prenom = '';
   String photoProfil = '';
-  String id= '';
+  String posterId= '';
+  String talentId = '';
 
   checkTalent() async {
     talent0 = await talentService.getCurrentUser();
+    if(talent0 != null) talentId = talent0.uid;
   }
 
   @override
@@ -42,19 +44,20 @@ class _PostWidgetState extends State<PostWidget> {
     photoProfil = widget.poster.photoProfile;
     nom = widget.poster.nom;
     prenom = widget.poster.prenom;
+    posterId = widget.poster.uid;
     super.initState();
   }
 
   handleLikePost() async {
-    bool _isLiked = (widget.post.likes[talent0.uid] == true);
+    bool _isLiked = (widget.post.likes[talentId] == true);
 
     if (_isLiked) {
       try {
         await postService.likeProfilPosts(
-            talent0.uid, widget.post.postId, false);
-        setState(() {
+            talentId, widget.post.postId, false);
+        setState(() { 
           isLiked = false;
-          widget.post.likes[talent0.uid] = false;
+          widget.post.likes[talentId] = false;
         });
       } catch (e) {
         print(e);
@@ -62,10 +65,10 @@ class _PostWidgetState extends State<PostWidget> {
     } else if (!_isLiked) {
       try {
         await postService.likeProfilPosts(
-            talent0.uid, widget.post.postId, true);
+            talentId, widget.post.postId, true);
         setState(() {
           isLiked = true;
-          widget.post.likes[talent0.uid] = true;
+          widget.post.likes[talentId] = true;
         });
       } catch (e) {
         print(e);
@@ -148,8 +151,8 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    isLiked = (widget.post.likes[talent0.uid] == true) ||
-        (widget.post.likes[widget.poster.uid] == true);
+    isLiked = (widget.post.likes[talentId] == true) ||
+        (widget.post.likes[posterId] == true);
 
     return Container(
       //height: MediaQuery.of(context).size.height,
