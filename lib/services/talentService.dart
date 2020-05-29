@@ -14,6 +14,7 @@ class TalentService {
   }
 
   Future<int> updateTalent(Talent talent) {
+    
     return talentRepository.updateTalent(talent);
   }
 

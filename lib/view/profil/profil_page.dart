@@ -41,8 +41,9 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   getProfileContent() async {
-    talent = await talentService.getCurrentUser();
+    
     if (widget.poster == null ) {
+      talent = await talentService.getCurrentUser();
       nom = talent.nom;
       prenom = talent.prenom;
       email = talent.email;
@@ -192,32 +193,46 @@ class _ProfilPageState extends State<ProfilPage> {
       ],
     );
   }
- Widget validationButton(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children:<Widget>[
-         FloatingActionButton(
-      backgroundColor: Colors.lightGreen,
-      child: Icon(Icons.check),
-  onPressed: () { print('Clicked'); },
-      ),
-      SizedBox(
-        width:30
-      ),
-       FloatingActionButton(
-      backgroundColor: Colors.redAccent,
-      child: Icon(Icons.delete_outline),
-  onPressed: () { print('Clicked'); },
-      )
-      ]
-    );
+
+ Widget floatButtons(){
+   // var icon=Icons.favorite_border;
+   switch (widget.visitor) {
+     case UserType.talent:
+      return null;
+       break;
+     case UserType.professionnel:
+        return  FloatingActionButton(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.favorite_border,color: Colors.redAccent,),
+                onPressed: (){
+                  setState(() {
+                  //  icon=Icons.favorite;
+                  });
+                },
+               );
+       break;
+     case UserType.admin:
+       return  FloatingActionButton(
+                backgroundColor: Colors.redAccent,
+                child: Icon(Icons.delete_forever),
+                
+                onPressed: (){
+                },
+               );
+       break;
+       default:return null;
+   }
+     
+   
     
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
      
-       floatingActionButton:widget.visitor==UserType.admin?validationButton():null ,
+       floatingActionButton:widget.visitor==UserType.admin?floatButtons():null ,
      
         backgroundColor: Colors.grey[200],
         appBar: widget.poster == null || talent == widget.poster
@@ -226,5 +241,52 @@ class _ProfilPageState extends State<ProfilPage> {
                 title: Text('Profile'),
               ),
         body: isWaiting ? circularProgress() : profileView());
+  }
+
+
+
+
+
+
+
+
+  void _showDialog(context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: Row(
+            children: <Widget>[
+              Icon(Icons.delete_sweep),
+              Text('Attention!!!'),
+            ],
+          ),
+          content: Container(
+            padding: EdgeInsets.all(7),
+            child:Text('Etes-vous sure?') ,
+            ),
+          
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+              child: new Text("Oui, je suis sur",style: TextStyle(
+                color:Colors.red
+              ),),
+              onPressed: () {
+                TalentService().deleteTalent(talent.uid);
+              }),
+             FlatButton(
+              child: new Text("Annuler"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+             
+          ],
+        );
+      },
+    );
   }
 }

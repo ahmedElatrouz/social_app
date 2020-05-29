@@ -38,7 +38,7 @@ class Talent extends Utilisateur {
     this.photo=photo;
     this.video=video;
     this.description=description;
-    this.isValidated=true;//isValidated;
+    this.isValidated=isValidated;
     
   }
   
@@ -49,6 +49,7 @@ class Talent extends Utilisateur {
 
   Map<String, dynamic> toMap() {
    if (this==null) return {};
+   print(this.toString());
     return {
       'uid': uid,
       'email':email,
@@ -58,7 +59,7 @@ class Talent extends Utilisateur {
       'genre':genre,
       'nationalite':nationalite,
       'photoProfile' :photoProfile,
-      'Categorie': categorie.toMap(),
+     // 'Categorie': categorie.toMap(),
       'photoUrl': photo,
       'videoUrl': video,
       'description': description,
@@ -82,7 +83,7 @@ class Talent extends Utilisateur {
       video:map['videoUrl'],
       nationalite: map['nationalite'],
       photoProfile :map['photoProfile'],
-      isValidated:true, //map['isValidated'],
+      isValidated:map['isValidated'],
       //age: int.tryParse(map['age']),
       categorie : Categorie.fromMap(map['Categorie']),
     //  List<Post>.from(map['posts']?.map((x) => Post.fromMap(x))),

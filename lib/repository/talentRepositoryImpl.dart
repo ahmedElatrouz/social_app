@@ -31,13 +31,16 @@ class TalentRepositoryImpl implements TalentRepository {
 
   @override
   Future<int> updateTalent(Talent talent) async {
+    
     int r = 0;
     try {
+      await _auth.signInWithEmailAndPassword(email: talent.email, password: talent.password);
       if (await exists(talent.uid) == true) {
         await usersRef.document(talent.uid).updateData(talent.toMap());
         _auth.currentUser().then((resultUser) async {
           await resultUser.updateEmail(talent.email);
           await resultUser.updatePassword(talent.password);
+          _auth.signOut();
         });
 
         r = 1;
