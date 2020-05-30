@@ -20,7 +20,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
     super.initState();
     loading();
     getCategories();
-    print(catCards);
   }
 
   @override
@@ -38,7 +37,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
   getCategories() async {
     List<Categorie> categories = await categorieService.allCategories();
     for (Categorie c in categories) {
-      print(c.cat);
       catCards.add(CategorieCard(categorie: c));
     }
     loading();
