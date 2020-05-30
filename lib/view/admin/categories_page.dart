@@ -1,4 +1,4 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:social_app/model/Categorie.dart';
@@ -11,57 +11,58 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
- static List<Categorie> categories=[
-  Categorie(cat:'Music',description:'cette categorie rejoint les talents en musique'),
-  Categorie(cat:'Dance',description:'cette categorie rejoint les talents en musique'),
-  Categorie(cat:'Photography',description:'cette categorie rejoint les talents en musique')];
-  List<CategorieCard> catCards=[CategorieCard(categorie:categories[0])];
-  CategorieService categorieService=CategorieService();
-  bool isWaiting=false;
- @override
+  List<CategorieCard> catCards = [];
+  CategorieService categorieService = CategorieService();
+  bool isWaiting = false;
+
+  @override
   void initState() {
     super.initState();
     loading();
-     catCards=[CategorieCard(categorie:categories[0]),CategorieCard(categorie:categories[1]),CategorieCard(categorie:categories[2])];
-getCategories();
+    getCategories();
+    print(catCards);
   }
+
   @override
   void dispose() {
     loading();
     super.dispose();
   }
-  loading(){
+
+  loading() {
     setState(() {
-      
-    isWaiting=!isWaiting;
+      isWaiting = !isWaiting;
     });
   }
 
-  getCategories()async{
-    List<Categorie> cats=await categorieService.allCategories();
-    for(Categorie c in cats){
-      print('object');
-    catCards.add(CategorieCard(categorie: c));
+  getCategories() async {
+    List<Categorie> categories = await categorieService.allCategories();
+    for (Categorie c in categories) {
+      print(c.cat);
+      catCards.add(CategorieCard(categorie: c));
     }
-  loading();
+    loading();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
-          child: Scaffold(
+      child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          child:Icon(Icons.add),
-          onPressed:()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateCategoryPage()))),
+            child: Icon(Icons.add),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CreateCategoryPage()))),
         appBar: AppBar(
-          automaticallyImplyLeading:false,
-          backgroundColor:Colors.purple[300],
-          title:Text('Categories')
-        ),
-        body:ListView(
-          children: catCards
-        ),
-      ), inAsyncCall: isWaiting,
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.purple[300],
+            title: Text(
+              'Categories',
+              style: TextStyle(fontFamily: 'JosefinSans',
+              fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white),
+            )),
+        body: ListView(children: catCards),
+      ),
+      inAsyncCall: isWaiting,
     );
   }
 }
@@ -69,8 +70,8 @@ getCategories();
 class CategorieCard extends StatelessWidget {
   final Categorie categorie;
 
-  const CategorieCard({ this.categorie}) ;
-void _showDialog(context) {
+  const CategorieCard({this.categorie});
+  void _showDialog(context) {
     // flutter defined function
     showDialog(
       context: context,
@@ -82,37 +83,28 @@ void _showDialog(context) {
             padding: EdgeInsets.all(7),
             color: Colors.grey[100],
             height: 200,
-            child: ListView(
-              children:<Widget>[
-                Text(
-              'categorie: '+categorie.cat,
-              style: TextStyle(
-                color: Colors.black,
-                 fontSize: 20,
-                fontWeight: FontWeight.w600
-                ),
-              
-              ),
-              SizedBox(
-                height:10
-              ),
-              
+            child: ListView(children: <Widget>[
               Text(
-              'description: '+categorie.description,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w600
-                ),
-              
+                'categorie: ' + categorie.cat,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
               ),
-              ]
-            ),
+              SizedBox(height: 10),
+              Text(
+                'description: ' + categorie.description,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
+              ),
+            ]),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-             FlatButton(
-              child:  Text("Close"),
+            FlatButton(
+              child: Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -122,36 +114,35 @@ void _showDialog(context) {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=>_showDialog(context),
+      onTap: () => _showDialog(context),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            color: Colors.grey,
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(categorie.imageUrl),
+              fit: BoxFit.cover,
+            )),
+        margin: EdgeInsets.fromLTRB(5, 4, 5, 0),
+        height: 100,
+        width: MediaQuery.of(context).size.width / 2,
+        child: Center(
           child: Container(
-        padding:EdgeInsets.all(10),
-      decoration: BoxDecoration(
-      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0)),
-                        color: Colors.grey,
-                        image: DecorationImage(image: AssetImage('assets/images/'+categorie.cat+'.jpg'),fit: BoxFit.cover,)
-      ),
-      
-      margin: EdgeInsets.fromLTRB(5, 4, 5, 0),
-      height: 100,
-      width: MediaQuery.of(context).size.width/2,
-      child: Center(
-        child: Container(
-          child: Text(
-            categorie.cat,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Signatra'
-              ),
-            
+            child: Text(
+              categorie.cat,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Signatra'),
             ),
+          ),
         ),
-      ),
       ),
     );
   }

@@ -4,11 +4,13 @@ class Categorie {
   String catID;
   String cat;
   String description;
+  String imageUrl;
   
   Categorie({
     this.catID,
     this.cat,
     this.description,
+    this.imageUrl,
   });
 
  
@@ -20,6 +22,7 @@ class Categorie {
       'catID': catID,
       'cat': cat,
       'description': description,
+      'imageUrl': imageUrl,
     };
   }
 
@@ -30,6 +33,7 @@ class Categorie {
       catID: map['catID'],
       cat: map['cat'],
       description: map['description'],
+      imageUrl: map['imageUrl'],
     );
   }
 

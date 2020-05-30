@@ -11,4 +11,5 @@ abstract class CategorieRepository {
   Future<List<Categorie>> searchByName(String name);
   Future<List<Categorie>> allCategories();
   Future<Categorie> getCategory(String name);
+  Future<String> handleSubmitImage(image, categoryId);
 }

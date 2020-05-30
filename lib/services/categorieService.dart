@@ -32,5 +32,9 @@ class CategorieService {
   Future<Categorie> getCategory(String name){
     return categorieRepository.getCategory(name);
   }
+
+  Future<String> handleSubmitImage(image, categoryId){
+    return categorieRepository.handleSubmitImage(image, categoryId);
+  }
   
 }
