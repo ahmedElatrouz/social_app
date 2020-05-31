@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:social_app/model/Commentaire.dart';
 import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/model/Talent.dart';
-import 'package:social_app/model/Utilisateur.dart';
 import 'package:social_app/repository/commentaireRepositoryImpl.dart';
 import 'package:social_app/services/commentaireService.dart';
 import 'package:social_app/services/professionelService.dart';
@@ -32,6 +31,7 @@ class _CommentsState extends State<Comments> {
   _CommentsState({this.proID, this.annonceID});
   ProfessionelService proService = ProfessionelService();
   Professionnel pro;
+  
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,7 @@ class _CommentsState extends State<Comments> {
 
   getCurrentPro()async{
     pro = await proService.getCurrentPro();
-    print(pro);
+    print(pro.nom);
   }
 
   buildComment() {
