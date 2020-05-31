@@ -65,49 +65,58 @@ class _CreateCategoryPageState extends State<CreateCategoryPage> {
     });
   }
 
-  Scaffold buildUploadForm() {
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          isUploading ? linearProgress() : Text(''),
-          if (image != null)
-            Container(
-              height: 300,
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: 16 / 16,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 4,
-                      ),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: FileImage(image),
+  Widget buildUploadForm() {
+    return ModalProgressHUD(
+          child: Scaffold(
+        body: ListView(
+          children: <Widget>[
+            if (image != null)
+              Container(
+                height: 300,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Center(
+                  child: AspectRatio(
+                    aspectRatio: 16 / 16,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 4,
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: FileImage(image),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
+            SizedBox(
+              height: 8,
             ),
-          SizedBox(
-            height: 8,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 40),
-            child: RaisedButton(
-              onPressed: () {
-                handleSunmitImage();
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: Text('termier',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white)),
-            ),
-          )
-        ],
-      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 40),
+              child: RaisedButton(
+                onPressed: () async{
+                  setState(() {
+                    isWaiting=true;
+                  });
+                  
+                await  handleSunmitImage();
+                setState(() {
+                    isWaiting=false;
+                  });
+
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                child: Text('termier',
+                    style: TextStyle(fontSize: 20.0, color: Colors.white)),
+              ),
+            )
+          ],
+        ),
+      ), inAsyncCall: isWaiting,
     );
   }
 
