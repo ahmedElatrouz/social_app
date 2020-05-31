@@ -57,7 +57,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
               'Categories',
               
             )),
-        body: ListView(children: catCards),
+        body: SingleChildScrollView(
+                  child: Column(
+            children:catCards
+          )),
       ),
       inAsyncCall: isWaiting,
     );
@@ -127,7 +130,7 @@ class CategorieCard extends StatelessWidget {
             )),
         margin: EdgeInsets.fromLTRB(5, 4, 5, 0),
         height: 100,
-        width: MediaQuery.of(context).size.width / 2,
+        width: MediaQuery.of(context).size.width-10,
         child: Center(
           child: Container(
             child: Text(
