@@ -55,8 +55,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             backgroundColor: Colors.purple[300],
             title: Text(
               'Categories',
-              style: TextStyle(fontFamily: 'JosefinSans',
-              fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white),
+              
             )),
         body: ListView(children: catCards),
       ),
