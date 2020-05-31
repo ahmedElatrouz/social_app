@@ -55,7 +55,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
             backgroundColor: Colors.purple[300],
             title: Text(
               'Categories',
-              
             )),
         body: SingleChildScrollView(
                   child: Column(

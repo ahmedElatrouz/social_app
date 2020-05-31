@@ -36,13 +36,15 @@ class _RegisterState extends State<Register> {
                         //crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          SizedBox(height: 30,),
                           Text(
                             'Register',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 40,
                               color: Colors.blueGrey,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'JosefinSans',
                             ),
                           ),
                           SizedBox(
@@ -66,7 +68,7 @@ class _RegisterState extends State<Register> {
                             });
                           },),
                           SizedBox(
-                            height: 20,
+                            height: 50,
                           ),
                           Container(
                             child: SingleChildScrollView(
@@ -85,8 +87,9 @@ class _RegisterState extends State<Register> {
                                             horizontal: 20, vertical: 8),
                                         child: Text('Talent',
                                             style: TextStyle(
-                                                fontSize: 18.0,
+                                                fontSize: 25.0,
                                                 color: Colors.white,
+                                                fontFamily: 'JosefinSans',
                                                 fontWeight: FontWeight.bold)),
                                       ),
                                       onPressed: () {
@@ -113,8 +116,9 @@ class _RegisterState extends State<Register> {
                                             horizontal: 8, vertical: 8),
                                         child: Text('professionnel',
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 25,
                                                 color: Colors.white,
+                                                fontFamily: 'JosefinSans',
                                                 fontWeight: FontWeight.bold)),
                                       ),
                                       onPressed: () {

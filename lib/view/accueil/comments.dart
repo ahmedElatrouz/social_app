@@ -40,7 +40,7 @@ class _CommentsState extends State<Comments> {
 
   getCurrentPro()async{
     pro = await proService.getCurrentPro();
-    print(pro.nom);
+    if(pro != null) print(pro.nom);
   }
 
   buildComment() {

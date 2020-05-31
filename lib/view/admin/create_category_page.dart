@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:social_app/model/Categorie.dart';
 import 'package:social_app/services/categorieService.dart';
+import 'package:social_app/view/admin/categories_page.dart';
+import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/progress.dart';
 
 class CreateCategoryPage extends StatefulWidget {
@@ -25,13 +27,14 @@ class _CreateCategoryPageState extends State<CreateCategoryPage> {
   File image;
 
 
-  addCategorie() async {
+  addCategorie(context) async {
     Categorie categorie =
         Categorie(cat: nom, description: description, imageUrl: imageUrl);
     await categorieService.createCategorie(categorie);
     setState(() {
       isWaiting = false;
     });
+    Navigator.pop(context);
   }
 
 
@@ -65,13 +68,14 @@ class _CreateCategoryPageState extends State<CreateCategoryPage> {
     });
   }
 
-  Widget buildUploadForm() {
+  Widget buildUploadForm(context) {
     return ModalProgressHUD(
           child: Scaffold(
         body: ListView(
           children: <Widget>[
             if (image != null)
               Container(
+                margin: EdgeInsets.only(top: 20),
                 height: 300,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Center(
@@ -80,7 +84,7 @@ class _CreateCategoryPageState extends State<CreateCategoryPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          width: 4,
+                          width: 1,
                         ),
                         image: DecorationImage(
                           fit: BoxFit.contain,
@@ -123,11 +127,12 @@ class _CreateCategoryPageState extends State<CreateCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return image != null
-        ? buildUploadForm()
+        ? buildUploadForm(context)
         : Scaffold(
             backgroundColor: Colors.grey[200],
             appBar: AppBar(
-              title: Text('Ajouter categorie'),
+              title: Text('Ajouter categorie',
+              style: kAdminHeaderTextStyle,),
             ),
             body: ModalProgressHUD(
               child: SingleChildScrollView(
@@ -230,7 +235,7 @@ class _CreateCategoryPageState extends State<CreateCategoryPage> {
                                     setState(() {
                                       isWaiting = true;
                                     });
-                                    await addCategorie();
+                                    await addCategorie(context);
                                     setState(() {
                                       this.controller.clear();
                                       isWaiting = false;

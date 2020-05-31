@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/view/authenticate/login_page.dart';
 import 'package:social_app/view/authenticate/register_page.dart';
+import 'package:social_app/view/shared/constants.dart';
 
 class Authenticate extends StatefulWidget {
   static const String id = 'authenticate';
@@ -12,11 +13,9 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/back.jpg'),fit: BoxFit.cover)
-      ),
+          image: DecorationImage(
+              image: AssetImage('assets/images/back.jpg'), fit: BoxFit.cover)),
       child: Scaffold(
         backgroundColor: Colors.white.withOpacity(0),
         body: Padding(
@@ -28,23 +27,15 @@ class _AuthenticateState extends State<Authenticate> {
               Text(
                 'WELCOME TO SOCIAL APP',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                )
+                style: kAdminHeaderTextStyle,
               ),
-
               SizedBox(
                 height: 100,
               ),
-
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Material(
-                  
                   elevation: 10,
-                  
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.purple[300],
                   child: MaterialButton(
@@ -52,19 +43,19 @@ class _AuthenticateState extends State<Authenticate> {
                       child: Text('Log in',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'JosefinSans',
                           )),
                       onPressed: () {
                         Navigator.pushNamed(context, LoginPage.id);
-                      }
-                      ),
+                      }),
                 ),
               ),
-
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Material(
-                  color:Colors.blue[700],
+                  color: Colors.blue[700],
                   elevation: 10,
                   borderRadius: BorderRadius.circular(10),
                   child: MaterialButton(
@@ -72,12 +63,13 @@ class _AuthenticateState extends State<Authenticate> {
                       child: Text('Register',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'JosefinSans',
                           )),
                       onPressed: () {
                         Navigator.pushNamed(context, Register.id);
-                      }
-                      ),
+                      }),
                 ),
               ),
             ],

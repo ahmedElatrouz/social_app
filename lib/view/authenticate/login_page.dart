@@ -89,7 +89,12 @@ class _LoginPageState extends State<LoginPage> {
                                     horizontal: 40, vertical: 8),
                                 child: Text('Login',
                                     style: TextStyle(
-                                        fontSize: 25.0, color: Colors.white)),
+                                        fontSize: 30.0, 
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'JosefinSans',
+                                      )
+                                    ),
                               ),
                               onPressed: () {
                                 logIn();
@@ -120,8 +125,8 @@ class _LoginPageState extends State<LoginPage> {
       });*/
       try {
         dynamic result = await AuthService().signIn(
-            //"youssef@email.com", "youssegf");
-            "netero@hunter.com", "123456");
+            "youssef@email.com", "youssegf");
+            //"netero@hunter.com", "123456");
             //"admin@email.com","123456");
             setState(() => loading = false);
         if (result == 0) {

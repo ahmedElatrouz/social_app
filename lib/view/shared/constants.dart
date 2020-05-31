@@ -8,6 +8,13 @@ const kHeaderTextStyle=TextStyle(
   fontSize: 40.0,
   fontFamily: 'Signatra',
 );
+
+const kAdminHeaderTextStyle=TextStyle(
+  color: Colors.white,
+  fontSize: 30.0,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'JosefinSans',
+);
  enum settings{
     editProfil,editEmail,editTel,editPassword,accesPrive
   }

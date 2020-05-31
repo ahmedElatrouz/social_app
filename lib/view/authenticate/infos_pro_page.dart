@@ -13,7 +13,7 @@ class InfosProPage extends StatefulWidget {
   @override
   _InfosProPageState createState() => _InfosProPageState();
 }
- 
+
 class _InfosProPageState extends State<InfosProPage> {
   final ProfAuth _profAuth = ProfAuth();
   final _formKey = GlobalKey<FormState>();
@@ -25,8 +25,8 @@ class _InfosProPageState extends State<InfosProPage> {
   String tel = '';
   String age = '';
   bool loading = false;
+  String selected;
 
-  
   @override
   Widget build(BuildContext context) {
     return loading
@@ -38,20 +38,18 @@ class _InfosProPageState extends State<InfosProPage> {
                   child: Form(
                       key: _formKey,
                       child: SingleChildScrollView(
-                                              child: Container(
+                        child: Container(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
                                 'Profetionnel',
-                                style:
-                                    TextStyle(fontSize: 30, color: Colors.blueGrey),
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    color: Colors.blueGrey,
+                                    fontFamily: 'JosefinSans',
+                                    fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(
-                                height: 25,
-                              ),
-
-
                               Container(
                                   child: CreateField(
                                 fieldName: "Nom",
@@ -62,7 +60,6 @@ class _InfosProPageState extends State<InfosProPage> {
                               SizedBox(
                                 height: 15,
                               ),
-
                               Container(
                                   child: CreateField(
                                 fieldName: "Prenom",
@@ -73,23 +70,39 @@ class _InfosProPageState extends State<InfosProPage> {
                               SizedBox(
                                 height: 15,
                               ),
-
-                              Container(
-                                  child: CreateField(
-                                fieldName: "Genre",
-                                change: (val) {
-                                  genre = val;
-                                },
-                              )),
+                              DropdownButtonFormField<String>(
+                                  isDense: true,
+                                  validator: (val) =>
+                                      val.isEmpty ? 'cant be empty' : null,
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  decoration: InputDecoration(
+                                    hintText: 'Genre',
+                                    hintStyle: TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.grey[600],
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  value: selected,
+                                  items: ["homme", "femme"]
+                                      .map((label) => DropdownMenuItem(
+                                            child: Text(label),
+                                            value: label,
+                                          ))
+                                      .toList(),
+                                  onChanged: (value) {
+                                    setState(() => selected = value);
+                                  }),
                               SizedBox(
                                 height: 15,
                               ),
-
                               Container(
                                   child: CreateField(
                                 fieldName: "Nationalite",
                                 change: (val) {
-                                 nationalite = val;
+                                  nationalite = val;
                                 },
                               )),
                               SizedBox(
@@ -113,11 +126,8 @@ class _InfosProPageState extends State<InfosProPage> {
                                 },
                               )),
                               SizedBox(
-                                height: 15,
+                                height: 30,
                               ),
-
-
-
                               RaisedButton(
                                   highlightColor: Colors.blue,
                                   shape: RoundedRectangleBorder(
@@ -128,11 +138,15 @@ class _InfosProPageState extends State<InfosProPage> {
                                         horizontal: 20, vertical: 10),
                                     child: Text('Register',
                                         style: TextStyle(
-                                            fontSize: 20.0, color: Colors.white)),
+                                            fontSize: 25.0,
+                                            color: Colors.white,
+                                            fontFamily: 'JosefinSans',
+                                            fontWeight: FontWeight.bold)),
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       //setState(() => loading = true);
+                                      genre = selected;
                                       dynamic result = await _profAuth
                                           .signUp(widget.email, widget.password)
                                           .then((currentUser) =>
@@ -154,17 +168,11 @@ class _InfosProPageState extends State<InfosProPage> {
                                         });
                                       } else {
                                         setState(() {
-                                          
                                           Navigator.pushReplacementNamed(
                                               context, ProProfilPage.id);
                                         });
-
-                                       
-
                                       }
                                     }
-
-                                    
                                   }),
                               SizedBox(
                                 height: 20,

@@ -69,10 +69,11 @@ class _InfosPageState extends State<InfosPage> {
                         Text(
                           'Talent',
                           style:
-                              TextStyle(fontSize: 30, color: Colors.blueGrey),
-                        ),
-                        SizedBox(
-                          height: 5,
+                              TextStyle(fontSize: 40,
+                               color: Colors.blueGrey,
+                               fontFamily: 'JosefinSans',
+                               fontWeight: FontWeight.bold,
+                               ),
                         ),
                         Expanded(
                           child: Row(
@@ -235,7 +236,8 @@ class _InfosPageState extends State<InfosPage> {
                               borderRadius: BorderRadius.circular(30)),
                           child: Text('add your first post',
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black)),
+                                  fontSize: 25.0, color: Colors.black,
+                                  fontFamily: 'JosefinSans',fontWeight: FontWeight.bold)),
                         ),
                         SizedBox(
                           height: 15,
@@ -247,7 +249,8 @@ class _InfosPageState extends State<InfosPage> {
                           color: Colors.lightBlueAccent,
                           child: Text('Register',
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.white)),
+                                  fontSize: 25.0, color: Colors.white,
+                                  fontFamily: 'JosefinSans',fontWeight: FontWeight.bold)),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               //setState(() => loading = true);
