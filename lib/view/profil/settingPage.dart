@@ -116,7 +116,7 @@ final settings setting;
               Container(
                 margin: EdgeInsets.all(20),
                 child: Text(
-                  'pour de raisons de securité votre compte va se deconnecter apres la modification !!',
+                  'pour des raisons de securité votre compte va se deconnecter apres la modification !!',
                   style: TextStyle(color:Colors.red),),
               ),
               Container(
@@ -181,7 +181,7 @@ final settings setting;
      //await TalentService().signOut();
      print( 'champ bien modifié !!');
      await TalentService().signOut();
-     Navigator.pushNamed(context, Authenticate.id);
+     Navigator.popUntil(context,ModalRoute.withName(Authenticate.id));
    } 
    else print('champ non modifié!!') ;
   }

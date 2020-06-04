@@ -116,6 +116,7 @@ class CategorieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(categorie.imageUrl);
     return GestureDetector(
       onTap: () => _showDialog(context),
       child: Container(
@@ -124,7 +125,7 @@ class CategorieCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             color: Colors.grey,
             image: DecorationImage(
-              image: CachedNetworkImageProvider(categorie.imageUrl),
+              image:CachedNetworkImageProvider(categorie.imageUrl),
               fit: BoxFit.cover,
             )),
         margin: EdgeInsets.fromLTRB(5, 4, 5, 0),

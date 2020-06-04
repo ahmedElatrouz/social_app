@@ -97,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                               ),
                               onPressed: () {
+                                
                                 logIn();
                               }),
                           SizedBox(
@@ -120,9 +121,9 @@ class _LoginPageState extends State<LoginPage> {
 
   logIn() async {
     if (_formKey.currentState.validate()) {
-     /* setState(() {
+      setState(() {
         loading = true;
-      });*/
+      });
       try {
         dynamic result = await AuthService().signIn(
             "youssef@email.com", "youssegf");
@@ -136,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           Navigator.pushReplacementNamed(context, Home.id);
         }
+        setState(() => loading = false);
       } catch (e) {setState(() => loading = false);print(e);}
     }
     
