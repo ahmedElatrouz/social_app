@@ -25,7 +25,7 @@ class _AuthenticateState extends State<Authenticate> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'WELCOME TO SOCIAL APP',
+                'WELCOME TO ARTINESS',
                 textAlign: TextAlign.center,
                 style: kAdminHeaderTextStyle,
               ),
