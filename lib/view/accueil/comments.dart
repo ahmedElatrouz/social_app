@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/model/Commentaire.dart';
+import 'package:social_app/model/Notification.dart';
 import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/model/Talent.dart';
 import 'package:social_app/repository/commentaireRepositoryImpl.dart';
 import 'package:social_app/services/commentaireService.dart';
+import 'package:social_app/services/notificationService.dart';
 import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/shared/progress.dart';
@@ -31,16 +33,17 @@ class _CommentsState extends State<Comments> {
   _CommentsState({this.proID, this.annonceID});
   ProfessionelService proService = ProfessionelService();
   Professionnel pro;
-  
+  NotificationService notificationService = NotificationService();
+
   @override
   void initState() {
     super.initState();
     getCurrentPro();
   }
 
-  getCurrentPro()async{
+  getCurrentPro() async {
     pro = await proService.getCurrentPro();
-    if(pro != null) print(pro.nom);
+    if (pro != null) print(pro.nom);
   }
 
   buildComment() {
@@ -52,14 +55,13 @@ class _CommentsState extends State<Comments> {
             return circularProgress();
           }
           List<Comment> comments = [];
-          snapshot.data.documents.forEach((doc){
+          snapshot.data.documents.forEach((doc) {
             comments.add(Comment.fromDocument(doc));
           });
           return ListView(
             children: comments,
           );
-        }
-    );
+        });
   }
 
   addComment() async {
@@ -75,13 +77,24 @@ class _CommentsState extends State<Comments> {
     int r = 0;
     r = await commentaireService.createCommentaire(commentaire);
     print(r);
+    await addCommentToNotification(talent);
     if (r == 1) commentController.clear();
+  }
+
+  addCommentToNotification(talent) async {
+    Notifications notif =new Notifications(
+        date: DateTime.now(),
+        talent: talent,
+        annonceId: widget.annonceID,
+        proId: widget.proID);
+    int r = await notificationService.createNotification(notif);
+    print(r);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, 'Comments','Commentaires'),
+      appBar: header(context, 'Comments', 'Commentaires'),
       body: Column(
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -89,23 +102,23 @@ class _CommentsState extends State<Comments> {
             child: buildComment(),
           ),
           Divider(),
-          if(pro == null)
-          ListTile(
-            title: TextFormField(
-              controller: commentController,
-              decoration: InputDecoration(
-                hintText: 'Write a comment ...',
-              ),
-            ),
-            trailing: FlatButton.icon(
-                onPressed: addComment,
-                icon: Icon(
-                  Icons.send,
-                  color: Colors.blueAccent,
-                  size: 30,
+          if (pro == null)
+            ListTile(
+              title: TextFormField(
+                controller: commentController,
+                decoration: InputDecoration(
+                  hintText: 'Write a comment ...',
                 ),
-                label: Text('')),
-          )
+              ),
+              trailing: FlatButton.icon(
+                  onPressed: addComment,
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.blueAccent,
+                    size: 30,
+                  ),
+                  label: Text('')),
+            )
         ],
       ),
     );
@@ -136,15 +149,19 @@ class Comment extends StatelessWidget {
         ListTile(
           title: Row(
             children: <Widget>[
-               Text(nom,
-               style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
-               ),
-               SizedBox(width: 10,),
-               Text(timeago.format(date.toDate()),
-               style: TextStyle(
-                 color: Colors.black38,
-               ),
-               ),
+              Text(
+                nom,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                timeago.format(date.toDate()),
+                style: TextStyle(
+                  color: Colors.black38,
+                ),
+              ),
             ],
           ),
           leading: CircleAvatar(
@@ -152,8 +169,9 @@ class Comment extends StatelessWidget {
                 ? CachedNetworkImageProvider(photoProfile)
                 : AssetImage('assets/images/3.jpg'),
           ),
-          subtitle: Text(comment,
-          style: TextStyle(fontSize: 18),          
+          subtitle: Text(
+            comment,
+            style: TextStyle(fontSize: 18),
           ),
         ),
         Divider(),
