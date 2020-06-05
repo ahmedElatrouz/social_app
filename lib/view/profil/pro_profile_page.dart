@@ -7,6 +7,7 @@ import 'package:social_app/services/annonceService.dart';
 import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
 import 'package:social_app/view/accueil/display_annonce.dart';
+import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/progress.dart';
 
 
@@ -66,7 +67,7 @@ class _ProProfilPageState extends State<ProProfilPage> {
       if(tempList.isNotEmpty)
     for(Annonce an in tempList){
       print('description:'+an.description);
-      annoncesWidgets.add(DisplayAnnonce(annonce:an,prof: pro,));
+      annoncesWidgets.add(DisplayAnnonce(annonce:an,prof: pro,userType: UserType.professionnel,));
     }
      setState(() {
        isWaitingForAnnonces=false;

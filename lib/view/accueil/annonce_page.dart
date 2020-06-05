@@ -4,6 +4,7 @@ import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/services/annonceService.dart';
 import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/view/accueil/display_annonce.dart';
+import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 
@@ -46,6 +47,7 @@ class _AnnoncePageState extends State<AnnoncePage> {
         displayAnnonce.add(DisplayAnnonce(
           annonce: annonce,
           prof: prof,
+          userType: UserType.talent,
         ));
           });
     }

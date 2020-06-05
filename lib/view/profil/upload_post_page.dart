@@ -25,6 +25,7 @@ class UploadPost extends StatefulWidget {
 }
 
 class _UploadPostState extends State<UploadPost> {
+  
   TalentService talentService = TalentService();
   PostService postService = PostService();
   TalentAuth talentAuth = TalentAuth();
@@ -122,6 +123,7 @@ class _UploadPostState extends State<UploadPost> {
       await postService.handleSubmitImage(image, captionController, talent.uid);
     }
     if (video != null) {
+      print('video');
       await postService.handleSubmitVideo(video, captionController, talent.uid);
     }
     captionController.clear();

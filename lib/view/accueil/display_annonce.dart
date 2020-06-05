@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:social_app/model/Annonce.dart';
 import 'package:social_app/model/Professionnel.dart';
 import 'package:social_app/view/accueil/comments.dart';
+import 'package:social_app/view/shared/constants.dart';
 
 class DisplayAnnonce extends StatefulWidget {
+  final UserType userType;
   final Annonce annonce;
   final Professionnel prof;
-  DisplayAnnonce({this.annonce, this.prof});
+  DisplayAnnonce({this.annonce, this.prof,@required this.userType});
   @override
   _DisplayAnnonceState createState() => _DisplayAnnonceState();
 }
@@ -114,6 +116,7 @@ class _DisplayAnnonceState extends State<DisplayAnnonce> {
             builder: (context) => Comments(
                   annonceID: annonceID,
                   proID: proID,
+                  userType: widget.userType,
                 )));
   }
 

@@ -10,14 +10,16 @@ import 'package:social_app/services/commentaireService.dart';
 import 'package:social_app/services/notificationService.dart';
 import 'package:social_app/services/professionelService.dart';
 import 'package:social_app/services/talentService.dart';
+import 'package:social_app/view/shared/constants.dart';
 import 'package:social_app/view/shared/progress.dart';
 import 'package:social_app/view/shared/reusable_header.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Comments extends StatefulWidget {
+  final UserType userType;
   final String annonceID;
   final String proID;
-  Comments({this.proID, this.annonceID});
+  Comments({this.proID, this.annonceID,@required this.userType});
   @override
   _CommentsState createState() => _CommentsState(
         annonceID: this.annonceID,
@@ -102,7 +104,7 @@ class _CommentsState extends State<Comments> {
             child: buildComment(),
           ),
           Divider(),
-          if (pro == null)
+          if (widget.userType==UserType.talent)
             ListTile(
               title: TextFormField(
                 controller: commentController,
